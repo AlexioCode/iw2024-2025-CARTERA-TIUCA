@@ -1,1 +1,1 @@
-# iw2024-2025-CARTERA-TIUCA
+Sistema de gestión de la cartera anual de proyectos TI de la UCA
