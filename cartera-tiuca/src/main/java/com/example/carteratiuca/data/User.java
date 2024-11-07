@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,9 @@ import java.util.Set;
 public class User extends AbstractEntity {
 
     private String username;
-    private String name;
+    @Email
+    private String email;
+    private String unit;
     @JsonIgnore
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
@@ -31,12 +35,6 @@ public class User extends AbstractEntity {
     }
     public void setUsername(String username) {
         this.username = username;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public String getHashedPassword() {
         return hashedPassword;
