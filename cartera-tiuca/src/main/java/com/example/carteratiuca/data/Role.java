@@ -1,5 +1,6 @@
 package com.example.carteratiuca.data;
 
 public enum Role {
-    USER, ADMIN;
+    USER, ADMIN, SOLICITANTE, PROMOTOR, OTP, CIO;
 }
+
