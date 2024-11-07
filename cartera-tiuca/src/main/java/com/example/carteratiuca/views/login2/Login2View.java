@@ -24,7 +24,7 @@ public class Login2View extends Composite<VerticalLayout> {
         getContent().setJustifyContentMode(JustifyContentMode.START);
         getContent().setAlignItems(Alignment.CENTER);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, loginForm);
-        loginForm.setWidth("min-content");
+        // loginForm.setWidth("min-content");
         getContent().add(loginForm);
     }
 }
