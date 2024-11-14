@@ -1,4 +1,4 @@
-package com.example.carteratiuca.views.login2;
+package es.uca.iw.carteratiuca.views.login2;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.login.LoginForm;

@@ -1,4 +1,4 @@
-package com.example.carteratiuca.data;
+package es.uca.iw.carteratiuca.data;
 
 import java.util.Date;
 

@@ -1,7 +1,7 @@
-package com.example.carteratiuca.security;
+package es.uca.iw.carteratiuca.security;
 
-import com.example.carteratiuca.data.User;
-import com.example.carteratiuca.data.UserRepository;
+import es.uca.iw.carteratiuca.data.User;
+import es.uca.iw.carteratiuca.data.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;

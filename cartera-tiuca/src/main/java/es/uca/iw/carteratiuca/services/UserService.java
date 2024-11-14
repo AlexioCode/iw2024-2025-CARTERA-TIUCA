@@ -1,7 +1,7 @@
-package com.example.carteratiuca.services;
+package es.uca.iw.carteratiuca.services;
 
-import com.example.carteratiuca.data.User;
-import com.example.carteratiuca.data.UserRepository;
+import es.uca.iw.carteratiuca.data.User;
+import es.uca.iw.carteratiuca.data.UserRepository;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

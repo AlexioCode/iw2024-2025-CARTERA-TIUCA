@@ -1,12 +1,10 @@
-package com.example.carteratiuca.data;
+package es.uca.iw.carteratiuca.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity

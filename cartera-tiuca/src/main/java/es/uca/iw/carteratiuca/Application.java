@@ -1,4 +1,4 @@
-package com.example.carteratiuca;
+package es.uca.iw.carteratiuca;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;

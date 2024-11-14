@@ -1,6 +1,6 @@
-package com.example.carteratiuca.security;
+package es.uca.iw.carteratiuca.security;
 
-import com.example.carteratiuca.views.login.LoginView;
+import es.uca.iw.carteratiuca.views.login.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

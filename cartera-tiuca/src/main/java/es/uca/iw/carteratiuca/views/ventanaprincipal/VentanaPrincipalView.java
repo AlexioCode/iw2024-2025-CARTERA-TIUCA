@@ -1,4 +1,4 @@
-package com.example.carteratiuca.views.ventanaprincipal;
+package es.uca.iw.carteratiuca.views.ventanaprincipal;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.H1;

@@ -1,4 +1,4 @@
-package com.example.carteratiuca.data;
+package es.uca.iw.carteratiuca.data;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

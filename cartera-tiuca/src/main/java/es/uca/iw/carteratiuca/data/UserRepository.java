@@ -1,4 +1,4 @@
-package com.example.carteratiuca.data;
+package es.uca.iw.carteratiuca.data;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

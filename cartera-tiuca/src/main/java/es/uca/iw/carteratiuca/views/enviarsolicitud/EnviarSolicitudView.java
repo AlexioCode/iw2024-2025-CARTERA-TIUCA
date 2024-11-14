@@ -1,4 +1,4 @@
-package com.example.carteratiuca.views.enviarsolicitud;
+package es.uca.iw.carteratiuca.views.enviarsolicitud;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;

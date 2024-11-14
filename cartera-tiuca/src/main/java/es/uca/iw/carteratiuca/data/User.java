@@ -1,4 +1,4 @@
-package com.example.carteratiuca.data;
+package es.uca.iw.carteratiuca.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Email;
 import java.util.Set;
 
 @Entity
-@Table(name = "application_user")
+@Table(name = "USERS")
 public class User extends AbstractEntity {
 
     private String username;

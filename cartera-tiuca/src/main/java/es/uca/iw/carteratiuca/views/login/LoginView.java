@@ -1,6 +1,6 @@
-package com.example.carteratiuca.views.login;
+package es.uca.iw.carteratiuca.views.login;
 
-import com.example.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.router.BeforeEnterEvent;
