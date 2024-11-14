@@ -3,58 +3,54 @@ package es.uca.iw.carteratiuca.data;
 import java.util.Date;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Embeddable
 public class JustificacionProyecto {
 
-    private boolean ActualizarOferta = false;
-    private boolean AltaCalidad = false;
-    private boolean AumentarInvestigacion = false;
-    private boolean ConseguirTransparencia = false;
-    private boolean GenerarValorCompartido = false;
-    private boolean ConsolidarGobiernoSostenible = false;
-    private boolean ReforzarPapelUCA = false;
+    private boolean actualizarOferta = false;
+    private boolean altaCalidad = false;
+    private boolean aumentarInvestigacion = false;
+    private boolean conseguirTransparencia = false;
+    private boolean generarValorCompartido = false;
+    private boolean consolidarGobiernoSostenible = false;
+    private boolean reforzarPapelUCA = false;
     private String alcance;
-    private Date fechaPuestaEnMarcha;
+    private LocalDate fechaPuestaEnMarcha;
     private String normativa;
 
-    public boolean isActualizarOferta() {return ActualizarOferta;}
-    public void setActualizarOferta(boolean ActualizarOferta) {this.ActualizarOferta = ActualizarOferta;}
-    public boolean isAltaCalidad() {return AltaCalidad;}
+    public boolean isActualizarOferta() {return actualizarOferta;}
+    public void setActualizarOferta(boolean ActualizarOferta) {this.actualizarOferta = ActualizarOferta;}
+    public boolean isAltaCalidad() {return altaCalidad;}
     public void setAltaCalidad(boolean AltaCalidad) {
-        this.AltaCalidad = AltaCalidad;
+        this.altaCalidad = AltaCalidad;
     }
-    public boolean isAumentarInvestigacion() {return AumentarInvestigacion;}
+    public boolean isAumentarInvestigacion() {return aumentarInvestigacion;}
     public void setAumentarInvestigacion(boolean AumentarInvestigacion) {
-        this.AumentarInvestigacion = AumentarInvestigacion;
+        this.aumentarInvestigacion = AumentarInvestigacion;
     }
-    public boolean isConseguirTransparencia() {return ConseguirTransparencia;}
+    public boolean isConseguirTransparencia() {return conseguirTransparencia;}
     public void setConseguirTransparencia(boolean ConseguirTransparencia) {
-        this.ConseguirTransparencia = ConseguirTransparencia;
+        this.conseguirTransparencia = ConseguirTransparencia;
     }
-    public boolean isGenerarValorCompartido() {return GenerarValorCompartido;}
+    public boolean isGenerarValorCompartido() {return generarValorCompartido;}
     public void setGenerarValorCompartido(boolean GenerarValorCompartido) {
-        this.GenerarValorCompartido = GenerarValorCompartido;
+        this.generarValorCompartido = GenerarValorCompartido;
     }
-    public boolean isConsolidarGobiernoSostenible() {return ConsolidarGobiernoSostenible;}
+    public boolean isConsolidarGobiernoSostenible() {return consolidarGobiernoSostenible;}
     public void setConsolidarGobiernoSostenible(boolean ConsolidarGobiernoSostenible) {
-        this.ConsolidarGobiernoSostenible = ConsolidarGobiernoSostenible;
+        this.consolidarGobiernoSostenible = ConsolidarGobiernoSostenible;
     }
-    public boolean isReforzarPapelUCA() {return ReforzarPapelUCA;}
+    public boolean isReforzarPapelUCA() {return reforzarPapelUCA;}
     public void setReforzarPapel(boolean ReforzarPapelUCA) {
-        this.ReforzarPapelUCA = ReforzarPapelUCA;
+        this.reforzarPapelUCA = ReforzarPapelUCA;
     }
     public String getAlcance() {return alcance;}
     public void setAlcance(String alcance) {this.alcance = alcance;}
-    public Date getFechaPuestaEnMarcha() {return fechaPuestaEnMarcha;}
-    public void setFechaPuestaEnMarcha(Date fechaPuestaEnMarcha) {
+    public LocalDate getFechaPuestaEnMarcha() {return fechaPuestaEnMarcha;}
+    public void setFechaPuestaEnMarcha(LocalDate fechaPuestaEnMarcha) {
         this.fechaPuestaEnMarcha = fechaPuestaEnMarcha;
     }
     public String getNormativa() {return normativa;}

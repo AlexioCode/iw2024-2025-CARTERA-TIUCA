@@ -8,12 +8,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-
-public class Proyecto {
-    @Id
-    @GeneratedValue
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID id;
+public class Proyecto extends AbstractEntity {
 
     private String titulo;
     private String nombreCorto;
@@ -32,6 +27,18 @@ public class Proyecto {
     private byte[] especificacionesTecnicas;
     private byte[] presupuesto;
 
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public String getNombreCorto() { return nombreCorto; }
+    public void setNombreCorto(String nombreCorto) { this.nombreCorto = nombreCorto; }
+    public BigDecimal getCoste() { return coste; }
+    public void setCoste(BigDecimal coste) { this.coste = coste; }
+    public int getNumEmpleados() { return numEmpleados; }
+    public void setNumEmpleados(int numEmpleados) { this.numEmpleados = numEmpleados; }
+    public int getImportanciaPromotor() { return importanciaPromotor; }
+    public int getGradoAvance() { return gradoAvance; }
+    public void setGradoAvance(int gradoAvance) { this.gradoAvance = gradoAvance; }
+
     public byte[] getMemoria() { return memoria; }
     public void setMemoria(byte[] memoria) {
         this.memoria = memoria;
@@ -46,20 +53,4 @@ public class Proyecto {
     public void setPresupuesto(byte[] presupuesto) {
         this.presupuesto = presupuesto;
     }
-
-
-
-
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
-    public String getNombreCorto() { return nombreCorto; }
-    public void setNombreCorto(String nombreCorto) { this.nombreCorto = nombreCorto; }
-    public BigDecimal getCoste() { return coste; }
-    public void setCoste(BigDecimal coste) { this.coste = coste; }
-    public int getNumEmpleados() { return numEmpleados; }
-    public void setNumEmpleados(int numEmpleados) { this.numEmpleados = numEmpleados; }
-    public int getImportanciaPromotor() { return importanciaPromotor; }
-    public int getGradoAvance() { return gradoAvance; }
-    public void setGradoAvance(int gradoAvance) { this.gradoAvance = gradoAvance; }
-
 }

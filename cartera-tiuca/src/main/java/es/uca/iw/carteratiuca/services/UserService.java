@@ -3,6 +3,8 @@ package es.uca.iw.carteratiuca.services;
 import es.uca.iw.carteratiuca.data.User;
 import es.uca.iw.carteratiuca.data.UserRepository;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,7 +19,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    public Optional<User> get(Long id) {
+    public Optional<User> get(UUID id) {
         return repository.findById(id);
     }
 
@@ -25,7 +27,7 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
     }
 
