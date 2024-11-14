@@ -159,6 +159,10 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     record SampleItem(String value, String label, Boolean disabled) {
     }
 
+
+    /*
+    TODO: Cambiar las opciones dentro del combobox
+    * */
     private void setComboBoxSampleData(ComboBox comboBox) {
         List<SampleItem> sampleItems = new ArrayList<>();
         sampleItems.add(new SampleItem("first", "First", null));
