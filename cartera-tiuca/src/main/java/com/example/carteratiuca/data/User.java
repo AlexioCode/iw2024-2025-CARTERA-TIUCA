@@ -36,6 +36,10 @@ public class User extends AbstractEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getUnit() { return unit; }
+    public void setUnit(String unit) { this.unit = unit; }
     public String getHashedPassword() {
         return hashedPassword;
     }

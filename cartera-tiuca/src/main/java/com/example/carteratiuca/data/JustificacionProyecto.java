@@ -2,14 +2,25 @@ package com.example.carteratiuca.data;
 
 import java.util.Date;
 
-public class JustificacionProyecto extends AbstractEntity{
-    private boolean ActualizarOferta=false;
-    private boolean AltaCalidad=false;
-    private boolean AumentarInvestigacion=false;
-    private boolean ConseguirTransparencia=false;
-    private boolean GenerarValorCompartido=false;
-    private boolean ConsolidarGobiernoSostenible=false;
-    private boolean ReforzarPapelUCA=false;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import java.time.LocalDate;
+import java.util.UUID;
+
+@Embeddable
+public class JustificacionProyecto {
+
+    private boolean ActualizarOferta = false;
+    private boolean AltaCalidad = false;
+    private boolean AumentarInvestigacion = false;
+    private boolean ConseguirTransparencia = false;
+    private boolean GenerarValorCompartido = false;
+    private boolean ConsolidarGobiernoSostenible = false;
+    private boolean ReforzarPapelUCA = false;
     private String alcance;
     private Date fechaPuestaEnMarcha;
     private String normativa;
