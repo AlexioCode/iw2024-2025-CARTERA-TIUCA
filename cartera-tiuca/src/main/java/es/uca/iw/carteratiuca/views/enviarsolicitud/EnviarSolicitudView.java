@@ -34,63 +34,78 @@ import java.util.List;
 public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
     public EnviarSolicitudView() {
-        H1 tituloPrincipalPagina = new H1();
+        //Comun a la vista
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+
+        //Seccion Principal
+        H1 h1PrincipalPagina = new H1();
         FormLayout formLayout2Col = new FormLayout();
-        TextField textFieldTituloProyecto = new TextField();
-        TextField textFieldNombreCorto = new TextField();
+        TextField tfTituloProyecto = new TextField();
+        TextField tfNombreCorto = new TextField();
         MemoryBuffer bufferParaMemoria = new MemoryBuffer();
         Upload uploadCargarMemoria = new Upload(bufferParaMemoria);
         Hr separadorPrincipal = new Hr();
-        H2 tituloSeccionSolicitante = new H2();
-        FormLayout formLayout3Col = new FormLayout();
-        TextField textFieldNombreSolicitante = new TextField();
-        EmailField emailFieldEmailSolicitante = new EmailField();
-        TextField textFieldUnidadSolicitante = new TextField();
-        Paragraph paragraphInfoSolicitante = new Paragraph();
-        Hr separadorInfoSolicitante = new Hr();
-        H2 tituloSeccionPromotor = new H2();
-        FormLayout formLayout2Col2 = new FormLayout();
-        ComboBox cmbPromotor = new ComboBox();
-        ComboBox cmbImportanciaPromotor = new ComboBox();
-        Hr hr5 = new Hr();
-        H2 h23 = new H2();
-        FormLayout formLayout2Col3 = new FormLayout();
-        TextField textField5 = new TextField();
-        TextField textField6 = new TextField();
-        H2 h24 = new H2();
-        CheckboxGroup checkboxGroup = new CheckboxGroup();
-        FormLayout formLayout2Col4 = new FormLayout();
-        TextField textField7 = new TextField();
-        DateTimePicker dateTimePicker = new DateTimePicker();
-        TextField textField8 = new TextField();
-        getContent().setWidth("100%");
-        getContent().getStyle().set("flex-grow", "1");
-        tituloPrincipalPagina.setText("Formulario de solicitud");
-        tituloPrincipalPagina.setWidth("max-content");
+
+        h1PrincipalPagina.setText("Formulario de solicitud");
+        h1PrincipalPagina.setWidth("max-content");
         formLayout2Col.setWidth("100%");
-        textFieldTituloProyecto.setLabel("Título del Proyecto");
-        textFieldTituloProyecto.setWidth("min-content");
-        textFieldNombreCorto.setLabel("Nombre Corto");
-        textFieldNombreCorto.setWidth("min-content");
+        tfTituloProyecto.setLabel("Título del Proyecto");
+        tfTituloProyecto.setWidth("min-content");
+        tfNombreCorto.setLabel("Nombre Corto");
+        tfNombreCorto.setWidth("min-content");
         uploadCargarMemoria.setWidth("min-content");
-        tituloSeccionSolicitante.setText("Información del Solicitante");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, tituloSeccionSolicitante);
-        tituloSeccionSolicitante.setWidth("max-content");
+
+        getContent().add(h1PrincipalPagina);
+        getContent().add(formLayout2Col);
+        formLayout2Col.add(tfTituloProyecto);
+        formLayout2Col.add(tfNombreCorto);
+        formLayout2Col.add(uploadCargarMemoria);
+        getContent().add(separadorPrincipal);
+
+        //Seccion Solicitante
+        H2 h2SeccionSolicitante = new H2();
+        FormLayout formLayout3Col = new FormLayout();
+        TextField tfNombreSolicitante = new TextField();
+        EmailField emailFieldSolicitante = new EmailField();
+        TextField tfUnidadSolicitante = new TextField();
+        Paragraph pInfoSolicitante = new Paragraph();
+        Hr separadorInfoSolicitante = new Hr();
+
+        h2SeccionSolicitante.setText("Información del Solicitante");
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2SeccionSolicitante);
+        h2SeccionSolicitante.setWidth("max-content");
         formLayout3Col.setWidth("100%");
         formLayout3Col.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2),
                 new ResponsiveStep("500px", 3));
-        textFieldNombreSolicitante.setLabel("Nombre Completo");
-        textFieldNombreSolicitante.setWidth("min-content");
-        emailFieldEmailSolicitante.setLabel("Email");
-        emailFieldEmailSolicitante.setWidth("min-content");
-        textFieldUnidadSolicitante.setLabel("Unidad");
-        textFieldUnidadSolicitante.setWidth("min-content");
-        paragraphInfoSolicitante.setText("Tendrá la condición de solicitante el responsable de cualquier área, unidad o centro");
-        paragraphInfoSolicitante.setWidth("100%");
-        paragraphInfoSolicitante.getStyle().set("font-size", "var(--lumo-font-size-xs)");
-        tituloSeccionPromotor.setText("Información del Promotor");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, tituloSeccionPromotor);
-        tituloSeccionPromotor.setWidth("max-content");
+        tfNombreSolicitante.setLabel("Nombre Completo");
+        tfNombreSolicitante.setWidth("min-content");
+        emailFieldSolicitante.setLabel("Email");
+        emailFieldSolicitante.setWidth("min-content");
+        tfUnidadSolicitante.setLabel("Unidad");
+        tfUnidadSolicitante.setWidth("min-content");
+        pInfoSolicitante.setText("Tendrá la condición de solicitante el responsable de cualquier área, unidad o centro");
+        pInfoSolicitante.setWidth("100%");
+        pInfoSolicitante.getStyle().set("font-size", "var(--lumo-font-size-xs)");
+
+        getContent().add(h2SeccionSolicitante);
+        getContent().add(formLayout3Col);
+        formLayout3Col.add(tfNombreSolicitante);
+        formLayout3Col.add(emailFieldSolicitante);
+        formLayout3Col.add(tfUnidadSolicitante);
+        formLayout3Col.add(pInfoSolicitante);
+        getContent().add(separadorInfoSolicitante);
+
+        //Seccion Promotor
+        H2 h2SeccionPromotor = new H2();
+        FormLayout formLayout2Col2 = new FormLayout();
+        ComboBox cmbPromotor = new ComboBox();
+        ComboBox cmbImportanciaPromotor = new ComboBox();
+        Hr separadorInfoPromotor = new Hr();
+
+        h2SeccionPromotor.setText("Información del Promotor");
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2SeccionPromotor);
+        h2SeccionPromotor.setWidth("max-content");
         formLayout2Col2.setWidth("100%");
         cmbPromotor.setLabel("Promotor");
         cmbPromotor.setWidth("min-content");
@@ -98,56 +113,62 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         cmbImportanciaPromotor.setLabel("Importancia (0 - 5)");
         cmbImportanciaPromotor.setWidth("min-content");
         setComboBoxSampleData(cmbImportanciaPromotor);
-        h23.setText("Información de los Interesados");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h23);
-        h23.setWidth("max-content");
-        formLayout2Col3.setWidth("100%");
-        textField5.setLabel("Interesados");
-        textField5.setWidth("min-content");
-        textField6.setLabel("Finanziación Aportada");
-        textField6.setWidth("min-content");
-        h24.setText("Justificación del Proyecto");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h24);
-        h24.setWidth("max-content");
-        checkboxGroup.setLabel("Alineamiento con objetivos estratégicos");
-        checkboxGroup.setWidth("100%");
-        checkboxGroup.setItems("Order ID", "Product Name", "Customer", "Status");
-        checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
-        formLayout2Col4.setWidth("100%");
-        textField7.setLabel("Alcance");
-        textField7.setWidth("100%");
-        dateTimePicker.setLabel("Fecha requerida para la puesta en marcha de la solución TI");
-        dateTimePicker.setWidth("100%");
-        textField8.setLabel("Normativa de la Aplicación");
-        textField8.setWidth("100%");
-        getContent().add(tituloPrincipalPagina);
-        getContent().add(formLayout2Col);
-        formLayout2Col.add(textFieldTituloProyecto);
-        formLayout2Col.add(textFieldNombreCorto);
-        formLayout2Col.add(uploadCargarMemoria);
-        getContent().add(separadorPrincipal);
-        getContent().add(tituloSeccionSolicitante);
-        getContent().add(formLayout3Col);
-        formLayout3Col.add(textFieldNombreSolicitante);
-        formLayout3Col.add(emailFieldEmailSolicitante);
-        formLayout3Col.add(textFieldUnidadSolicitante);
-        formLayout3Col.add(paragraphInfoSolicitante);
-        getContent().add(separadorInfoSolicitante);
-        getContent().add(tituloSeccionPromotor);
+
+        getContent().add(h2SeccionPromotor);
         getContent().add(formLayout2Col2);
         formLayout2Col2.add(cmbPromotor);
         formLayout2Col2.add(cmbImportanciaPromotor);
-        getContent().add(hr5);
-        getContent().add(h23);
+        getContent().add(separadorInfoPromotor);
+
+        //Seccion Interesados
+        H2 h2InfoInteresados = new H2();
+        FormLayout formLayout2Col3 = new FormLayout();
+        TextField tfInteresados = new TextField();
+        TextField tfFinanziacion = new TextField();
+
+        h2InfoInteresados.setText("Información de los Interesados");
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2InfoInteresados);
+        h2InfoInteresados.setWidth("max-content");
+        formLayout2Col3.setWidth("100%");
+        tfInteresados.setLabel("Interesados");
+        tfInteresados.setWidth("min-content");
+        tfFinanziacion.setLabel("Finanziación Aportada");
+        tfFinanziacion.setWidth("min-content");
+
+        getContent().add(h2InfoInteresados);
         getContent().add(formLayout2Col3);
-        formLayout2Col3.add(textField5);
-        formLayout2Col3.add(textField6);
-        getContent().add(h24);
-        getContent().add(checkboxGroup);
+        formLayout2Col3.add(tfInteresados);
+        formLayout2Col3.add(tfFinanziacion);
+
+        //Seccion Justificacion
+        H2 h2JustifProyecto = new H2();
+        CheckboxGroup chkObjetivosEstrategicos = new CheckboxGroup();
+        FormLayout formLayout2Col4 = new FormLayout();
+        TextField tfAlcance = new TextField();
+        DateTimePicker dateTimePicker = new DateTimePicker();
+        TextField tfNormativaApp = new TextField();
+
+        h2JustifProyecto.setText("Justificación del Proyecto");
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2JustifProyecto);
+        h2JustifProyecto.setWidth("max-content");
+        chkObjetivosEstrategicos.setLabel("Alineamiento con objetivos estratégicos");
+        chkObjetivosEstrategicos.setWidth("100%");
+        chkObjetivosEstrategicos.setItems("Order ID", "Product Name", "Customer", "Status");
+        chkObjetivosEstrategicos.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
+        formLayout2Col4.setWidth("100%");
+        tfAlcance.setLabel("Alcance");
+        tfAlcance.setWidth("100%");
+        dateTimePicker.setLabel("Fecha requerida para la puesta en marcha de la solución TI");
+        dateTimePicker.setWidth("100%");
+        tfNormativaApp.setLabel("Normativa de la Aplicación");
+        tfNormativaApp.setWidth("100%");
+        
+        getContent().add(h2JustifProyecto);
+        getContent().add(chkObjetivosEstrategicos);
         getContent().add(formLayout2Col4);
-        formLayout2Col4.add(textField7);
+        formLayout2Col4.add(tfAlcance);
         formLayout2Col4.add(dateTimePicker);
-        getContent().add(textField8);
+        getContent().add(tfNormativaApp);
     }
 
     record SampleItem(String value, String label, Boolean disabled) {
