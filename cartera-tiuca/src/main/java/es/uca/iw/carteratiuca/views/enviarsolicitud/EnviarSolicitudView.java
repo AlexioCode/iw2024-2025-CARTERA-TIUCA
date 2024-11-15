@@ -52,6 +52,8 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col.setWidth("100%");
         tfTituloProyecto.setLabel("Título del Proyecto");
         tfTituloProyecto.setWidth("min-content");
+        tfTituloProyecto.setRequired(true);
+        tfTituloProyecto.setErrorMessage("Campo requerido");
         tfNombreCorto.setLabel("Nombre Corto");
         tfNombreCorto.setWidth("min-content");
         uploadCargarMemoria.setWidth("min-content");
@@ -162,7 +164,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         dateTimePicker.setWidth("100%");
         tfNormativaApp.setLabel("Normativa de la Aplicación");
         tfNormativaApp.setWidth("100%");
-        
+
         getContent().add(h2JustifProyecto);
         getContent().add(chkObjetivosEstrategicos);
         getContent().add(formLayout2Col4);
