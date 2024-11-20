@@ -20,7 +20,7 @@ public class Proyecto extends AbstractEntity {
     private EstadoProyecto estado;
     private int gradoAvance;
 
-    @Embedded
+    @OneToOne
     private JustificacionProyecto justificacion;
 
     private byte[] memoria;

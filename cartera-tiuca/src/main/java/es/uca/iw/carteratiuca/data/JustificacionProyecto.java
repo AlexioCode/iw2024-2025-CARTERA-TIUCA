@@ -3,12 +3,13 @@ package es.uca.iw.carteratiuca.data;
 import java.util.Date;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
-@Embeddable
-public class JustificacionProyecto {
+@Entity
+public class JustificacionProyecto extends AbstractEntity{
 
     private boolean actualizarOferta = false;
     private boolean altaCalidad = false;
