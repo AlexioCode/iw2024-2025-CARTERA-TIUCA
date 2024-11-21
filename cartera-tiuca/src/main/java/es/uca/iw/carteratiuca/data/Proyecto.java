@@ -5,24 +5,34 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Proyecto extends AbstractEntity {
-
+    @NotEmpty
     private String titulo;
+    @NotEmpty
     private String nombreCorto;
+    @NotEmpty
     private BigDecimal coste;
+    @NotEmpty
     private int numEmpleados;
+    @NotEmpty
     private int importanciaPromotor;
+    @NotEmpty
     private BigDecimal interesados;
+    @NotEmpty
     private BigDecimal financiacionInteresado;
+    @NotEmpty
     private EstadoProyecto estado;
-    private int gradoAvance;
+    private int gradoAvance = 0;
 
     @OneToOne
     private JustificacionProyecto justificacion;
 
+    @NotEmpty
     private byte[] memoria;
     private byte[] especificacionesTecnicas;
     private byte[] presupuesto;
@@ -53,4 +63,5 @@ public class Proyecto extends AbstractEntity {
     public void setPresupuesto(byte[] presupuesto) {
         this.presupuesto = presupuesto;
     }
+
 }

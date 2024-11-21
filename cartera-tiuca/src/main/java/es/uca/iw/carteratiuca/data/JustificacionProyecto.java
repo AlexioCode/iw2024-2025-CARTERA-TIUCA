@@ -4,6 +4,7 @@ import java.util.Date;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class JustificacionProyecto extends AbstractEntity{
     private boolean generarValorCompartido = false;
     private boolean consolidarGobiernoSostenible = false;
     private boolean reforzarPapelUCA = false;
+    @NotEmpty
     private String alcance;
     private LocalDate fechaPuestaEnMarcha;
     private String normativa;
@@ -58,5 +60,6 @@ public class JustificacionProyecto extends AbstractEntity{
     public void setNormativa(String normativa) {
         this.normativa = normativa;
     }
+
 
 }

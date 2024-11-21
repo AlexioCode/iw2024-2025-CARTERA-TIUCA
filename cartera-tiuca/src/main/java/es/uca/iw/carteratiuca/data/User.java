@@ -10,18 +10,21 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
 public class User extends AbstractEntity {
-
+    @NotEmpty
     private String username;
     @Email
+    @NotEmpty
     private String email;
     private String unit;
     @JsonIgnore
+    @NotEmpty
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
