@@ -17,6 +17,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
@@ -127,6 +128,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         FormLayout formLayout2Col3 = new FormLayout();
         TextField tfInteresados = new TextField();
         TextField tfFinanziacion = new TextField();
+        Hr separadorInfoInteresados = new Hr();
 
         h2InfoInteresados.setText("Información de los Interesados");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2InfoInteresados);
@@ -141,6 +143,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col3);
         formLayout2Col3.add(tfInteresados);
         formLayout2Col3.add(tfFinanziacion);
+        getContent().add(separadorInfoInteresados);
 
         //Seccion Justificacion
         H2 h2JustifProyecto = new H2();
@@ -150,6 +153,11 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         DateTimePicker dateTimePicker = new DateTimePicker();
         TextField tfNormativaApp = new TextField();
         Paragraph pInfoAlineamiento = new Paragraph();
+        Paragraph pInfoAlcance = new Paragraph();
+        Paragraph pInfoFecha = new Paragraph();
+        Paragraph pInfoNormativa = new Paragraph();
+        Hr separadorInfoJustificacion = new Hr();
+
 
         h2JustifProyecto.setText("Justificación del Proyecto");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2JustifProyecto);
@@ -173,10 +181,21 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col4.setWidth("100%");
         tfAlcance.setLabel("Alcance");
         tfAlcance.setWidth("100%");
+        pInfoAlcance.setText("Total de personas de las diferentes unidades, áreas, centros, departamentos o campus que se " +
+                "beneficiarían de la implantación del proyecto");
+        pInfoAlcance.setWidth("100%");
+        pInfoAlcance.getStyle().set("font-size", "var(--lumo-font-size-xs)");
         dateTimePicker.setLabel("Fecha requerida para la puesta en marcha de la solución TI");
         dateTimePicker.setWidth("100%");
+        pInfoFecha.setText("Solo rellenar la fecha límite para la puesta en marcha en el caso de que su motivación sea" +
+                " por obligado cumplimiento de normativa.");
+        pInfoFecha.setWidth("100%");
+        pInfoFecha.getStyle().set("font-size", "var(--lumo-font-size-xs)");
         tfNormativaApp.setLabel("Normativa de la Aplicación");
         tfNormativaApp.setWidth("100%");
+        pInfoNormativa.setText("Solo rellenar la fecha límite para la puesta en marcha en el caso de que su motivación " +
+                "sea por obligado cumplimiento de normativa.");
+        pInfoNormativa.getStyle().set("font-size", "var(--lumo-font-size-xs)");
 
         getContent().add(h2JustifProyecto);
         getContent().add(chkObjetivosEstrategicos);
@@ -184,7 +203,11 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col4);
         formLayout2Col4.add(tfAlcance);
         formLayout2Col4.add(dateTimePicker);
+        formLayout2Col4.add(pInfoAlcance);
+        formLayout2Col4.add(pInfoFecha);
         getContent().add(tfNormativaApp);
+        getContent().add(pInfoNormativa);
+        getContent().add(separadorInfoJustificacion);
 
         //Sección Documentación Adicional
         H2 h2DocumentacionAdicional = new H2();
@@ -192,20 +215,38 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         Upload uploadEspecificacionTecnica = new Upload(bufferParaEspecificacionTecnica);
         MemoryBuffer bufferParaPresupuesto = new MemoryBuffer();
         Upload uploadPresupuesto = new Upload(bufferParaPresupuesto);
+        Paragraph tituloSpecs = new Paragraph();
+        Paragraph tituloPresupuesto = new Paragraph();
+        FormLayout formLayout2Col5 = new FormLayout();
 
         h2DocumentacionAdicional.setText("Documentacion Adicional");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2DocumentacionAdicional);
         h2DocumentacionAdicional.setWidth("max-content");
+        formLayout2Col5.setWidth("100%");
 
-        uploadEspecificacionTecnica.setWidth("min-content");
-        uploadPresupuesto.setWidth("min-content");
+        uploadEspecificacionTecnica.setWidth("max-content");
+        uploadPresupuesto.setWidth("max-content");
 
         getContent().add(separadorPrincipal);
         getContent().add(h2DocumentacionAdicional);
+        getContent().add(formLayout2Col5);
+        tituloSpecs.setText("Especificaciones Técnicas:");
+        tituloSpecs.getStyle().set("font-size", "lumo-size-l");
+        getContent().add(tituloSpecs);
         getContent().add(uploadEspecificacionTecnica);
+        tituloPresupuesto.setText("Presupuesto(s)");
+        tituloPresupuesto.getStyle().set("font-size", "lumo-size-l");
+        getContent().add(tituloPresupuesto);
         getContent().add(uploadPresupuesto);
 
-
+        //Sección Enviar
+        H2 h2Enviar = new H2();
+        h2Enviar.setText("");
+        getContent().add(h2Enviar);
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2Enviar);
+        Button botonEnviar = new Button("Enviar");
+        getContent().add(botonEnviar);
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
 
     }
 
