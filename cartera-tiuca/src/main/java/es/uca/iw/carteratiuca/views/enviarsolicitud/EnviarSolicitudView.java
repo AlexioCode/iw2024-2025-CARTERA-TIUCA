@@ -134,7 +134,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col3.setWidth("100%");
         tfInteresados.setLabel("Interesados");
         tfInteresados.setWidth("min-content");
-        tfFinanziacion.setLabel("Finanziación Aportada");
+        tfFinanziacion.setLabel("Financiación Aportada");
         tfFinanziacion.setWidth("min-content");
 
         getContent().add(h2InfoInteresados);
@@ -149,13 +149,26 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         TextField tfAlcance = new TextField();
         DateTimePicker dateTimePicker = new DateTimePicker();
         TextField tfNormativaApp = new TextField();
+        Paragraph pInfoAlineamiento = new Paragraph();
 
         h2JustifProyecto.setText("Justificación del Proyecto");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2JustifProyecto);
         h2JustifProyecto.setWidth("max-content");
         chkObjetivosEstrategicos.setLabel("Alineamiento con objetivos estratégicos");
         chkObjetivosEstrategicos.setWidth("100%");
-        chkObjetivosEstrategicos.setItems("Order ID", "Product Name", "Customer", "Status");
+        chkObjetivosEstrategicos.setItems("Innovar, rediseñar y actualizar nuestra oferta formativa para adaptarla " +
+                "a las necesidades sociales y económicas de nuestro etorno.",
+                "Conseguir los niveles más altos de calidad en nuestra oferta formativa propa y reglada.",
+                "Aumentar significativamente nuestro posicionamiento en investigación y transferir de forma relevante y" +
+                        " útil nuestra investigación a nuestro tejido social y productivo.",
+                "Consolidar un modelo de gobierno sostenible y socialmente responsable.",
+                "Conseguir que la transparencia sea un valor distintivo y relevante en la UCA.",
+                "Generar valor compartido con la Comunidad Universitaria.",
+                "Reforzar la importancia del papel de la UCA en la sociedad.");
+        pInfoAlineamiento.setText("Su solicitud debe estar alineada con, al menos, uno de los anteriores objetivos estratégicos\n");
+        pInfoAlineamiento.setWidth("100%");
+        pInfoAlineamiento.getStyle().set("font-size", "var(--lumo-font-size-xs)");
+
         chkObjetivosEstrategicos.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
         formLayout2Col4.setWidth("100%");
         tfAlcance.setLabel("Alcance");
@@ -167,11 +180,36 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
         getContent().add(h2JustifProyecto);
         getContent().add(chkObjetivosEstrategicos);
+        getContent().add(pInfoAlineamiento);
         getContent().add(formLayout2Col4);
         formLayout2Col4.add(tfAlcance);
         formLayout2Col4.add(dateTimePicker);
         getContent().add(tfNormativaApp);
+
+        //Sección Documentación Adicional
+        H2 h2DocumentacionAdicional = new H2();
+        MemoryBuffer bufferParaEspecificacionTecnica = new MemoryBuffer();
+        Upload uploadEspecificacionTecnica = new Upload(bufferParaEspecificacionTecnica);
+        MemoryBuffer bufferParaPresupuesto = new MemoryBuffer();
+        Upload uploadPresupuesto = new Upload(bufferParaPresupuesto);
+
+        h2DocumentacionAdicional.setText("Documentacion Adicional");
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2DocumentacionAdicional);
+        h2DocumentacionAdicional.setWidth("max-content");
+
+        uploadEspecificacionTecnica.setWidth("min-content");
+        uploadPresupuesto.setWidth("min-content");
+
+        getContent().add(separadorPrincipal);
+        getContent().add(h2DocumentacionAdicional);
+        getContent().add(uploadEspecificacionTecnica);
+        getContent().add(uploadPresupuesto);
+
+
+
     }
+
+
 
     record SampleItem(String value, String label, Boolean disabled) {
     }
