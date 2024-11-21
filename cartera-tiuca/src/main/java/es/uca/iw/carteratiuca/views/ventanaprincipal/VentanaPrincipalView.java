@@ -11,10 +11,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import es.uca.iw.carteratiuca.views.login.LoginView;
 
-@PageTitle("Ventana Principal")
+@PageTitle("Inicio")
 @Route("")
 @Menu(order = 0, icon = "line-awesome/svg/home-solid.svg")
 @AnonymousAllowed
@@ -32,7 +34,7 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.setHeight("min-content");
-        h1.setText("HEADER DE LA VENTANA PRINCIPAL");
+        h1.setText("BIENVENIDO A CARTERATIUCA");
         layoutRow.setAlignSelf(FlexComponent.Alignment.START, h1);
         h1.setWidth("max-content");
         layoutColumn2.setWidth("100%");
@@ -46,5 +48,7 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         layoutRow.add(h1);
         getContent().add(layoutColumn2);
         layoutColumn2.add(textLarge);
+
+        // RouterLink loginLink = new RouterLink("Login", LoginView.class);
     }
 }

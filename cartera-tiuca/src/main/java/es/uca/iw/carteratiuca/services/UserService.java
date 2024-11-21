@@ -4,6 +4,7 @@ import es.uca.iw.carteratiuca.data.User;
 import es.uca.iw.carteratiuca.data.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,24 +17,40 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import es.uca.iw.carteratiuca.data.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
-    public UserService(UserRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username);
-        if (user == null) {
+        Optional<User> user = repository.findByUsername(username);
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getHashedPassword(),
-                    getAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),
+                    getAuthorities(user.get()));
         }
     }
 
@@ -67,6 +84,18 @@ public class UserService implements UserDetailsService {
         return repository.findAll(filter, pageable);
     }
 
+    public boolean registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRegisterCode(UUID.randomUUID().toString().substring(0, 5));
+        user.addRole(Role.USER);
 
+        try {
+            repository.save(user);
+            // emailService.sendRegistrationEmail(user);
+            return true;
+        } catch (DataIntegrityViolationException e) {
+            return false;
+        }
+    }
 
 }
