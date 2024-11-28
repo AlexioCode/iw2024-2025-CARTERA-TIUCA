@@ -1,7 +1,12 @@
 package es.uca.iw.carteratiuca.services;
 
 import es.uca.iw.carteratiuca.entities.User;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,13 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.InetAddress;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class EmailService {
-    /*
+/*
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
@@ -26,10 +32,9 @@ public class EmailService {
     @Value("${server.port}")
     private int serverPort;
 
-    public EmailRealService(JavaMailSender mailSender) {
+    public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-
 
     private String getServerUrl() {
 
@@ -41,8 +46,6 @@ public class EmailService {
 
     }
 
-
-    @Override
     public boolean sendRegistrationEmail(User user) {
 
         MimeMessage message = mailSender.createMimeMessage();
@@ -54,7 +57,6 @@ public class EmailService {
                 + "Go to " + getServerUrl() + "useractivation "
                 + "and introduce your mail and the following code: "
                 + user.getRegisterCode();
-
 
         try {
             helper.setFrom(defaultMail);
@@ -69,6 +71,5 @@ public class EmailService {
 
         return true;
     }
-
 */
 }
