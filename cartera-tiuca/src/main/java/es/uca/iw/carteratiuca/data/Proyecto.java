@@ -1,8 +1,6 @@
 package es.uca.iw.carteratiuca.data;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -17,29 +15,26 @@ public class Proyecto extends AbstractEntity {
     private String titulo;
     @NotEmpty
     private String nombreCorto;
-    @NotNull
+    @NotEmpty
     private BigDecimal coste;
-    @Min(value = 0, message = "El número de empleados debe ser mayor de 0")
+    @NotEmpty
     private int numEmpleados;
-    @NotNull
+    @NotEmpty
     private int importanciaPromotor;
-    @NotNull
+    @NotEmpty
     private BigDecimal interesados;
-    @NotNull
+    @NotEmpty
     private BigDecimal financiacionInteresado;
-    @NotNull
+    @NotEmpty
     private EstadoProyecto estado;
     private int gradoAvance = 0;
 
     @OneToOne
     private JustificacionProyecto justificacion;
 
-    @Lob
-    @NotNull
+    @NotEmpty
     private byte[] memoria;
-    @Lob
     private byte[] especificacionesTecnicas;
-    @Lob
     private byte[] presupuesto;
 
     public String getTitulo() { return titulo; }
