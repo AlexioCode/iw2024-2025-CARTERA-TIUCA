@@ -11,6 +11,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
@@ -106,6 +107,16 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         ComboBox cmbImportanciaPromotor = new ComboBox();
         Hr separadorInfoPromotor = new Hr();
 
+        Paragraph pInfoPromotor = new Paragraph();
+        pInfoPromotor.setText("Encargado de apoyar y defender la necesidad estratégica " +
+                "del proyecto que se solicita");
+        pInfoPromotor.getStyle().set("font-size", "var(--lumo-font-size-xs)");
+
+        Paragraph pInfoImportancia = new Paragraph();
+        pInfoImportancia.setText("En caso de que un promotor avale varias propuestas, " +
+                "este campo indicará el grado de prioridad entre ellas\n");
+        pInfoImportancia.getStyle().set("font-size", "var(--lumo-font-size-xs)");
+
         h2SeccionPromotor.setText("Información del Promotor");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2SeccionPromotor);
         h2SeccionPromotor.setWidth("max-content");
@@ -121,14 +132,24 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col2);
         formLayout2Col2.add(cmbPromotor);
         formLayout2Col2.add(cmbImportanciaPromotor);
+        formLayout2Col2.add(pInfoPromotor);
+        formLayout2Col2.add(pInfoImportancia);
         getContent().add(separadorInfoPromotor);
 
         //Seccion Interesados
         H2 h2InfoInteresados = new H2();
         FormLayout formLayout2Col3 = new FormLayout();
         TextField tfInteresados = new TextField();
-        TextField tfFinanziacion = new TextField();
+        TextField tfFinanciacion = new TextField();
         Hr separadorInfoInteresados = new Hr();
+
+        Paragraph pInfoFinanciacion = new Paragraph();
+        pInfoFinanciacion.setText("Financiación que puede ser aportada por los interesados " +
+                "de cara a la ejecución del proyecto");
+        pInfoFinanciacion.getStyle().set("font-size", "var(--lumo-font-size-xs)");
+
+        Paragraph salto = new Paragraph();
+        salto.setText("");
 
         h2InfoInteresados.setText("Información de los Interesados");
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2InfoInteresados);
@@ -136,13 +157,15 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col3.setWidth("100%");
         tfInteresados.setLabel("Interesados");
         tfInteresados.setWidth("min-content");
-        tfFinanziacion.setLabel("Financiación Aportada");
-        tfFinanziacion.setWidth("min-content");
+        tfFinanciacion.setLabel("Financiación Aportada");
+        tfFinanciacion.setWidth("min-content");
 
         getContent().add(h2InfoInteresados);
         getContent().add(formLayout2Col3);
         formLayout2Col3.add(tfInteresados);
-        formLayout2Col3.add(tfFinanziacion);
+        formLayout2Col3.add(tfFinanciacion);
+        formLayout2Col3.add(salto);
+        formLayout2Col3.add(pInfoFinanciacion);
         getContent().add(separadorInfoInteresados);
 
         //Seccion Justificacion
@@ -165,7 +188,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         chkObjetivosEstrategicos.setLabel("Alineamiento con objetivos estratégicos");
         chkObjetivosEstrategicos.setWidth("100%");
         chkObjetivosEstrategicos.setItems("Innovar, rediseñar y actualizar nuestra oferta formativa para adaptarla " +
-                "a las necesidades sociales y económicas de nuestro etorno.",
+                        "a las necesidades sociales y económicas de nuestro etorno.",
                 "Conseguir los niveles más altos de calidad en nuestra oferta formativa propa y reglada.",
                 "Aumentar significativamente nuestro posicionamiento en investigación y transferir de forma relevante y" +
                         " útil nuestra investigación a nuestro tejido social y productivo.",
@@ -193,9 +216,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         pInfoFecha.getStyle().set("font-size", "var(--lumo-font-size-xs)");
         tfNormativaApp.setLabel("Normativa de la Aplicación");
         tfNormativaApp.setWidth("100%");
-        pInfoNormativa.setText("Solo rellenar la fecha límite para la puesta en marcha en el caso de que su motivación " +
-                "sea por obligado cumplimiento de normativa.");
-        pInfoNormativa.getStyle().set("font-size", "var(--lumo-font-size-xs)");
 
         getContent().add(h2JustifProyecto);
         getContent().add(chkObjetivosEstrategicos);
@@ -206,38 +226,51 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col4.add(pInfoAlcance);
         formLayout2Col4.add(pInfoFecha);
         getContent().add(tfNormativaApp);
-        getContent().add(pInfoNormativa);
         getContent().add(separadorInfoJustificacion);
 
         //Sección Documentación Adicional
         H2 h2DocumentacionAdicional = new H2();
+        h2DocumentacionAdicional.setText("Documentación Adicional");
+        h2DocumentacionAdicional.setWidth("max-content");
+        getContent().add(h2DocumentacionAdicional);
+
+        FormLayout formLayout2Col5 = new FormLayout();
+        formLayout2Col5.setWidth("100%");
+        formLayout2Col5.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2));
+
+        H5 tituloSpecs = new H5();
+        tituloSpecs.setText("Especificaciones Técnicas:");
+        tituloSpecs.getStyle().set("font-size", "lumo-size-xs");
+        formLayout2Col5.add(tituloSpecs);
+
+        H5 tituloPresupuesto = new H5("Presupuesto(s)");
+        tituloPresupuesto.getStyle().set("font-size", "lumo-size-xs");
+        formLayout2Col5.add(tituloPresupuesto);
+
         MemoryBuffer bufferParaEspecificacionTecnica = new MemoryBuffer();
         Upload uploadEspecificacionTecnica = new Upload(bufferParaEspecificacionTecnica);
+        uploadEspecificacionTecnica.setWidth("max-content");
+        formLayout2Col5.add(uploadEspecificacionTecnica);
+
         MemoryBuffer bufferParaPresupuesto = new MemoryBuffer();
         Upload uploadPresupuesto = new Upload(bufferParaPresupuesto);
-        Paragraph tituloSpecs = new Paragraph();
-        Paragraph tituloPresupuesto = new Paragraph();
-        FormLayout formLayout2Col5 = new FormLayout();
-
-        h2DocumentacionAdicional.setText("Documentacion Adicional");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2DocumentacionAdicional);
-        h2DocumentacionAdicional.setWidth("max-content");
-        formLayout2Col5.setWidth("100%");
-
-        uploadEspecificacionTecnica.setWidth("max-content");
         uploadPresupuesto.setWidth("max-content");
+        formLayout2Col5.add(uploadPresupuesto);
 
-        getContent().add(separadorPrincipal);
-        getContent().add(h2DocumentacionAdicional);
+        Paragraph pInfoSpecs = new Paragraph();
+        pInfoSpecs.setText("Documentos con las especificaciones tecnológicas");
+        pInfoSpecs.getStyle().set("font-size", "lumo-size-sx");
+        formLayout2Col5.add(pInfoSpecs);
+
+        Paragraph pInfoPresupuesto = new Paragraph();
+        pInfoPresupuesto.setText("Presupuesto(s) de la(s) solución(es) aportada(s)");
+        pInfoPresupuesto.getStyle().set("font-size", "lumo-size-xs");
+        formLayout2Col5.add(pInfoPresupuesto);
+
+        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2DocumentacionAdicional);
+
         getContent().add(formLayout2Col5);
-        tituloSpecs.setText("Especificaciones Técnicas:");
-        tituloSpecs.getStyle().set("font-size", "lumo-size-l");
-        getContent().add(tituloSpecs);
-        getContent().add(uploadEspecificacionTecnica);
-        tituloPresupuesto.setText("Presupuesto(s)");
-        tituloPresupuesto.getStyle().set("font-size", "lumo-size-l");
-        getContent().add(tituloPresupuesto);
-        getContent().add(uploadPresupuesto);
+
 
         //Sección Enviar
         H2 h2Enviar = new H2();
