@@ -70,6 +70,14 @@ public class Proyecto extends AbstractEntity {
     public int getNumEmpleados() { return numEmpleados; }
     public void setNumEmpleados(int numEmpleados) { this.numEmpleados = numEmpleados; }
     public int getImportanciaPromotor() { return importanciaPromotor; }
+    public void setImportanciaPromotor(int impPromotor) { this.importanciaPromotor = impPromotor; }
+    public BigDecimal getInteresados() { return interesados; }
+    public void setInteresados(BigDecimal interes) { this.interesados = interes; }
+    public BigDecimal getFinanciacionInteresado() { return financiacionInteresado; }
+    public void setFinanciacionInteresado(BigDecimal financiacion) { this.financiacionInteresado = financiacion; }
+    public EstadoProyecto getEstado() { return estado; }
+    public void setEstado(EstadoProyecto estado) { this.estado = estado; }
+
     public int getGradoAvance() { return gradoAvance; }
     public void setGradoAvance(int gradoAvance) { this.gradoAvance = gradoAvance; }
 
