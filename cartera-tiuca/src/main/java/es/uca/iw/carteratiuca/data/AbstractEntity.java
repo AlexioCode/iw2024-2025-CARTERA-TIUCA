@@ -15,9 +15,9 @@ import java.util.UUID;
 public abstract class AbstractEntity {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgenerator")
     // The initial value is to account for data.sql demo data ids
-    @JdbcTypeCode(SqlTypes.CHAR)
+    @SequenceGenerator(name = "idgenerator", initialValue = 1000)
     private UUID id;
 
     @Version
