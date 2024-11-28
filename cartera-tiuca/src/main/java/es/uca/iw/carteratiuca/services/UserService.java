@@ -26,11 +26,13 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @Override
@@ -89,4 +91,16 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public boolean activateUser(String email, String registerCode) {
+        Optional<User> user = repository.findByEmail(email);
+
+        if (user.isPresent() && user.get().getRegisterCode().equals(registerCode)) {
+            user.get().setActive(true);
+            repository.save(user.get());
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 }

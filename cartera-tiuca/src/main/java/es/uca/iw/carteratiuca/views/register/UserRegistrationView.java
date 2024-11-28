@@ -87,18 +87,18 @@ public class UserRegistrationView extends VerticalLayout {
 
         if (binder.validate().isOk() & password.getValue().equals(password2.getValue())) {
             if (service.registerUser(binder.getBean())) {
-                status.setText("Great. Please look at your mail inbox!");
+                status.setText("Genial. Revise su bandeja de correos, por favor.");
                 status.setVisible(true);
                 binder.setBean(new User());
                 password2.setValue("");
             } else {
-                Notification.show("Please, the username is already in use");
+                Notification.show("Ese nombre de usuario ya está en uso");
 
             }
 
 
         } else {
-            Notification.show("Please, check input data");
+            Notification.show("Revise los datos introducidos, por favor.");
         }
 
     }

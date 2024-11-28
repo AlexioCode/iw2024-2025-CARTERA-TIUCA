@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -13,9 +15,9 @@ import java.util.UUID;
 public abstract class AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgenerator")
+    @GeneratedValue()
     // The initial value is to account for data.sql demo data ids
-    @SequenceGenerator(name = "idgenerator", initialValue = 1000)
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
     @Version
