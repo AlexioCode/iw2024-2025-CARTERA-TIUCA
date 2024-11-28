@@ -1,11 +1,7 @@
-package es.uca.iw.carteratiuca.data;
+package es.uca.iw.carteratiuca.entities;
 
-import java.util.Date;
-
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 

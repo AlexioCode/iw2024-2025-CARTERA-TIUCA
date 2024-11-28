@@ -1,32 +1,40 @@
-package es.uca.iw.carteratiuca.data;
+package es.uca.iw.carteratiuca.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
-import java.util.Objects;
-import java.util.UUID;
+
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Proyecto extends AbstractEntity {
+
+    @ManyToOne
+    private User solicitante;
+
     @NotEmpty
     private String titulo;
+
     @NotEmpty
     private String nombreCorto;
+
     @NotNull
     private BigDecimal coste;
+
     @Min(value = 0, message = "El número de empleados debe ser mayor de 0")
     private int numEmpleados;
+
     @NotNull
     private int importanciaPromotor;
+
     @NotNull
     private BigDecimal interesados;
+
     @NotNull
     private BigDecimal financiacionInteresado;
+
     @NotNull
     private EstadoProyecto estado;
     private int gradoAvance = 0;
@@ -37,10 +45,21 @@ public class Proyecto extends AbstractEntity {
     @Lob
     @NotNull
     private byte[] memoria;
+
     @Lob
     private byte[] especificacionesTecnicas;
+
     @Lob
     private byte[] presupuesto;
+
+
+    public User getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(User solicitante) {
+        this.solicitante = solicitante;
+    }
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -68,5 +87,4 @@ public class Proyecto extends AbstractEntity {
     public void setPresupuesto(byte[] presupuesto) {
         this.presupuesto = presupuesto;
     }
-
 }

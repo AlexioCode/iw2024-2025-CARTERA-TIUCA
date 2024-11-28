@@ -1,6 +1,6 @@
 package es.uca.iw.carteratiuca.views;
 
-import es.uca.iw.carteratiuca.data.User;
+import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;

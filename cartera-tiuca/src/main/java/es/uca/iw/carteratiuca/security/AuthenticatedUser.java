@@ -1,7 +1,7 @@
 package es.uca.iw.carteratiuca.security;
 
-import es.uca.iw.carteratiuca.data.User;
-import es.uca.iw.carteratiuca.data.UserRepository;
+import es.uca.iw.carteratiuca.entities.User;
+import es.uca.iw.carteratiuca.repositories.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;

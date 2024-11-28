@@ -1,7 +1,7 @@
 package es.uca.iw.carteratiuca.services;
 
-import es.uca.iw.carteratiuca.data.User;
-import es.uca.iw.carteratiuca.data.UserRepository;
+import es.uca.iw.carteratiuca.entities.User;
+import es.uca.iw.carteratiuca.repositories.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +17,9 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import es.uca.iw.carteratiuca.data.Role;
-import org.springframework.beans.factory.annotation.Autowired;
+import es.uca.iw.carteratiuca.entities.Role;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {

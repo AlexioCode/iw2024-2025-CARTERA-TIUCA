@@ -13,11 +13,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import java.io.Serial;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
-import es.uca.iw.carteratiuca.data.User;
+import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.services.UserService;
 
 @PageTitle("Registrar usuario")
@@ -65,7 +61,7 @@ public class UserRegistrationView extends VerticalLayout {
         password2 = new PasswordField("Repite la contraseña");
         password2.setId("password2");
 
-        register = new Button("Register");
+        register = new Button("Registrarse");
         register.setId("register");
 
         status = new H4();

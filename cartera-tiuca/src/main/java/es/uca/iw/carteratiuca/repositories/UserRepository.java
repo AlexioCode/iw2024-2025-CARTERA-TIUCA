@@ -1,6 +1,7 @@
-package es.uca.iw.carteratiuca.data;
+package es.uca.iw.carteratiuca.repositories;
 
 
+import es.uca.iw.carteratiuca.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
