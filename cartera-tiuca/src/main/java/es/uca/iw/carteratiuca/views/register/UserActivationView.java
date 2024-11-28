@@ -8,14 +8,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import es.uca.iw.carteratiuca.services.UserService;
-import es.uca.iw.carteratiuca.views.UserProyectsView;
+import es.uca.iw.carteratiuca.views.UserProjectsView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +68,7 @@ public class UserActivationView extends VerticalLayout {
 
         if (service.activateUser(email.getValue(), secretCode.getValue())) {
             status.setText("Tu cuenta ha sido activada con éxito");
-            add(new RouterLink("Log in", UserProyectsView.class));
+            add(new RouterLink("Log in", UserProjectsView.class));
 
 
         } else {
