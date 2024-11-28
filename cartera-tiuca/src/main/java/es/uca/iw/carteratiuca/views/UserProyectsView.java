@@ -66,7 +66,7 @@ public class UserProyectsView extends Composite<VerticalLayout> {
 
 
          //obtener la lista de proyectos de un usuario
-        List<Proyecto> misProyectos = service.getProyectosBySolicitante(user.get());
+        List<Proyecto> misProyectos = service.getProyectosBySolicitante(user.get().get());
 
         for(Proyecto proyecto : misProyectos) {
             titulo = proyecto.getTitulo();
@@ -78,6 +78,7 @@ public class UserProyectsView extends Composite<VerticalLayout> {
             //llevará a otra vista donde se mostrarán los otros atributos de un proyectos
             Button buttonPrimary2 = new Button("Más Detalles");
 
+            details.setSummaryText(titulo);
 
 
         }
