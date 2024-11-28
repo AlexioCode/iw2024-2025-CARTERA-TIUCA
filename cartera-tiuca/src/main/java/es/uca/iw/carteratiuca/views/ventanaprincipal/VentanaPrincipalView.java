@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.views.ventanaprincipal;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -15,6 +16,8 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import es.uca.iw.carteratiuca.views.login.LoginView;
+
+import com.vaadin.flow.component.button.Button;
 
 @PageTitle("Inicio")
 @Route("")
@@ -48,6 +51,12 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         layoutRow.add(h1);
         getContent().add(layoutColumn2);
         layoutColumn2.add(textLarge);
+
+        //boton para ir al userProyectsView, vista de los proyectos del solicitante
+        Button buttonMisProyectos = new Button("MisProyectos");
+        buttonMisProyectos.addClickListener(buttonClickEvent -> {
+            UI.getCurrent().navigate("userProjects/");});
+        getContent().add(buttonMisProyectos);
 
         // RouterLink loginLink = new RouterLink("Login", LoginView.class);
     }
