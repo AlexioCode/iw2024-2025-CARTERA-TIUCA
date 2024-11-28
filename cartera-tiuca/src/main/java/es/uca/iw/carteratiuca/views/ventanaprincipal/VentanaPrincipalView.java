@@ -15,6 +15,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import es.uca.iw.carteratiuca.entities.User;
+import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.views.login.LoginView;
 
 import com.vaadin.flow.component.button.Button;
@@ -52,12 +54,17 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         getContent().add(layoutColumn2);
         layoutColumn2.add(textLarge);
 
-        //boton para ir al userProyectsView, vista de los proyectos del solicitante
-        Button buttonMisProyectos = new Button("MisProyectos");
-        buttonMisProyectos.addClickListener(buttonClickEvent -> {
-            UI.getCurrent().navigate("userProjects/");});
-        getContent().add(buttonMisProyectos);
+        //boton para ir al userProyectsView, vista de los proyectos del solicitante / admin
+        if(getId().isPresent()) {
 
+            Button buttonMisProyectos = new Button("MisProyectos");
+            AuthenticatedUser user;
+            //COMPROBAR QUE EL ROL DEL USUARIO QUE HA INICIADO SESIÓN TIENE EL ROL ADMIN O SOLICITANTE
+            buttonMisProyectos.addClickListener(buttonClickEvent -> {
+                UI.getCurrent().navigate("userProjects/");
+            });
+            getContent().add(buttonMisProyectos);
+        }
         // RouterLink loginLink = new RouterLink("Login", LoginView.class);
     }
 }
