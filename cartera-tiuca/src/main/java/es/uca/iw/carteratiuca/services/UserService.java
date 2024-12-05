@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional // Ejecución como transacción (atómica)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = repository.findByUsername(username);
         if (!user.isPresent()) {
