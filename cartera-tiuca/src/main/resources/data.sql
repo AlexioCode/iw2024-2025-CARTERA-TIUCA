@@ -13,10 +13,5 @@ values ('40960360-a730-4cfe-8776-ced6192e8398', 'ADMIN');
 INSERT INTO `proyecto` (`coste`, `estado`, `financiacion_interesado`, `grado_avance`, `importancia_promotor`,
                         `interesados`, `num_empleados`, `version`, `id`, `justificacion_id`, `solicitante_id`,
                         `nombre_corto`, `titulo`, `especificaciones_tecnicas`, `presupuesto`)
-VALUES ('50000', '1', '10000', '0', '10', '10000', '2', '1', 'b29369ea-b33a-11ef-baa2-00ffcf6a3272', NULL, NULL,
-        'awebo', 'illo no vea lo ke paza', NULL, NULL);
-INSERT INTO `proyecto` (`coste`, `estado`, `financiacion_interesado`, `grado_avance`, `importancia_promotor`,
-                        `interesados`, `num_empleados`, `version`, `id`, `justificacion_id`, `solicitante_id`,
-                        `nombre_corto`, `titulo`, `especificaciones_tecnicas`, `presupuesto`)
 VALUES ('50000', '1', '10000', '0', '10', '10000', '2', '1', '1db86b5b-b33b-11ef-baa2-00ffcf6a3272', NULL,
         '01f6e929-98d7-431a-9ded-c121ff299676', 'asdasda', 'asdasdas', NULL, NULL);
