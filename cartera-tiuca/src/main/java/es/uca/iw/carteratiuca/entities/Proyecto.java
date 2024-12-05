@@ -37,7 +37,7 @@ public class Proyecto extends AbstractEntity {
 
     @NotNull
     private EstadoProyecto estado;
-    private int gradoAvance = 0;
+    private Integer gradoAvance = 0;
 
     @OneToOne
     private JustificacionProyecto justificacion;
@@ -78,7 +78,7 @@ public class Proyecto extends AbstractEntity {
     public EstadoProyecto getEstado() { return estado; }
     public void setEstado(EstadoProyecto estado) { this.estado = estado; }
 
-    public int getGradoAvance() { return gradoAvance; }
+    public Integer getGradoAvance() { return gradoAvance; }
     public void setGradoAvance(int gradoAvance) { this.gradoAvance = gradoAvance; }
 
     public byte[] getMemoria() { return memoria; }
