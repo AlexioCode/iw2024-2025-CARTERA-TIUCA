@@ -11,8 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLink;
 import es.uca.iw.carteratiuca.services.UserService;
-import es.uca.iw.carteratiuca.views.UserProjectsView;
-import jakarta.validation.constraints.Size;
+import es.uca.iw.carteratiuca.views.projects.UserProjectsView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
