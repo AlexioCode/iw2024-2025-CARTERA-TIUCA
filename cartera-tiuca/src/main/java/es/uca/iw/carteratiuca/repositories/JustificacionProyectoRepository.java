@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.UUID;
 
-public interface JustificacionProyectoRepository extends JpaRepository<JustificacionProyecto, UUID>, JpaSpecificationExecutor<User> {
+public interface JustificacionProyectoRepository extends JpaRepository<JustificacionProyecto, UUID>, JpaSpecificationExecutor<JustificacionProyecto> {
 
 }

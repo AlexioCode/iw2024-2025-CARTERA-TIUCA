@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 import java.util.UUID;
 
-public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSpecificationExecutor<User> {
+public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSpecificationExecutor<Proyecto> {
     Proyecto findByTitulo(String titulo);
     List<Proyecto> findBySolicitante(User solicitante); // or UUID solicitante;
 }
