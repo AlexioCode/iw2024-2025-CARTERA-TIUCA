@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @Service
 public class EmailService {
-/*
+
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
@@ -52,11 +52,10 @@ public class EmailService {
 
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 
-        String subject = "Welcome";
-        String body = "You should active your account. "
-                + "Go to " + getServerUrl() + "useractivation "
-                + "and introduce your mail and the following code: "
-                + user.getRegisterCode();
+        String subject = "Bienvenido a CarteraTIUCA";
+        String body = "Para activar tu cuenta de usuario, dirígete a la página " + getServerUrl()
+                    + "activate e introduce tu correo y el siguiente código: "
+                    + user.getRegisterCode();
 
         try {
             helper.setFrom(defaultMail);
@@ -71,5 +70,5 @@ public class EmailService {
 
         return true;
     }
-*/
+
 }

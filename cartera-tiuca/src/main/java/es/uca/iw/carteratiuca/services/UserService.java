@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
 
         try {
             repository.save(user);
-            // emailService.sendRegistrationEmail(user);
+            emailService.sendRegistrationEmail(user);
             return true;
         } catch (DataIntegrityViolationException e) {
             return false;
