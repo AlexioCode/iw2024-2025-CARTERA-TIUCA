@@ -1,4 +1,4 @@
-package es.uca.iw.carteratiuca.views;
+package es.uca.iw.carteratiuca.views.projects;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
