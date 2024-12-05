@@ -12,6 +12,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RouterLink;
 import es.uca.iw.carteratiuca.services.UserService;
 import es.uca.iw.carteratiuca.views.UserProjectsView;
+import jakarta.validation.constraints.Size;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +42,9 @@ public class UserActivationView extends VerticalLayout {
         email = new TextField("Correo electrónico");
         email.setId("email");
 
-        secretCode = new TextField("Código secreto de activación");
+        secretCode = new TextField("Código de activación");
         secretCode.setId("secretCode");
+        secretCode.setMaxLength(5);
 
         status = new H4();
         status.setId("status");
