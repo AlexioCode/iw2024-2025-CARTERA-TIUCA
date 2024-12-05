@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serial;
 
 @PageTitle("Activación de usuario")
-@Route(value = "activate")
+@Route(value = "activate", autoLayout = false)
 @Component // Required for unit testing
 @Scope("prototype") // Required for IT testing
 //@RouteAlias("")
