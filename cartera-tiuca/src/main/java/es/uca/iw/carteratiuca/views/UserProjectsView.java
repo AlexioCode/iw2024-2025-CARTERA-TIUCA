@@ -51,6 +51,8 @@ public class UserProjectsView extends Composite<VerticalLayout> {
             estado = proyecto.getEstado();
             gradoAvance = proyecto.getGradoAvance();
 
+
+
             //llevará a otra vista donde se mostrarán los otros atributos de un proyectos
             Button buttonPrimary2 = new Button("Más Detalles");
 
