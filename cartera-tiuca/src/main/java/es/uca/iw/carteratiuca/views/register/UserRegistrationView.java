@@ -58,6 +58,7 @@ public class UserRegistrationView extends VerticalLayout {
         password = new PasswordField("Contraseña");
         password.setId("password");
         password.setMinLength(8);
+        password.setErrorMessage("La contraseña debe tener al menos 8 caracteres.");
 
         password2 = new PasswordField("Repite la contraseña");
         password2.setId("password2");

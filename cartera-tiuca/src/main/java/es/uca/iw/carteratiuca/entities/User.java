@@ -11,6 +11,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +36,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     @JsonIgnore
     @NotEmpty
+    @Size(min = 8)
     private String password;
 
     private String registerCode = "";

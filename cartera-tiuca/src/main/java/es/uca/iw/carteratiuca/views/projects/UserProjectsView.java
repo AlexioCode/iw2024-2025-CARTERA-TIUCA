@@ -19,7 +19,7 @@ import jakarta.annotation.security.PermitAll;
 import java.util.List;
 
 @PageTitle("Mis proyectos")
-@Route(value = "userProjects")
+@Route(value = "user-projects")
 @PermitAll
 public class UserProjectsView extends Composite<VerticalLayout> {
 
@@ -34,16 +34,13 @@ public class UserProjectsView extends Composite<VerticalLayout> {
         h3.setWidth("max-content");
         getContent().add(h3);
 
-
-        //obtener la lista de proyectos de un usuario
+        // Obtener la lista de proyectos de un usuario
         List<Proyecto> misProyectos = service.getProyectosBySolicitante(user.get().get());
 
         for (Proyecto proyecto : misProyectos) {
 
-
             VerticalLayout infoProyecto = new VerticalLayout();
             HorizontalLayout horNombreCorto = new HorizontalLayout();
-
 
             H5 h5nombreCorto = new H5("Nombre Corto: ");
             Span nombreCorto = new Span(proyecto.getNombreCorto());
@@ -61,7 +58,7 @@ public class UserProjectsView extends Composite<VerticalLayout> {
             infoProyecto.add(horEstado);
 
             H5 h5gradoAvance = new H5("Grado de avance: ");
-            Span gradoAvance = new Span(proyecto.getGradoAvance().toString());
+            Span gradoAvance = new Span(proyecto.getGradoAvance().toString() + "%");
             HorizontalLayout horGradoAvance = new HorizontalLayout(h5gradoAvance, gradoAvance);
             infoProyecto.add(horGradoAvance);
 
