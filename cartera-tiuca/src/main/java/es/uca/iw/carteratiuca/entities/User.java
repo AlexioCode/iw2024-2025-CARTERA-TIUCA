@@ -83,6 +83,7 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @Override
+    // Metodo de Spring para comprobar si el usuario tiene acceso al sitio
     public boolean isEnabled() {
         return active;
     }
