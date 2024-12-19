@@ -31,7 +31,7 @@ import java.util.List;
 
 @PageTitle("Enviar Solicitud")
 @Route("enviar-solicitud")
-@Menu(order = 1, icon = "line-awesome/svg/mail-bulk-solid.svg")
+@Menu(order = 2, icon = "line-awesome/svg/mail-bulk-solid.svg")
 @PermitAll
 public class EnviarSolicitudView extends Composite<VerticalLayout> {
 

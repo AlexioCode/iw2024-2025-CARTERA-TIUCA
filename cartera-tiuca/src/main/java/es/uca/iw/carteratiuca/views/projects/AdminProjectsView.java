@@ -7,15 +7,20 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
 
-@PageTitle("Mis proyectos administrador")
-@Route(value = "admin-projects")
+
+@PermitAll
+@Route("Detalle")
+@Menu(order = 1, icon = "line-awesome/svg/folder-open.svg")
 @RolesAllowed("ADMIN")
 public class AdminProjectsView extends Composite<VerticalLayout> {
 
