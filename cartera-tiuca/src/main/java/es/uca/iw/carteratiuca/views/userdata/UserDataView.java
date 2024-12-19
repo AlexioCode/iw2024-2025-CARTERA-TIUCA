@@ -13,7 +13,6 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.User;
@@ -21,11 +20,11 @@ import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 @PageTitle("Datos de usuario")
 @Route(value = "user-data")
-@Menu(order = 3, icon = "line-awesome/svg/folder-open.svg")
 @PermitAll
 public class UserDataView extends VerticalLayout {
 
@@ -75,6 +74,7 @@ public class UserDataView extends VerticalLayout {
         discardChangesButton.setId("cancel");
         discardChangesButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
+
         // Vinculación de campos del formulario
         binder = new BeanValidationBinder<>(User.class);
         binder.bindInstanceFields(this);
@@ -84,6 +84,7 @@ public class UserDataView extends VerticalLayout {
         User currentUser = user.get().get();
         binder.setBean(currentUser);
 
+
         // Layout para los botones
         HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton);
 
@@ -92,17 +93,15 @@ public class UserDataView extends VerticalLayout {
         // Subir foto de perfil
         MemoryBuffer buffer = new MemoryBuffer();
         Upload uploadProfilePicture = new Upload(buffer);
-        uploadProfilePicture.setWidth("max-content");
         uploadProfilePicture.addSucceededListener(event -> {
-            String fileName = event.getFileName();
-            InputStream inputStream = buffer.getInputStream();
-
-            // Do something with the file data
-            // processFile(inputStream, fileName);
+            try {
+                // Read the data from the buffer.
+                InputStream fileData = buffer.getInputStream();
+                currentUser.setProfilePicture(fileData.readAllBytes());
+            } catch(IOException e) { Notification.show("Error al subir la foto de perfil"); }
         });
+        uploadProfilePicture.setWidth("max-content");
         add(uploadProfilePicture);
-
-
 
         // Listeners para los botones
         submitButton.addClickListener(e -> onSubmitButtonClick(currentUser));
