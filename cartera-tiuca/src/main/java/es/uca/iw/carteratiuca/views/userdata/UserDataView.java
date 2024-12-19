@@ -9,6 +9,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
+import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -16,6 +19,8 @@ import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
+
+import java.io.InputStream;
 
 @PageTitle("Datos de usuario")
 @Route(value = "user-data")
@@ -32,6 +37,7 @@ public class UserDataView extends VerticalLayout {
     private final PasswordField password2;
     private final Button submitButton;
     private final Button discardChangesButton;
+
 
     private final BeanValidationBinder<User> binder;
 
@@ -80,6 +86,21 @@ public class UserDataView extends VerticalLayout {
         HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton);
 
         add(title, username, email, unit, password, password2, buttonsLayout);
+
+        // Subir foto de perfil
+        MemoryBuffer buffer = new MemoryBuffer();
+        Upload uploadProfilePicture = new Upload(buffer);
+        uploadProfilePicture.setWidth("max-content");
+        uploadProfilePicture.addSucceededListener(event -> {
+            String fileName = event.getFileName();
+            InputStream inputStream = buffer.getInputStream();
+
+            // Do something with the file data
+            // processFile(inputStream, fileName);
+        });
+        add(uploadProfilePicture);
+
+
 
         // Listeners para los botones
         submitButton.addClickListener(e -> onSubmitButtonClick(currentUser));
