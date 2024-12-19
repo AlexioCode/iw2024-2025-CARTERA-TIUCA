@@ -13,6 +13,7 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.User;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 
 @PageTitle("Datos de usuario")
 @Route(value = "user-data")
+@Menu(order = 3, icon = "line-awesome/svg/folder-open.svg")
 @PermitAll
 public class UserDataView extends VerticalLayout {
 
