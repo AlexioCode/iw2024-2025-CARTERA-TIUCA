@@ -35,6 +35,7 @@ public class DetailsProjectView extends Composite<VerticalLayout> {
         getContent().add(new H3("Presupuesto: "));
         getContent().add(new H3("Estado: " + proyecto.getEstado()));
         getContent().add(new H3("Grado de avance: " + proyecto.getGradoAvance()));
+
     }
 
 }

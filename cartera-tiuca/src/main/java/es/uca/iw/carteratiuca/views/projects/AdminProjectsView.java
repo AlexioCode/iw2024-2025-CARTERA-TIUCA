@@ -1,18 +1,22 @@
 package es.uca.iw.carteratiuca.views.projects;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.renderer.NativeButtonRenderer;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
 
-
-@PermitAll
-@Route("Detalle")
+@PageTitle("Mis proyectos administrador")
+@Route(value = "admin-projects")
+@RolesAllowed("ADMIN")
 public class AdminProjectsView extends Composite<VerticalLayout> {
 
     private final ProyectoService service;
@@ -28,9 +32,30 @@ public class AdminProjectsView extends Composite<VerticalLayout> {
 
 
         //recibir todos los proyectos
-        List<Proyecto> allProjects = service.getProyectos();
+        List<Proyecto> allProjects = service.getProyectosSinArchivar();
 
-        
+        Grid<Proyecto> projectGrid = new Grid<>();
+        getContent().getStyle().set("flex-grow", "1");
+        projectGrid.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
+        projectGrid.addColumn(Proyecto::getNombreCorto).setHeader("Nombre Corto").setSortable(true);
+        projectGrid.addColumn(Proyecto::getCoste).setHeader("Coste").setSortable(true);
+        projectGrid.addColumn(Proyecto::getEstado).setHeader("Estado").setSortable(true);
+        projectGrid.addColumn(Proyecto::getGradoAvance).setHeader("Grado Avance").setSortable(true);
+
+        projectGrid.addColumn(new NativeButtonRenderer<>("Detalles",
+                event -> {
+                    UI.getCurrent().navigate(DetailsProjectView.class).
+                            ifPresent(detalle -> detalle.editProject(event));
+                }));
+
+        setGridData(projectGrid);
+        getContent().add(projectGrid);
+
+
+    }
+
+    private void setGridData(Grid grid) {
+        grid.setItems(service.getProyectos());
     }
 
 }

@@ -58,7 +58,7 @@ public class UserProjectsView extends Composite<VerticalLayout> {
             infoProyecto.add(horEstado);
 
             H5 h5gradoAvance = new H5("Grado de avance: ");
-            Span gradoAvance = new Span(proyecto.getGradoAvance().toString() + "%");
+            Span gradoAvance = new Span(proyecto.getGradoAvance() + "%");
             HorizontalLayout horGradoAvance = new HorizontalLayout(h5gradoAvance, gradoAvance);
             infoProyecto.add(horGradoAvance);
 

@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.repositories;
 
 
+import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,6 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSp
     Proyecto findByTitulo(String titulo);
 
     List<Proyecto> findBySolicitante(User solicitante); // or UUID solicitante;
-    
+
+    List<Proyecto> findByEstado(EstadoProyecto estado);
 }
