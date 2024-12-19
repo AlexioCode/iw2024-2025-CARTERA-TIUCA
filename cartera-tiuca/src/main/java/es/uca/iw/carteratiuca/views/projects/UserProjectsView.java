@@ -23,10 +23,10 @@ import java.util.List;
 @PermitAll
 public class UserProjectsView extends Composite<VerticalLayout> {
 
-    private ProyectoService service;
+    private final ProyectoService service;
 
-    public UserProjectsView(AuthenticatedUser user, ProyectoService service) {
-
+    public UserProjectsView(AuthenticatedUser user, ProyectoService servicioProyecto) {
+        service = servicioProyecto;
         H3 h3 = new H3();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
