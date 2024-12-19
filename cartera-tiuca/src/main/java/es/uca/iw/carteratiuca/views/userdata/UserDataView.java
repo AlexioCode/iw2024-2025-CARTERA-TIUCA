@@ -36,9 +36,8 @@ public class UserDataView extends VerticalLayout {
     private final TextField unit;
     private final PasswordField password;
     private final PasswordField password2;
-    private final Button submitButton;
     private final Button discardChangesButton;
-
+    private final Button submitButton;
 
     private final BeanValidationBinder<User> binder;
 
@@ -66,13 +65,13 @@ public class UserDataView extends VerticalLayout {
         password2.setMinLength(8);
         password.setErrorMessage("La contraseña debe tener al menos 8 caracteres.");
 
-        submitButton = new Button("Guardar cambios");
-        submitButton.setId("submit");
-        submitButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-
         discardChangesButton = new Button("Cancelar");
         discardChangesButton.setId("cancel");
-        discardChangesButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        discardChangesButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+
+        submitButton = new Button("Guardar cambios");
+        submitButton.setId("submit");
+        submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE, ButtonVariant.LUMO_SUCCESS);
 
 
         // Vinculación de campos del formulario
@@ -85,10 +84,7 @@ public class UserDataView extends VerticalLayout {
         binder.setBean(currentUser);
 
 
-        // Layout para los botones
-        HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton);
-
-        add(title, username, email, unit, password, password2, buttonsLayout);
+        add(title, username, email, unit, password, password2);
 
         // Subir foto de perfil
         MemoryBuffer buffer = new MemoryBuffer();
@@ -102,6 +98,11 @@ public class UserDataView extends VerticalLayout {
         });
         uploadProfilePicture.setWidth("max-content");
         add(uploadProfilePicture);
+
+
+        // Layout para los botones
+        HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton);
+        add(buttonsLayout);
 
         // Listeners para los botones
         submitButton.addClickListener(e -> onSubmitButtonClick(currentUser));
