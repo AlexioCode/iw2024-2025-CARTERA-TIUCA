@@ -2,6 +2,7 @@ package es.uca.iw.carteratiuca.views.userdata;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -40,6 +41,7 @@ public class UserDataView extends VerticalLayout {
     private final PasswordField password2;
     private final Button discardChangesButton;
     private final Button submitButton;
+    private final Button deleteAccountButton;
 
     private final BeanValidationBinder<User> binder;
 
@@ -69,12 +71,15 @@ public class UserDataView extends VerticalLayout {
 
         discardChangesButton = new Button("Cancelar");
         discardChangesButton.setId("cancel");
-        discardChangesButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+        discardChangesButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE, ButtonVariant.LUMO_ERROR);
 
         submitButton = new Button("Guardar cambios");
         submitButton.setId("submit");
-        submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE, ButtonVariant.LUMO_SUCCESS);
+        submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
 
+        deleteAccountButton = new Button("Eliminar cuenta");
+        deleteAccountButton.setId("delete");
+        deleteAccountButton.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_WARNING);
 
         // Vinculación de campos del formulario
         binder = new BeanValidationBinder<>(User.class);
@@ -103,12 +108,13 @@ public class UserDataView extends VerticalLayout {
 
 
         // Layout para los botones
-        HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton);
+        HorizontalLayout buttonsLayout = new HorizontalLayout(discardChangesButton, submitButton, deleteAccountButton);
         add(buttonsLayout);
 
         // Listeners para los botones
         submitButton.addClickListener(e -> onSubmitButtonClick(currentUser));
         discardChangesButton.addClickListener(e -> onDiscardChangesButtonClick(currentUser));
+        deleteAccountButton.addClickListener(e -> onDeleteAccountButton(currentUser));
     }
 
     private void onSubmitButtonClick(User user) {
@@ -136,5 +142,37 @@ public class UserDataView extends VerticalLayout {
         password2.clear();
 
         Notification.show("Cambios descartados.");
+    }
+
+    private void onDeleteAccountButton(User user) {
+        /*
+        Span status = new Span();
+
+        status.setVisible(false);
+
+        ConfirmDialog dialog = new ConfirmDialog();
+        dialog.setHeader("Unsaved changes");
+        dialog.setText(
+                "There are unsaved changes. Do you want to discard or save them?");
+
+        dialog.setCancelable(true);
+        dialog.addCancelListener(event -> setStatus("Canceled"));
+
+        dialog.setRejectable(true);
+        dialog.setRejectText("Discard");
+        dialog.addRejectListener(event -> setStatus("Discarded"));
+
+        dialog.setConfirmText("Save");
+        dialog.addConfirmListener(event -> setStatus("Saved"));
+
+        Button button = new Button("Open confirm dialog");
+        button.addClickListener(event -> {
+            dialog.open();
+            status.setVisible(false);
+        });
+
+
+        */
+        // service.delete(user.getId());
     }
 }
