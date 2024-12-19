@@ -2,16 +2,14 @@ package es.uca.iw.carteratiuca.views.projects;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -19,7 +17,7 @@ import java.util.List;
 
 
 @PermitAll
-@Route("Detalle")
+@Route("admin-projects")
 @Menu(order = 1, icon = "line-awesome/svg/folder-open.svg")
 @RolesAllowed("ADMIN")
 public class AdminProjectsView extends Composite<VerticalLayout> {
@@ -47,11 +45,14 @@ public class AdminProjectsView extends Composite<VerticalLayout> {
         projectGrid.addColumn(Proyecto::getEstado).setHeader("Estado").setSortable(true);
         projectGrid.addColumn(Proyecto::getGradoAvance).setHeader("Grado Avance").setSortable(true);
 
-        projectGrid.addColumn(new NativeButtonRenderer<>("Detalles",
-                event -> {
-                    UI.getCurrent().navigate(DetailsProjectView.class).
-                            ifPresent(detalle -> detalle.editProject(event));
-                }));
+        projectGrid.addComponentColumn(proyecto -> {
+            Button botonDetalles = new Button("Detalles", event -> {
+                UI.getCurrent().navigate(DetailsProjectView.class).
+                        ifPresent(detalle -> detalle.editProject(proyecto));
+            });
+            return botonDetalles;
+        });
+
 
         setGridData(projectGrid);
         getContent().add(projectGrid);
