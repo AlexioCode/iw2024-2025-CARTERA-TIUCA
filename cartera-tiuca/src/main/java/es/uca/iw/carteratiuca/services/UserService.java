@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    @Transactional // Ejecución como transacción (atómica)
+    @Transactional // Ejecución como transacción (de forma atómica)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = repository.findByUsername(username);
         if (!user.isPresent()) {
@@ -57,8 +57,12 @@ public class UserService implements UserDetailsService {
         return repository.findById(id);
     }
 
-    public User update(User entity) {
-        return repository.save(entity);
+    public User update(User user) {
+        // Si la contraseña no está vacía, cifrarla antes de guardar
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return repository.save(user);
     }
 
     public void delete(UUID id) {

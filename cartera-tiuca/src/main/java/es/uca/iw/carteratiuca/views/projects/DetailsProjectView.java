@@ -4,14 +4,16 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
 
 
+@PageTitle("Mis proyectos")
+@Route("proyecto-detalle")
 @PermitAll
-@Route("Detalle")
 public class DetailsProjectView extends Composite<VerticalLayout> {
 
     private ProyectoService service;
