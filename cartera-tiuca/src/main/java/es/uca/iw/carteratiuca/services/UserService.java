@@ -1,25 +1,26 @@
 package es.uca.iw.carteratiuca.services;
 
+import es.uca.iw.carteratiuca.entities.Role;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.repositories.UserRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import es.uca.iw.carteratiuca.entities.Role;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -35,6 +36,12 @@ public class UserService implements UserDetailsService {
         this.emailService = emailService;
     }
 
+    private static List<GrantedAuthority> getAuthorities(User user) {
+        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());
+
+    }
+
     @Override
     @Transactional // Ejecución como transacción (de forma atómica)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,12 +52,6 @@ public class UserService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),
                     getAuthorities(user.get()));
         }
-    }
-
-    private static List<GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());
-
     }
 
     public Optional<User> get(UUID id) {
@@ -106,5 +107,9 @@ public class UserService implements UserDetailsService {
         } else {
             return false;
         }
+    }
+
+    public List<User> getActiveUsers() {
+        return repository.findByActiveIsTrue();
     }
 }
