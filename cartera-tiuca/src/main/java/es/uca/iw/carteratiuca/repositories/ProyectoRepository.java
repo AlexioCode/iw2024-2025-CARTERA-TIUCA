@@ -11,5 +11,7 @@ import java.util.UUID;
 
 public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSpecificationExecutor<Proyecto> {
     Proyecto findByTitulo(String titulo);
+
     List<Proyecto> findBySolicitante(User solicitante); // or UUID solicitante;
+    
 }
