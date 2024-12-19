@@ -34,6 +34,8 @@ public class User extends AbstractEntity implements UserDetails {
     @NotEmpty
     private String unit;
 
+    private String cargo;
+
     @JsonIgnore
     @NotEmpty
     @Size(min = 8)
@@ -61,6 +63,8 @@ public class User extends AbstractEntity implements UserDetails {
     public void setEmail(String email) { this.email = email; }
     public String getUnit() { return unit; }
     public void setUnit(String unit) { this.unit = unit; }
+    public String getCargo() {return cargo;}
+    public void setCargo(String cargo) {this.cargo = cargo;}
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     public Set<Role> getRoles() { return roles; }
