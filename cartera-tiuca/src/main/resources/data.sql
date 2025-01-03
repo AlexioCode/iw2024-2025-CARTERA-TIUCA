@@ -10,6 +10,12 @@ insert into user_roles (user_id, roles)
 values ('40960360-a730-4cfe-8776-ced6192e8398', 'USER');
 insert into user_roles (user_id, roles)
 values ('40960360-a730-4cfe-8776-ced6192e8398', 'ADMIN');
+insert into user_roles (user_id, roles)
+values ('40960360-a730-4cfe-8776-ced6192e8398', 'PROMOTOR');
+insert into user_roles (user_id, roles)
+values ('40960360-a730-4cfe-8776-ced6192e8398', 'CIO');
+insert into user_roles (user_id, roles)
+values ('40960360-a730-4cfe-8776-ced6192e8398', 'OTP');
 INSERT INTO `proyecto` (`coste`, `estado`, `financiacion_interesado`, `grado_avance`, `importancia_promotor`,
                         `interesados`, `num_empleados`, `version`, `id`, `justificacion_id`, `solicitante_id`,
                         `nombre_corto`, `titulo`, `especificaciones_tecnicas`, `presupuesto`)

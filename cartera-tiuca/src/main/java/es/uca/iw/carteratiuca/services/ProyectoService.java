@@ -59,4 +59,8 @@ public class ProyectoService {
             justificacionProyectoRepository.deleteById(proyecto.getJustificacion().getId());
         proyectoRepository.deleteById(id);
     }
+
+    public List<Proyecto> getProyectosDePromotor(User user) {
+        return proyectoRepository.findByPromotor(user);
+    }
 }
