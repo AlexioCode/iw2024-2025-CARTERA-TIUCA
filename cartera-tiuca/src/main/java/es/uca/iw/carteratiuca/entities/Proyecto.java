@@ -1,12 +1,14 @@
 package es.uca.iw.carteratiuca.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-
-import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Proyecto extends AbstractEntity {
@@ -18,7 +20,6 @@ public class Proyecto extends AbstractEntity {
     private JustificacionProyecto justificacion;
 
     @ManyToOne
-    @NotNull
     private User promotor;
 
     @NotEmpty
@@ -37,7 +38,7 @@ public class Proyecto extends AbstractEntity {
     private int importanciaPromotor;
 
     @NotNull
-    private BigDecimal interesados;
+    private String interesados;
 
     @NotNull
     private BigDecimal financiacionInteresado;
@@ -61,44 +62,111 @@ public class Proyecto extends AbstractEntity {
     public User getSolicitante() {
         return solicitante;
     }
+
     public void setSolicitante(User solicitante) {
         this.solicitante = solicitante;
     }
 
-    public JustificacionProyecto getJustificacion() { return justificacion; }
-    public void setJustificacion(JustificacionProyecto justificacion) { justificacion = justificacion; }
+    public JustificacionProyecto getJustificacion() {
+        return justificacion;
+    }
 
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
-    public String getNombreCorto() { return nombreCorto; }
-    public void setNombreCorto(String nombreCorto) { this.nombreCorto = nombreCorto; }
-    public BigDecimal getCoste() { return coste; }
-    public void setCoste(BigDecimal coste) { this.coste = coste; }
-    public int getNumEmpleados() { return numEmpleados; }
-    public void setNumEmpleados(int numEmpleados) { this.numEmpleados = numEmpleados; }
-    public int getImportanciaPromotor() { return importanciaPromotor; }
-    public void setImportanciaPromotor(int impPromotor) { this.importanciaPromotor = impPromotor; }
-    public BigDecimal getInteresados() { return interesados; }
-    public void setInteresados(BigDecimal interes) { this.interesados = interes; }
-    public BigDecimal getFinanciacionInteresado() { return financiacionInteresado; }
-    public void setFinanciacionInteresado(BigDecimal financiacion) { this.financiacionInteresado = financiacion; }
-    public EstadoProyecto getEstado() { return estado; }
-    public void setEstado(EstadoProyecto estado) { this.estado = estado; }
+    public void setJustificacion(JustificacionProyecto justificacion) {
+        justificacion = justificacion;
+    }
 
-    public Integer getGradoAvance() { return gradoAvance; }
-    public void setGradoAvance(int gradoAvance) { this.gradoAvance = gradoAvance; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    public byte[] getMemoria() { return memoria; }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
+    }
+
+    public BigDecimal getCoste() {
+        return coste;
+    }
+
+    public void setCoste(BigDecimal coste) {
+        this.coste = coste;
+    }
+
+    public int getNumEmpleados() {
+        return numEmpleados;
+    }
+
+    public void setNumEmpleados(int numEmpleados) {
+        this.numEmpleados = numEmpleados;
+    }
+
+    public int getImportanciaPromotor() {
+        return importanciaPromotor;
+    }
+
+    public void setImportanciaPromotor(int impPromotor) {
+        this.importanciaPromotor = impPromotor;
+    }
+
+    public String getInteresados() {
+        return interesados;
+    }
+
+    public void setInteresados(String interes) {
+        this.interesados = interes;
+    }
+
+    public BigDecimal getFinanciacionInteresado() {
+        return financiacionInteresado;
+    }
+
+    public void setFinanciacionInteresado(BigDecimal financiacion) {
+        this.financiacionInteresado = financiacion;
+    }
+
+    public EstadoProyecto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoProyecto estado) {
+        this.estado = estado;
+    }
+
+    public Integer getGradoAvance() {
+        return gradoAvance;
+    }
+
+    public void setGradoAvance(int gradoAvance) {
+        this.gradoAvance = gradoAvance;
+    }
+
+    public byte[] getMemoria() {
+        return memoria;
+    }
+
     public void setMemoria(byte[] memoria) {
         this.memoria = memoria;
     }
+
     public byte[] getEspecificacionesTecnicas() {
         return especificacionesTecnicas;
     }
+
     public void setEspecificacionesTecnicas(byte[] especificacionesTecnicas) {
         this.especificacionesTecnicas = especificacionesTecnicas;
     }
-    public byte[] getPresupuesto() { return presupuesto; }
+
+    public byte[] getPresupuesto() {
+        return presupuesto;
+    }
+
     public void setPresupuesto(byte[] presupuesto) {
         this.presupuesto = presupuesto;
     }

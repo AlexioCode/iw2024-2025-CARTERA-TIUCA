@@ -12,8 +12,7 @@ import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
@@ -26,9 +25,7 @@ import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.MaxValidatorForBigDecimal;
 
 @PageTitle("Enviar Solicitud")
 @Route("enviar-solicitud")
@@ -42,10 +39,11 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
 
     private final H4 status;
+    private final MaxValidatorForBigDecimal maxValidatorForBigDecimal;
 
     Proyecto proyecto = new Proyecto();
 
-    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user) {
+    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user, MaxValidatorForBigDecimal maxValidatorForBigDecimal) {
         this.proyectoService = service;
 
         //Comun a la vista
@@ -80,13 +78,13 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col.add(uploadCargarMemoria);
         getContent().add(separadorPrincipal);
 
-       //no hace falta las opciones de solicitante
+        //no hace falta las opciones de solicitante
 
         //Seccion Promotor
         H2 h2SeccionPromotor = new H2();
         FormLayout formLayout2Col2 = new FormLayout();
         ComboBox cmbPromotor = new ComboBox();
-        ComboBox cmbImportanciaPromotor = new ComboBox();
+        ComboBox<Integer> cmbImportanciaPromotor = new ComboBox();
         Hr separadorInfoPromotor = new Hr();
 
         Paragraph pInfoPromotor = new Paragraph();
@@ -105,14 +103,14 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col2.setWidth("100%");
         cmbPromotor.setLabel("Promotor");
         cmbPromotor.setWidth("min-content");
-        setComboBoxSampleData(cmbPromotor);
+        //setComboBoxSampleData(cmbPromotor);
         cmbImportanciaPromotor.setLabel("Importancia (0 - 5)");
         cmbImportanciaPromotor.setWidth("min-content");
-        setComboBoxSampleData(cmbImportanciaPromotor);
+        cmbImportanciaPromotor.setItems(1, 2, 3, 4, 5);
 
         getContent().add(h2SeccionPromotor);
         getContent().add(formLayout2Col2);
-        formLayout2Col2.add(cmbPromotor);
+        //formLayout2Col2.add(cmbPromotor);
         formLayout2Col2.add(cmbImportanciaPromotor);
         formLayout2Col2.add(pInfoPromotor);
         formLayout2Col2.add(pInfoImportancia);
@@ -122,7 +120,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         H2 h2InfoInteresados = new H2();
         FormLayout formLayout2Col3 = new FormLayout();
         TextField tfInteresados = new TextField();
-        TextField tfFinanciacion = new TextField();
+        BigDecimalField tfFinanciacion = new BigDecimalField();
         Hr separadorInfoInteresados = new Hr();
 
         Paragraph pInfoFinanciacion = new Paragraph();
@@ -264,15 +262,23 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         binderProyecto.forField(tfTituloProyecto).bind(Proyecto::getTitulo, Proyecto::setTitulo);
         binderProyecto.forField(tfNombreCorto).bind(Proyecto::getNombreCorto, Proyecto::setNombreCorto);
 
+        //importancia promotor
+
+        proyecto.setImportanciaPromotor(cmbImportanciaPromotor.getValue());
+
+        binderProyecto.forField(tfInteresados).bind(Proyecto::getInteresados, Proyecto::setInteresados);
+
+        //financiacion
+
+        binderProyecto.forField(tfFinanciacion).bind(Proyecto::getFinanciacionInteresado, Proyecto::setFinanciacionInteresado);
+
         binderProyecto.setBean(proyecto);
         proyecto.setSolicitante(user.get().get());
+
 
         //binder para guardar una justificación proyecto en la BD
 
         binderJustificacion = new BeanValidationBinder<>(JustificacionProyecto.class);
-
-        binderJustificacion.forField().bind(JustificacionProyecto::)
-
 
 
         binderJustificacion.setBean(new JustificacionProyecto());
@@ -286,22 +292,22 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         botonEnviar.addClickListener(e -> onRegisterButtonClick());
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
-
+        this.maxValidatorForBigDecimal = maxValidatorForBigDecimal;
     }
 
-    /*
-    TODO: Cambiar las opciones dentro del combobox
-    * */
-    private void setComboBoxSampleData(ComboBox comboBox) {
-        List<SampleItem> sampleItems = new ArrayList<>();
-        sampleItems.add(new SampleItem("first", "First", null));
-        sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-        sampleItems.add(new SampleItem("fourth", "Fourth", null));
-        comboBox.setItems(sampleItems);
-        comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
-    }
-
+    /* /*
+     TODO: Cambiar las opciones dentro del combobox
+     *
+     private void setComboBoxSampleData(ComboBox comboBox) {
+         List<SampleItem> sampleItems = new ArrayList<>();
+         sampleItems.add(new SampleItem("first", "First", null));
+         sampleItems.add(new SampleItem("second", "Second", null));
+         sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
+         sampleItems.add(new SampleItem("fourth", "Fourth", null));
+         comboBox.setItems(sampleItems);
+         comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
+     }
+         */
     public void onRegisterButtonClick() {
         if (binderProyecto.validate().isOk() & binderJustificacion.validate().isOk()) {
             if (proyectoService.registerProyecto(binderProyecto.getBean())) {
@@ -312,9 +318,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         } else {
             Notification.show("Error del registro.");
         }
-    }
-
-    record SampleItem(String value, String label, Boolean disabled) {
     }
 
 }

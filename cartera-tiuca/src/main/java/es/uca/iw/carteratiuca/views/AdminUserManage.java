@@ -58,6 +58,7 @@ public class AdminUserManage extends Composite<VerticalLayout> {
             return botonModificar;
         });
 
+        //poner botón en color rojo
         projectGrid.addComponentColumn(usuario -> {
             Button botonEliminar = new Button("Eliminar", event -> onBotonEliminarClick(usuario, currentUser));
             return botonEliminar;
