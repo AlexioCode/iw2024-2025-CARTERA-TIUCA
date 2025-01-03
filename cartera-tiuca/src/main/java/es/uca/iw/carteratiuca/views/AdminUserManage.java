@@ -1,6 +1,8 @@
 package es.uca.iw.carteratiuca.views;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -9,6 +11,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.services.UserService;
+import es.uca.iw.carteratiuca.views.userdata.UserDataView;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
@@ -27,7 +30,7 @@ public class AdminUserManage extends Composite<VerticalLayout> {
         H3 h3 = new H3();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
-        h3.setText("Proyectos del sistema");
+        h3.setText("Usuarios del sistema");
         h3.setWidth("max-content");
         getContent().add(h3);
 
@@ -43,6 +46,15 @@ public class AdminUserManage extends Composite<VerticalLayout> {
 
         //PONER BOTONES DE MODIFICAR Y ELIMINAR USUARIO
 
+        projectGrid.addComponentColumn(usuario -> {
+            Button botonModificar = new Button("Modificar", event -> {
+                UI.getCurrent().navigate(UserDataView.class).
+                        ifPresent(user -> user.adminUserDataView(usuario));
+            });
+            return botonModificar;
+        });
+
+        
         setGridData(projectGrid);
         getContent().add(projectGrid);
 
