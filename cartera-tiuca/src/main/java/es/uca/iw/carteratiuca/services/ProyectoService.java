@@ -55,7 +55,8 @@ public class ProyectoService {
 
     public void delete(UUID id) {
         Proyecto proyecto = proyectoRepository.findById(id).get();
-        justificacionProyectoRepository.deleteById(proyecto.getJustificacion().getId());
+        if(proyecto.getJustificacion() != null)
+            justificacionProyectoRepository.deleteById(proyecto.getJustificacion().getId());
         proyectoRepository.deleteById(id);
     }
 }

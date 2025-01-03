@@ -30,6 +30,7 @@ import jakarta.annotation.security.PermitAll;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 @PageTitle("Datos de usuario")
 @Route(value = "user-data")
@@ -163,20 +164,19 @@ public class UserDataView extends VerticalLayout {
 
         dialog.setConfirmText("Eliminar cuenta");
         dialog.addConfirmListener(e -> {
+            UUID currentUserId = currentUser.get().get().getId();
             userService.delete(userToModify.getId());
             Notification.show("Cuenta eliminada con éxito.");
-            // Si el usuario eliminado es el mismo que el usuario actual, cerrar sesión y llevarlo a la pantalla principal
-            if (currentUser.get().isPresent() && currentUser.get().get().getId().equals(userToModify.getId())) {
-                // Cerrar sesión y redirigir
+
+            // Si el usuario eliminado es el mismo que el usuario actual, cerrar sesión
+            if (currentUserId.equals(userToModify.getId()))
                 currentUser.logout();
-                UI.getCurrent().navigate("main");
-            }
         });
 
         dialog.open();
     }
 
-    // Método para cuando un admin modifica los datos de usuario
+    // Metodo para cuando un admin modifica los datos de usuario
     public void adminUserDataView(User user) {
         binder.setBean(user);
         userToModify = user;

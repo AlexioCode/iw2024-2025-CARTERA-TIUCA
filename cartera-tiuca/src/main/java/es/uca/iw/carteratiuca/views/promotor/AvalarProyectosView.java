@@ -27,7 +27,7 @@ public class AvalarProyectosView extends VerticalLayout {
 
     ProyectoService proyectoService;
 
-    public AvalarProyectosView(AuthenticatedUser currentUser, proyectoService) {
+    public AvalarProyectosView(AuthenticatedUser currentUser, ProyectoService proyectoService) {
         this.proyectoService = proyectoService;
 
         H3 h3 = new H3();
@@ -37,7 +37,8 @@ public class AvalarProyectosView extends VerticalLayout {
         h3.setWidth("max-content");
         add(h3);
 
-        List<Proyecto> proyectosPorAvalar = getProyectosDePromotor(currentUser.get().get());
+        // Aún por implementar esta función
+        //List<Proyecto> proyectosPorAvalar = getProyectosDePromotor(currentUser.get().get());
 
         Grid<Proyecto> gridProyectos = new Grid<>(Proyecto.class);
 
@@ -60,7 +61,7 @@ public class AvalarProyectosView extends VerticalLayout {
             return botonNoAvalar;
         });
 
-        gridProyectos.setItems(proyectosPorAvalar);
+        //gridProyectos.setItems(proyectosPorAvalar);
         add(gridProyectos);
     }
 }
