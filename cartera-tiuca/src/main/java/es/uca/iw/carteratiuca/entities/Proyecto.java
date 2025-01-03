@@ -17,6 +17,9 @@ public class Proyecto extends AbstractEntity {
     @OneToOne
     private JustificacionProyecto justificacion;
 
+    @ManyToOne
+    private User promotor;
+
     @NotEmpty
     private String titulo;
 
