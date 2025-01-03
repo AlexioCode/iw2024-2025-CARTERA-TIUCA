@@ -41,11 +41,11 @@ public class AvalarProyectosView extends VerticalLayout {
         List<Proyecto> proyectosPorAvalar = proyectoService.getProyectosDePromotor(currentUser.get().get());
 
         Grid<Proyecto> gridProyectos = new Grid<>(Proyecto.class);
-
+        /*
         gridProyectos.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
         gridProyectos.addColumn(Proyecto::getNombreCorto).setHeader("Nombre Corto").setSortable(true);
         gridProyectos.addColumn(Proyecto::getSolicitante).setHeader("Solicitante").setSortable(true);
-
+        */
         // Añadir botones Avalar y No avalar
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonAvalar = new Button("Avalar", e -> {
