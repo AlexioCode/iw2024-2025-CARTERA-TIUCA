@@ -19,13 +19,16 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @PageTitle("Datos de usuario")
 @Route(value = "user-data")
@@ -33,7 +36,8 @@ import java.io.InputStream;
 @PermitAll
 public class UserDataView extends VerticalLayout {
 
-    private final UserService service;
+    private final UserService userService;
+    private final ProyectoService proyectoService;
 
     User userToModify;
     private final H1 title;
@@ -48,8 +52,9 @@ public class UserDataView extends VerticalLayout {
 
     private final BeanValidationBinder<User> binder;
 
-    public UserDataView(AuthenticatedUser currentUser, UserService userService) {
-        this.service = userService;
+    public UserDataView(AuthenticatedUser currentUser, UserService userService, ProyectoService proyectoService) {
+        this.userService = userService;
+        this.proyectoService = proyectoService;
 
         title = new H1("Datos de usuario");
 
@@ -128,7 +133,7 @@ public class UserDataView extends VerticalLayout {
                 user.setPassword(password.getValue());
 
             // Guardar los cambios en la base de datos
-            User updatedUser = service.update(user);
+            User updatedUser = userService.update(user);
 
             Notification.show("Datos de usuario actualizados con éxito.");
         } else {
@@ -157,9 +162,12 @@ public class UserDataView extends VerticalLayout {
 
         dialog.setConfirmText("Eliminar cuenta");
         dialog.addConfirmListener(e -> {
-            service.delete(user.getId()); // Lógica para eliminar el usuario
+            userService.delete(user.getId());
             Notification.show("Cuenta eliminada con éxito.");
+            // Si el usuario eliminado es el mismo que el usuario actual, cerrar sesión y llevarlo a la pantalla principal
+
         });
+
         dialog.open();
     }
 

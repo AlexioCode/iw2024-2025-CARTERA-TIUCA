@@ -1,5 +1,6 @@
 package es.uca.iw.carteratiuca.services;
 
+import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.Role;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.repositories.UserRepository;
@@ -26,12 +27,15 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
+    private final ProyectoService proyectoService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserService(UserRepository repository, ProyectoService proyectoService,
+                       PasswordEncoder passwordEncoder, EmailService emailService) {
         this.repository = repository;
+        this.proyectoService = proyectoService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
@@ -67,6 +71,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void delete(UUID id) {
+        // Antes de eliminar al usuario, si tiene proyectos, eliminar sus proyectos y justificaciones
+        List<Proyecto> listaProyectosUsuario = proyectoService.getProyectosBySolicitante(get(id).get());
+        if (!listaProyectosUsuario.isEmpty()) {
+            for (Proyecto proyecto : listaProyectosUsuario)
+                proyectoService.delete(proyecto.getId());
+        }
         repository.deleteById(id);
     }
 
