@@ -16,4 +16,5 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSp
     List<Proyecto> findBySolicitante(User solicitante); // or UUID solicitante;
 
     List<Proyecto> findByEstado(EstadoProyecto estado);
+
 }

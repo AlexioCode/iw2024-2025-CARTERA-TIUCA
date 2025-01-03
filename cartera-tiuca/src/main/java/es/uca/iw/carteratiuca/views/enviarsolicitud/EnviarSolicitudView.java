@@ -2,30 +2,31 @@ package es.uca.iw.carteratiuca.views.enviarsolicitud;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.H5;
-import com.vaadin.flow.component.html.Hr;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
+import es.uca.iw.carteratiuca.entities.Proyecto;
+import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,22 @@ import java.util.List;
 @PermitAll
 public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
-    public EnviarSolicitudView() {
+    private final ProyectoService proyectoService;
+
+    private final BeanValidationBinder<Proyecto> binderProyecto;
+    private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
+
+    private final H4 status;
+
+    Proyecto proyecto = new Proyecto();
+
+    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user) {
+        this.proyectoService = service;
+
         //Comun a la vista
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
+
 
         //Seccion Principal
         H1 h1PrincipalPagina = new H1();
@@ -67,38 +80,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col.add(uploadCargarMemoria);
         getContent().add(separadorPrincipal);
 
-        //Seccion Solicitante
-        H2 h2SeccionSolicitante = new H2();
-        FormLayout formLayout3Col = new FormLayout();
-        TextField tfNombreSolicitante = new TextField();
-        EmailField emailFieldSolicitante = new EmailField();
-        TextField tfUnidadSolicitante = new TextField();
-        Paragraph pInfoSolicitante = new Paragraph();
-        Hr separadorInfoSolicitante = new Hr();
-
-        h2SeccionSolicitante.setText("Información del Solicitante");
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2SeccionSolicitante);
-        h2SeccionSolicitante.setWidth("max-content");
-        formLayout3Col.setWidth("100%");
-        formLayout3Col.setResponsiveSteps(new ResponsiveStep("0", 1), new ResponsiveStep("250px", 2),
-                new ResponsiveStep("500px", 3));
-        tfNombreSolicitante.setLabel("Nombre Completo");
-        tfNombreSolicitante.setWidth("min-content");
-        emailFieldSolicitante.setLabel("Email");
-        emailFieldSolicitante.setWidth("min-content");
-        tfUnidadSolicitante.setLabel("Unidad");
-        tfUnidadSolicitante.setWidth("min-content");
-        pInfoSolicitante.setText("Tendrá la condición de solicitante el responsable de cualquier área, unidad o centro");
-        pInfoSolicitante.setWidth("100%");
-        pInfoSolicitante.getStyle().set("font-size", "var(--lumo-font-size-xs)");
-
-        getContent().add(h2SeccionSolicitante);
-        getContent().add(formLayout3Col);
-        formLayout3Col.add(tfNombreSolicitante);
-        formLayout3Col.add(emailFieldSolicitante);
-        formLayout3Col.add(tfUnidadSolicitante);
-        formLayout3Col.add(pInfoSolicitante);
-        getContent().add(separadorInfoSolicitante);
+       //no hace falta las opciones de solicitante
 
         //Seccion Promotor
         H2 h2SeccionPromotor = new H2();
@@ -189,7 +171,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         chkObjetivosEstrategicos.setWidth("100%");
         chkObjetivosEstrategicos.setItems("Innovar, rediseñar y actualizar nuestra oferta formativa para adaptarla " +
                         "a las necesidades sociales y económicas de nuestro etorno.",
-                "Conseguir los niveles más altos de calidad en nuestra oferta formativa propa y reglada.",
+                "Conseguir los niveles más altos de calidad en nuestra oferta formativa propia y reglada.",
                 "Aumentar significativamente nuestro posicionamiento en investigación y transferir de forma relevante y" +
                         " útil nuestra investigación a nuestro tejido social y productivo.",
                 "Consolidar un modelo de gobierno sostenible y socialmente responsable.",
@@ -272,22 +254,40 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col5);
 
 
+        //binder para guardar un proyecto en la BD
+
+        status = new H4();
+        status.setId("status");
+        status.setVisible(false);
+
+        binderProyecto = new BeanValidationBinder<>(Proyecto.class);
+        binderProyecto.forField(tfTituloProyecto).bind(Proyecto::getTitulo, Proyecto::setTitulo);
+        binderProyecto.forField(tfNombreCorto).bind(Proyecto::getNombreCorto, Proyecto::setNombreCorto);
+
+        binderProyecto.setBean(proyecto);
+        proyecto.setSolicitante(user.get().get());
+
+        //binder para guardar una justificación proyecto en la BD
+
+        binderJustificacion = new BeanValidationBinder<>(JustificacionProyecto.class);
+
+        binderJustificacion.forField().bind(JustificacionProyecto::)
+
+
+
+        binderJustificacion.setBean(new JustificacionProyecto());
+
         //Sección Enviar
         H2 h2Enviar = new H2();
         h2Enviar.setText("");
         getContent().add(h2Enviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2Enviar);
         Button botonEnviar = new Button("Enviar");
+        botonEnviar.addClickListener(e -> onRegisterButtonClick());
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
 
     }
-
-
-
-    record SampleItem(String value, String label, Boolean disabled) {
-    }
-
 
     /*
     TODO: Cambiar las opciones dentro del combobox
@@ -301,4 +301,20 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         comboBox.setItems(sampleItems);
         comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
     }
+
+    public void onRegisterButtonClick() {
+        if (binderProyecto.validate().isOk() & binderJustificacion.validate().isOk()) {
+            if (proyectoService.registerProyecto(binderProyecto.getBean())) {
+                status.setText("Proyecto registrado en la base de datos");
+                status.setVisible(true);
+                binderProyecto.setBean(new Proyecto());
+            }
+        } else {
+            Notification.show("Error del registro.");
+        }
+    }
+
+    record SampleItem(String value, String label, Boolean disabled) {
+    }
+
 }
