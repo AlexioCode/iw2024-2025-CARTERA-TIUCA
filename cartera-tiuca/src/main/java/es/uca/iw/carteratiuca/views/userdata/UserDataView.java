@@ -35,6 +35,7 @@ public class UserDataView extends VerticalLayout {
 
     private final UserService service;
 
+    User userToModify;
     private final H1 title;
     private final TextField username;
     private final EmailField email;
@@ -47,7 +48,7 @@ public class UserDataView extends VerticalLayout {
 
     private final BeanValidationBinder<User> binder;
 
-    public UserDataView(AuthenticatedUser user, UserService userService) {
+    public UserDataView(AuthenticatedUser currentUser, UserService userService) {
         this.service = userService;
 
         title = new H1("Datos de usuario");
@@ -89,8 +90,8 @@ public class UserDataView extends VerticalLayout {
         binder.removeBinding(password); // Excluyo la contraseña para que no se autocomplete
 
         // Cargar datos del usuario autenticado
-        User currentUser = user.get().get();
-        binder.setBean(currentUser);
+        userToModify = currentUser.get().get();
+        binder.setBean(userToModify);
 
 
         add(title, username, email, unit, password, password2);
@@ -102,7 +103,7 @@ public class UserDataView extends VerticalLayout {
             try {
                 // Read the data from the buffer.
                 InputStream fileData = buffer.getInputStream();
-                currentUser.setProfilePicture(fileData.readAllBytes());
+                userToModify.setProfilePicture(fileData.readAllBytes());
             } catch(IOException e) { Notification.show("Error al subir la foto de perfil"); }
         });
         uploadProfilePicture.setWidth("max-content");
@@ -114,9 +115,9 @@ public class UserDataView extends VerticalLayout {
         add(buttonsLayout);
 
         // Listeners para los botones
-        submitButton.addClickListener(e -> onSubmitButtonClick(currentUser));
-        discardChangesButton.addClickListener(e -> onDiscardChangesButtonClick(currentUser));
-        deleteAccountButton.addClickListener(e -> onDeleteAccountButton(currentUser));
+        submitButton.addClickListener(e -> onSubmitButtonClick(userToModify));
+        discardChangesButton.addClickListener(e -> onDiscardChangesButtonClick(userToModify));
+        deleteAccountButton.addClickListener(e -> onDeleteAccountButton(userToModify));
     }
 
     private void onSubmitButtonClick(User user) {
@@ -148,6 +149,7 @@ public class UserDataView extends VerticalLayout {
 
     private void onDeleteAccountButton(User user) {
         /*
+
         Span status = new Span();
         status.setVisible(false);
 
@@ -172,12 +174,12 @@ public class UserDataView extends VerticalLayout {
             status.setVisible(false);
         });
 
-
         */
         // service.delete(user.getId());
     }
 
     public void adminUserDataView(User user) {
         binder.setBean(user);
+        userToModify = user;
     }
 }
