@@ -147,35 +147,20 @@ public class UserDataView extends VerticalLayout {
         Notification.show("Cambios descartados.");
     }
 
-    private void onDeleteAccountButton(User user) {
-        /*
-
-        Span status = new Span();
-        status.setVisible(false);
-
+    public void onDeleteAccountButton(User user) {
         ConfirmDialog dialog = new ConfirmDialog();
-        dialog.setHeader("Unsaved changes");
-        dialog.setText(
-                "¿Está seguro de que desea eliminar su cuenta?");
-
-        dialog.setCancelable(true);
-        dialog.addCancelListener(e -> setStatus("Canceled"));
+        dialog.setHeader("Eliminar cuenta");
+        dialog.setText("¿Está seguro de que desea eliminar la cuenta y todos los proyectos asociados?");
 
         dialog.setRejectable(true);
-        dialog.setRejectText("No");
-        dialog.addRejectListener(e -> setStatus("Discarded"));
+        dialog.setRejectText("Atrás");
 
-        dialog.setConfirmText("Sí");
-        dialog.addConfirmListener(e -> setStatus("Saved"));
-
-        Button button = new Button("Open confirm dialog");
-        button.addClickListener(event -> {
-            dialog.open();
-            status.setVisible(false);
+        dialog.setConfirmText("Eliminar cuenta");
+        dialog.addConfirmListener(e -> {
+            service.delete(user.getId()); // Lógica para eliminar el usuario
+            Notification.show("Cuenta eliminada con éxito.");
         });
-
-        */
-        // service.delete(user.getId());
+        dialog.open();
     }
 
     public void adminUserDataView(User user) {

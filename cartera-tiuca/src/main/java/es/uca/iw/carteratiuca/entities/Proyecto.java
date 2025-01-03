@@ -14,6 +14,9 @@ public class Proyecto extends AbstractEntity {
     @ManyToOne
     private User solicitante;
 
+    @OneToOne
+    private JustificacionProyecto justificacion;
+
     @NotEmpty
     private String titulo;
 
@@ -39,8 +42,6 @@ public class Proyecto extends AbstractEntity {
     private EstadoProyecto estado;
     private Integer gradoAvance = 0;
 
-    @OneToOne
-    private JustificacionProyecto justificacion;
 
     @Lob
     @NotNull
@@ -56,10 +57,12 @@ public class Proyecto extends AbstractEntity {
     public User getSolicitante() {
         return solicitante;
     }
-
     public void setSolicitante(User solicitante) {
         this.solicitante = solicitante;
     }
+
+    public JustificacionProyecto getJustificacion() { return justificacion; }
+    public void setJustificacion(JustificacionProyecto justificacion) { justificacion = justificacion; }
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
