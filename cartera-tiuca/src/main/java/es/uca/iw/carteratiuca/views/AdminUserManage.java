@@ -54,7 +54,14 @@ public class AdminUserManage extends Composite<VerticalLayout> {
             return botonModificar;
         });
 
-        
+        projectGrid.addComponentColumn(usuario -> {
+            Button botonEliminar = new Button("Eliminar", event -> {
+                UI.getCurrent().navigate(UserDataView.class);//.
+                //ifPresent(user -> user.onDeleteAccountButton(usuario));
+            });
+            return botonEliminar;
+        });
+
         setGridData(projectGrid);
         getContent().add(projectGrid);
 
