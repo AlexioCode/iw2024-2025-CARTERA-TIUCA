@@ -2,8 +2,10 @@ package es.uca.iw.carteratiuca.views.userdata;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -147,23 +149,22 @@ public class UserDataView extends VerticalLayout {
     private void onDeleteAccountButton(User user) {
         /*
         Span status = new Span();
-
         status.setVisible(false);
 
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setHeader("Unsaved changes");
         dialog.setText(
-                "There are unsaved changes. Do you want to discard or save them?");
+                "¿Está seguro de que desea eliminar su cuenta?");
 
         dialog.setCancelable(true);
-        dialog.addCancelListener(event -> setStatus("Canceled"));
+        dialog.addCancelListener(e -> setStatus("Canceled"));
 
         dialog.setRejectable(true);
-        dialog.setRejectText("Discard");
-        dialog.addRejectListener(event -> setStatus("Discarded"));
+        dialog.setRejectText("No");
+        dialog.addRejectListener(e -> setStatus("Discarded"));
 
-        dialog.setConfirmText("Save");
-        dialog.addConfirmListener(event -> setStatus("Saved"));
+        dialog.setConfirmText("Sí");
+        dialog.addConfirmListener(e -> setStatus("Saved"));
 
         Button button = new Button("Open confirm dialog");
         button.addClickListener(event -> {
@@ -174,5 +175,9 @@ public class UserDataView extends VerticalLayout {
 
         */
         // service.delete(user.getId());
+    }
+
+    public void adminUserDataView(User user) {
+        binder.setBean(user);
     }
 }
