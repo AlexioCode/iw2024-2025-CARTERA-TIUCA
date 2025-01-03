@@ -75,7 +75,7 @@ public class UserService implements UserDetailsService {
         List<Proyecto> listaProyectosUsuario = proyectoService.getProyectosBySolicitante(get(id).get());
         if (!listaProyectosUsuario.isEmpty()) {
             for (Proyecto proyecto : listaProyectosUsuario)
-                proyectoService.delete(proyecto.getId());
+                proyectoService.delete(proyecto.getId()); // Función aún por implementar
         }
         repository.deleteById(id);
     }

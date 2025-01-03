@@ -1,5 +1,6 @@
 package es.uca.iw.carteratiuca.views.userdata;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
@@ -122,7 +123,7 @@ public class UserDataView extends VerticalLayout {
         // Listeners para los botones
         submitButton.addClickListener(e -> onSubmitButtonClick(userToModify));
         discardChangesButton.addClickListener(e -> onDiscardChangesButtonClick(userToModify));
-        deleteAccountButton.addClickListener(e -> onDeleteAccountButton(userToModify));
+        deleteAccountButton.addClickListener(e -> onDeleteAccountButton(userToModify, currentUser));
     }
 
     private void onSubmitButtonClick(User user) {
@@ -152,7 +153,7 @@ public class UserDataView extends VerticalLayout {
         Notification.show("Cambios descartados.");
     }
 
-    public void onDeleteAccountButton(User user) {
+    public void onDeleteAccountButton(User userToModify, AuthenticatedUser currentUser) {
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setHeader("Eliminar cuenta");
         dialog.setText("¿Está seguro de que desea eliminar la cuenta y todos los proyectos asociados?");
@@ -162,10 +163,14 @@ public class UserDataView extends VerticalLayout {
 
         dialog.setConfirmText("Eliminar cuenta");
         dialog.addConfirmListener(e -> {
-            userService.delete(user.getId());
+            userService.delete(userToModify.getId());
             Notification.show("Cuenta eliminada con éxito.");
             // Si el usuario eliminado es el mismo que el usuario actual, cerrar sesión y llevarlo a la pantalla principal
-
+            if (currentUser.get().isPresent() && currentUser.get().get().getId().equals(userToModify.getId())) {
+                // Cerrar sesión y redirigir
+                currentUser.logout();
+                UI.getCurrent().navigate("main");
+            }
         });
 
         dialog.open();
