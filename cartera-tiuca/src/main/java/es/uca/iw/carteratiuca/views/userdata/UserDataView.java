@@ -176,6 +176,7 @@ public class UserDataView extends VerticalLayout {
         dialog.open();
     }
 
+    // Método para cuando un admin modifica los datos de usuario
     public void adminUserDataView(User user) {
         binder.setBean(user);
         userToModify = user;
