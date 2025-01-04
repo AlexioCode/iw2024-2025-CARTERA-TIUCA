@@ -51,6 +51,11 @@ public class ProyectoService {
         }
     }
 
+
+    public void update(Proyecto proyecto) {
+        proyectoRepository.save(proyecto);
+    }
+
     public void delete(UUID id) {
         Proyecto proyecto = proyectoRepository.findById(id).get();
         UUID justificacionId = proyecto.getJustificacion().getId();

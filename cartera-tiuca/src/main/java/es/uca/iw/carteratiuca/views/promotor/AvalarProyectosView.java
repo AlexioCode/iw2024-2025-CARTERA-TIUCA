@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.views.promotor;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.gridpro.GridPro;
 import com.vaadin.flow.component.button.Button;
@@ -9,6 +10,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.EstadoAvalacionProyecto;
+import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.ProyectoService;
@@ -39,6 +42,7 @@ public class AvalarProyectosView extends VerticalLayout {
 
         List<Proyecto> proyectosPorAvalar = proyectoService.getProyectosDePromotorPendientesDeAvalar(currentUser.get().get());
         Grid<Proyecto> gridProyectos = new Grid<>(Proyecto.class);
+        gridProyectos.setItems(proyectosPorAvalar);
 
         /*
         gridProyectos.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
@@ -49,19 +53,29 @@ public class AvalarProyectosView extends VerticalLayout {
         // Añadir botones Avalar y No avalar
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonAvalar = new Button("Avalar", e -> {
+                // Proyecto se establece como avalado
+                proyecto.setEstadoAvalacion(EstadoAvalacionProyecto.SI);
 
+                proyectoService.update(proyecto);
+                proyectosPorAvalar.remove(proyecto);
+                gridProyectos.getDataProvider().refreshAll();
             });
             return botonAvalar;
         });
 
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonNoAvalar = new Button("No Avalar", e -> {
+                // Proyecto se establece como no avalado y denegado
+                proyecto.setEstadoAvalacion(EstadoAvalacionProyecto.NO);
+                proyecto.setEstado(EstadoProyecto.DENEGADO);
 
+                proyectoService.update(proyecto);
+                proyectosPorAvalar.remove(proyecto);
+                gridProyectos.getDataProvider().refreshAll();
             });
+            botonNoAvalar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
             return botonNoAvalar;
         });
-
-        gridProyectos.setItems(proyectosPorAvalar);
 
         add(gridProyectos);
     }

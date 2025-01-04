@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.views.register;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -18,10 +19,10 @@ import org.springframework.stereotype.Component;
 import java.io.Serial;
 
 @PageTitle("Activación de usuario")
-@Route(value = "activate", autoLayout = false)
-@Component // Required for unit testing
-@Scope("prototype") // Required for IT testing
-//@RouteAlias("")
+@Route(value = "activate")
+@Menu(order = 7, icon = "line-awesome/svg/folder-open.svg")
+// @Component // Required for unit testing
+// @Scope("prototype") // Required for IT testing
 @AnonymousAllowed
 public class UserActivationView extends VerticalLayout {
     @Serial

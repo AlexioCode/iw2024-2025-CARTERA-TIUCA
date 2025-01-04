@@ -60,7 +60,7 @@ public class AdminUserManageView extends Composite<VerticalLayout> {
 
         projectGrid.addComponentColumn(usuario -> {
             Button botonEliminar = new Button("Eliminar", event -> onBotonEliminarClick(usuario, currentUser));
-            botonEliminar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE, ButtonVariant.LUMO_ERROR);
+            botonEliminar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
             return botonEliminar;
         });
 

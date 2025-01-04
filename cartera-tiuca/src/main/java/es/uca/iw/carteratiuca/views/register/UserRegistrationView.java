@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
@@ -18,6 +19,7 @@ import es.uca.iw.carteratiuca.services.UserService;
 
 @PageTitle("Registrar usuario")
 @Route(value = "register")
+@Menu(order = 6, icon = "line-awesome/svg/folder-open.svg")
 //@RouteAlias("")
 @AnonymousAllowed
 public class UserRegistrationView extends VerticalLayout {
