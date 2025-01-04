@@ -69,6 +69,13 @@ public class ProyectoService {
     }
 
     public List<Proyecto> getProyectosDePromotorPendientesDeAvalar(User user) {
-        return proyectoRepository.findByPromotorAndEstadoAvalacion(user, EstadoAvalacionProyecto.PORDETERMINAR);
+        return proyectoRepository.findByPromotorAndEstadoAvalacion(user, EstadosAvalacionValoracion.PORDETERMINAR);
     }
+
+    public List<Proyecto> getProyectosAvaladosSinValorarCIO() {
+        return proyectoRepository.findByEstadoAvalacionAndEstadoValoracionCIO(EstadosAvalacionValoracion.SI, EstadosAvalacionValoracion.PORDETERMINAR);
+    }
+
+
+
 }

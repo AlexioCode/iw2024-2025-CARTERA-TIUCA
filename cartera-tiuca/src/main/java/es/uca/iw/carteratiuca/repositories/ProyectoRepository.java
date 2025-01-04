@@ -1,7 +1,7 @@
 package es.uca.iw.carteratiuca.repositories;
 
 
-import es.uca.iw.carteratiuca.entities.EstadoAvalacionProyecto;
+import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.User;
@@ -20,5 +20,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSp
 
     List<Proyecto> findByPromotor(User user);
 
-    List<Proyecto> findByPromotorAndEstadoAvalacion(User promotor, EstadoAvalacionProyecto estadoAvalacion);
+    List<Proyecto> findByPromotorAndEstadoAvalacion(User promotor, EstadosAvalacionValoracion estadoAvalacion);
+
+    List<Proyecto> findByEstadoAvalacionAndEstadoValoracionCIO(EstadosAvalacionValoracion estadoAvalacion, EstadosAvalacionValoracion estadoValoracionCIO);
 }

@@ -3,25 +3,21 @@ package es.uca.iw.carteratiuca.views.promotor;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.gridpro.GridPro;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import es.uca.iw.carteratiuca.entities.EstadoAvalacionProyecto;
+import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.views.projects.DetailsProjectView;
-import es.uca.iw.carteratiuca.views.userdata.UserDataView;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
-import java.awt.*;
 import java.util.List;
 
 @PageTitle("Avalar proyectos")
@@ -33,8 +29,9 @@ public class AvalarProyectosView extends VerticalLayout {
     ProyectoService proyectoService;
     EmailService emailService;
 
-    public AvalarProyectosView(AuthenticatedUser currentUser, ProyectoService proyectoService) {
+    public AvalarProyectosView(AuthenticatedUser currentUser, ProyectoService proyectoService, EmailService emailService) {
         this.proyectoService = proyectoService;
+        this.emailService = emailService;
 
         H3 h3 = new H3();
         setWidth("100%");
@@ -56,7 +53,7 @@ public class AvalarProyectosView extends VerticalLayout {
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonAvalar = new Button("Avalar", e -> {
                 // Proyecto se establece como avalado
-                proyecto.setEstadoAvalacion(EstadoAvalacionProyecto.SI);
+                proyecto.setEstadoAvalacion(EstadosAvalacionValoracion.SI);
                 proyecto.setGradoAvance(proyecto.getGradoAvance() + 25);
                 proyectoService.update(proyecto);
                 proyectosPorAvalar.remove(proyecto);
@@ -69,7 +66,7 @@ public class AvalarProyectosView extends VerticalLayout {
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonNoAvalar = new Button("No Avalar", e -> {
                 // Proyecto se establece como no avalado y denegado
-                proyecto.setEstadoAvalacion(EstadoAvalacionProyecto.NO);
+                proyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
                 proyecto.setEstado(EstadoProyecto.DENEGADO);
                 proyecto.setGradoAvance(0);
 

@@ -1,5 +1,5 @@
 package es.uca.iw.carteratiuca.entities;
 
-public enum EstadoAvalacionProyecto {
+public enum EstadosAvalacionValoracion {
     SI, PORDETERMINAR, NO
 }

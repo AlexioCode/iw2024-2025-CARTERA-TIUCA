@@ -50,7 +50,13 @@ public class Proyecto extends AbstractEntity {
     private EstadoProyecto estado;
 
     @Enumerated(EnumType.STRING)
-    private EstadoAvalacionProyecto estadoAvalacion;
+    private EstadosAvalacionValoracion estadoAvalacion;
+
+    @Enumerated(EnumType.STRING)
+    private EstadosAvalacionValoracion estadoValoracionCIO;
+
+    @Enumerated(EnumType.STRING)
+    private EstadosAvalacionValoracion estadoValoracionOTP;
 
     @Lob
     @NotNull
@@ -176,11 +182,27 @@ public class Proyecto extends AbstractEntity {
     }
 
 
-    public EstadoAvalacionProyecto getEstadoAvalacion() {
+    public EstadosAvalacionValoracion getEstadoAvalacion() {
         return estadoAvalacion;
     }
 
-    public void setEstadoAvalacion(EstadoAvalacionProyecto estadoAvalacion) {
+    public void setEstadoAvalacion(EstadosAvalacionValoracion estadoAvalacion) {
         this.estadoAvalacion = estadoAvalacion;
+    }
+
+    public EstadosAvalacionValoracion getEstadoValoracionCIO() {
+        return estadoValoracionCIO;
+    }
+
+    public void setEstadoValoracionCIO(EstadosAvalacionValoracion estadoValoracionCIO) {
+        this.estadoValoracionCIO = estadoValoracionCIO;
+    }
+
+    public EstadosAvalacionValoracion getEstadoValoracionOTP() {
+        return estadoValoracionOTP;
+    }
+
+    public void setEstadoValoracionOTP(EstadosAvalacionValoracion estadoValoracionOTP) {
+        this.estadoValoracionOTP = estadoValoracionOTP;
     }
 }
