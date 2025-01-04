@@ -19,8 +19,8 @@ public class ConvocatoriaService {
         return convocatoriaRepository.findAll();
     }
 
-    public Convocatoria create(Convocatoria convocatoria) {
-        
+    public void create(Convocatoria convocatoria) {
+        convocatoriaRepository.save(convocatoria);
     }
 
 }
