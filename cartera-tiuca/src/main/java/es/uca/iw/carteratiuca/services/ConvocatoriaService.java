@@ -19,5 +19,8 @@ public class ConvocatoriaService {
         return convocatoriaRepository.findAll();
     }
 
+    public Convocatoria create(Convocatoria convocatoria) {
+        
+    }
 
 }

@@ -12,12 +12,11 @@ import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
 
 @PageTitle("Todos los proyectos")
-@Route("admin-projects")
+@Route("all-projects")
 @Menu(order = 1, icon = "line-awesome/svg/folder-open.svg")
 @PermitAll
 public class AdminProjectsView extends Composite<VerticalLayout> {

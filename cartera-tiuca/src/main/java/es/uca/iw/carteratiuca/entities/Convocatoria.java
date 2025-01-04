@@ -8,22 +8,31 @@ import java.util.Date;
 @Entity
 public class Convocatoria extends AbstractEntity {
 
-    private Date fechaInicial;
-    private Date fechaFinal;
+    private String nombre;
+    private Date fecha_inicial;
+    private Date fecha_final;
 
-    public Date getFechaInicial() {
-        return fechaInicial;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setFechaInicial(Date fechaIni) {
-        fechaInicial = fechaIni;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Date getFechaFinal() {
-        return fechaFinal;
+    public Date getFecha_inicial() {
+        return fecha_inicial;
     }
 
-    public void setFechaFinal(Date fechaFin) {
-        fechaFinal = fechaFin;
+    public void setFecha_inicial(Date fechaIni) {
+        fecha_inicial = fechaIni;
+    }
+
+    public Date getFecha_final() {
+        return fecha_final;
+    }
+
+    public void setFecha_final(Date fechaFin) {
+        fecha_final = fechaFin;
     }
 }

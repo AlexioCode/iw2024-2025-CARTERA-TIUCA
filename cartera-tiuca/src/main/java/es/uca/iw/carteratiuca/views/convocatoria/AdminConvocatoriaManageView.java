@@ -1,6 +1,8 @@
-package es.uca.iw.carteratiuca.views;
+package es.uca.iw.carteratiuca.views.convocatoria;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -10,8 +12,6 @@ import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Convocatoria;
 import es.uca.iw.carteratiuca.services.ConvocatoriaService;
 import jakarta.annotation.security.RolesAllowed;
-
-import java.util.List;
 
 @PageTitle("Todas las convocatorias")
 @Route("admin-convocatoria-manage")
@@ -32,12 +32,19 @@ public class AdminConvocatoriaManageView extends Composite<VerticalLayout> {
         h3.setWidth("max-content");
         getContent().add(h3);
 
-        List<Convocatoria> allConvos = service.getConvocatorias();
-
         Grid<Convocatoria> projectGrid = new Grid<>();
         getContent().getStyle().set("flex-grow", "1");
-        projectGrid.addColumn(Convocatoria::getFechaInicial).setHeader("Fecha Inicial").setSortable(true);
-        projectGrid.addColumn(Convocatoria::getFechaFinal).setHeader("Fecha Final").setSortable(true);
+        projectGrid.addColumn(Convocatoria::getNombre).setHeader("Nombre").setSortable(true);
+        projectGrid.addColumn(Convocatoria::getFecha_inicial).setHeader("Fecha Inicial").setSortable(true);
+        projectGrid.addColumn(Convocatoria::getFecha_final).setHeader("Fecha Final").setSortable(true);
+
+        //boton para ir a modificar datos
+        projectGrid.addComponentColumn(convocatoria -> {
+            Button botonModificar = new Button("Modificar", event -> {
+                UI.getCurrent().navigate(ConvocatoriaDataView.class);
+            });
+            return botonModificar;
+        });
 
 
         setGridData(projectGrid);
