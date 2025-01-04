@@ -1,9 +1,6 @@
 package es.uca.iw.carteratiuca.services;
 
-import es.uca.iw.carteratiuca.entities.EstadoProyecto;
-import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
-import es.uca.iw.carteratiuca.entities.Proyecto;
-import es.uca.iw.carteratiuca.entities.User;
+import es.uca.iw.carteratiuca.entities.*;
 import es.uca.iw.carteratiuca.repositories.JustificacionProyectoRepository;
 import es.uca.iw.carteratiuca.repositories.ProyectoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -64,5 +61,9 @@ public class ProyectoService {
 
     public List<Proyecto> getProyectosDePromotor(User user) {
         return proyectoRepository.findByPromotor(user);
+    }
+
+    public List<Proyecto> getProyectosDePromotorPendientesDeAvalar(User user) {
+        return proyectoRepository.findByPromotorAndEstadoAvalacion(user, EstadoAvalacionProyecto.PORDETERMINAR);
     }
 }

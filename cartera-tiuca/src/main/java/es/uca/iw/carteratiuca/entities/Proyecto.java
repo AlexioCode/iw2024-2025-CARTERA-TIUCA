@@ -1,9 +1,6 @@
 package es.uca.iw.carteratiuca.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -46,10 +43,14 @@ public class Proyecto extends AbstractEntity {
     @NotNull
     private BigDecimal financiacionInteresado;
 
-    @NotNull
-    private EstadoProyecto estado;
     private Integer gradoAvance = 0;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private EstadoProyecto estado;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoAvalacionProyecto estadoAvalacion;
 
     @Lob
     @NotNull
@@ -172,5 +173,14 @@ public class Proyecto extends AbstractEntity {
 
     public void setPresupuesto(byte[] presupuesto) {
         this.presupuesto = presupuesto;
+    }
+
+
+    public EstadoAvalacionProyecto getEstadoAvalacion() {
+        return estadoAvalacion;
+    }
+
+    public void setEstadoAvalacion(EstadoAvalacionProyecto estadoAvalacion) {
+        this.estadoAvalacion = estadoAvalacion;
     }
 }

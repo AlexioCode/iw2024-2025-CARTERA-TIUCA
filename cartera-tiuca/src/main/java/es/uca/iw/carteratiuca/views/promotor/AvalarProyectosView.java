@@ -37,26 +37,26 @@ public class AvalarProyectosView extends VerticalLayout {
         h3.setWidth("max-content");
         add(h3);
 
-        // Aún por implementar esta función
-        List<Proyecto> proyectosPorAvalar = proyectoService.getProyectosDePromotor(currentUser.get().get());
-
+        List<Proyecto> proyectosPorAvalar = proyectoService.getProyectosDePromotorPendientesDeAvalar(currentUser.get().get());
         Grid<Proyecto> gridProyectos = new Grid<>(Proyecto.class);
+
         /*
         gridProyectos.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
         gridProyectos.addColumn(Proyecto::getNombreCorto).setHeader("Nombre Corto").setSortable(true);
         gridProyectos.addColumn(Proyecto::getSolicitante).setHeader("Solicitante").setSortable(true);
         */
+
         // Añadir botones Avalar y No avalar
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonAvalar = new Button("Avalar", e -> {
-                System.out.println("Avalar");
+
             });
             return botonAvalar;
         });
 
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonNoAvalar = new Button("No Avalar", e -> {
-                System.out.println("No Avalar");
+
             });
             return botonNoAvalar;
         });
