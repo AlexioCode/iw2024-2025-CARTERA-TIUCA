@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final ProyectoService proyectoService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     public UserService(UserRepository repository, ProyectoService proyectoService,
                        PasswordEncoder passwordEncoder, EmailService emailService) {
-        this.repository = repository;
+        this.userRepository = repository;
         this.proyectoService = proyectoService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional // Ejecución como transacción (de forma atómica)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = repository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         if (!user.isPresent()) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {
@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<User> get(UUID id) {
-        return repository.findById(id);
+        return userRepository.findById(id);
     }
 
     public User update(User user) {
@@ -67,29 +67,39 @@ public class UserService implements UserDetailsService {
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     public void delete(UUID id) {
-        // Antes de eliminar al usuario, si tiene proyectos, eliminar sus proyectos y justificaciones
-        List<Proyecto> listaProyectosUsuario = proyectoService.getProyectosBySolicitante(get(id).get());
-        if (!listaProyectosUsuario.isEmpty()) {
+        User user = userRepository.findById(id).get();
+
+        // Antes de eliminar a un solicitante, si tiene proyectos, eliminar sus proyectos y justificaciones
+        if(user.getRoles().contains(Role.USER)) {
+            List<Proyecto> listaProyectosUsuario = proyectoService.getProyectosBySolicitante(user);
             for (Proyecto proyecto : listaProyectosUsuario)
-                proyectoService.delete(proyecto.getId()); // Función aún por implementar
+                proyectoService.delete(proyecto.getId());
         }
-        repository.deleteById(id);
+
+        // Antes de eliminar a un promotor, eliminar los proyectos de los que es promotor
+        if(user.getRoles().contains(Role.PROMOTOR)) {
+            List<Proyecto> proyectosDePromotor = proyectoService.getProyectosDePromotor(user);
+            for(Proyecto proyecto : proyectosDePromotor)
+                proyectoService.delete(proyecto.getId());
+        }
+
+        userRepository.deleteById(id);
     }
 
     public int count() {
-        return (int) repository.count();
+        return (int) userRepository.count();
     }
 
     public Page<User> list(Pageable pageable) {
-        return repository.findAll(pageable);
+        return userRepository.findAll(pageable);
     }
 
     public Page<User> list(Pageable pageable, Specification<User> filter) {
-        return repository.findAll(filter, pageable);
+        return userRepository.findAll(filter, pageable);
     }
 
     public boolean registerUser(User user) {
@@ -98,7 +108,7 @@ public class UserService implements UserDetailsService {
         user.addRole(Role.USER);
 
         try {
-            repository.save(user);
+            userRepository.save(user);
             emailService.sendRegistrationEmail(user);
             return true;
         } catch (DataIntegrityViolationException e) {
@@ -107,11 +117,11 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean activateUser(String email, String registerCode) {
-        Optional<User> user = repository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isPresent() && user.get().getRegisterCode().equals(registerCode)) {
             user.get().setActive(true);
-            repository.save(user.get());
+            userRepository.save(user.get());
             return true;
 
         } else {
@@ -120,6 +130,6 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getActiveUsers() {
-        return repository.findByActiveIsTrue();
+        return userRepository.findByActiveIsTrue();
     }
 }

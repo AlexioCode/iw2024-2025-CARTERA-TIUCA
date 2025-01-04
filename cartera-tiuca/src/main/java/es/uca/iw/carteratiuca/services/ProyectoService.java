@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.services;
 
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
+import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.repositories.JustificacionProyectoRepository;
@@ -55,9 +56,10 @@ public class ProyectoService {
 
     public void delete(UUID id) {
         Proyecto proyecto = proyectoRepository.findById(id).get();
-        if(proyecto.getJustificacion() != null)
-            justificacionProyectoRepository.deleteById(proyecto.getJustificacion().getId());
+        UUID justificacionId = proyecto.getJustificacion().getId();
+
         proyectoRepository.deleteById(id);
+        justificacionProyectoRepository.deleteById(justificacionId);
     }
 
     public List<Proyecto> getProyectosDePromotor(User user) {

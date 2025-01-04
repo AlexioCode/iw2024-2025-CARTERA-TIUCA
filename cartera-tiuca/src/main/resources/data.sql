@@ -4,9 +4,10 @@ values (1, '01f6e929-98d7-431a-9ded-c121ff299676', 'user',
 insert into user_roles (user_id, roles)
 values ('01f6e929-98d7-431a-9ded-c121ff299676', 'USER');
 
-insert into carteratiuca.app_users (version, id, username, password, profile_picture, unit, email, active)
+insert into carteratiuca.app_users (version, id, username, password, profile_picture, unit, email, active, cargo)
 values (1, '40960360-a730-4cfe-8776-ced6192e8398', 'admin',
-        '$2a$10$jpLNVNeA7Ar/ZQ2DKbKCm.MuT2ESe.Qop96jipKMq7RaUgCoQedV.', '', 'unidad2', 'emailprueba2@uwu.es', 1);
+        '$2a$10$jpLNVNeA7Ar/ZQ2DKbKCm.MuT2ESe.Qop96jipKMq7RaUgCoQedV.', '', 'unidad2',
+        'emailprueba2@uwu.es', 1, 'Vicerrectorado de Investigación y Transferencia');
 insert into user_roles (user_id, roles)
 values ('40960360-a730-4cfe-8776-ced6192e8398', 'USER');
 insert into user_roles (user_id, roles)

@@ -14,15 +14,15 @@ import java.math.BigDecimal;
 public class Proyecto extends AbstractEntity {
 
     @ManyToOne
+    // @NotNull
     private User solicitante;
 
-    @ManyToOne
-    private Convocatoria convocatoria;
-
     @OneToOne
+    // @NotNull
     private JustificacionProyecto justificacion;
 
     @ManyToOne
+    // @NotNull
     private User promotor;
 
     @NotEmpty

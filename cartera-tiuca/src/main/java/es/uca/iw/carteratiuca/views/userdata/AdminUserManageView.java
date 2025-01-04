@@ -1,4 +1,4 @@
-package es.uca.iw.carteratiuca.views;
+package es.uca.iw.carteratiuca.views.userdata;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
@@ -15,7 +15,6 @@ import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.UserService;
-import es.uca.iw.carteratiuca.views.userdata.UserDataView;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
