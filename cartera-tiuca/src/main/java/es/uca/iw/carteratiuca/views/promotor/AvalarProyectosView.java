@@ -14,6 +14,7 @@ import es.uca.iw.carteratiuca.entities.EstadoAvalacionProyecto;
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.views.projects.DetailsProjectView;
 import es.uca.iw.carteratiuca.views.userdata.UserDataView;
@@ -30,6 +31,7 @@ import java.util.List;
 public class AvalarProyectosView extends VerticalLayout {
 
     ProyectoService proyectoService;
+    EmailService emailService;
 
     public AvalarProyectosView(AuthenticatedUser currentUser, ProyectoService proyectoService) {
         this.proyectoService = proyectoService;
@@ -50,7 +52,7 @@ public class AvalarProyectosView extends VerticalLayout {
         gridProyectos.addColumn(Proyecto::getSolicitante).setHeader("Solicitante").setSortable(true);
         gridProyectos.addColumn(Proyecto::getInteresados).setHeader("Interesados").setSortable(true);
 
-        // Añadir botones Avalar y No avalar
+
         gridProyectos.addComponentColumn(proyecto -> {
             Button botonAvalar = new Button("Avalar", e -> {
                 // Proyecto se establece como avalado
@@ -59,6 +61,7 @@ public class AvalarProyectosView extends VerticalLayout {
                 proyectoService.update(proyecto);
                 proyectosPorAvalar.remove(proyecto);
                 gridProyectos.getDataProvider().refreshAll();
+                emailService.enviarCorreoAvalacion(proyecto.getSolicitante(), "SI");
             });
             return botonAvalar;
         });
@@ -73,6 +76,7 @@ public class AvalarProyectosView extends VerticalLayout {
                 proyectoService.update(proyecto);
                 proyectosPorAvalar.remove(proyecto);
                 gridProyectos.getDataProvider().refreshAll();
+                emailService.enviarCorreoAvalacion(proyecto.getSolicitante(), "NO");
             });
             botonNoAvalar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
             return botonNoAvalar;

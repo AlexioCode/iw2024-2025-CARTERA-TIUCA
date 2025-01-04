@@ -71,4 +71,34 @@ public class EmailService {
         return true;
     }
 
+    public boolean enviarCorreoAvalacion(User solicitante, String resultadoAvalacion) {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+
+        String subject;
+        String body;
+
+        if ("SI".equals(resultadoAvalacion)) {
+            subject = "Su proyecto ha sido avalado";
+            body = "El promotor ha avalado su propuesta de proyecto.";
+        } else if ("NO".equals(resultadoAvalacion)) {
+            subject = "Su proyecto no ha sido avalado";
+            body = "El promotor ha decidido no avalar su propuesta de proyecto.";
+        } else {
+            // Si el resultado no es válido, no enviamos ningún correo.
+            return false;
+        }
+
+        try {
+            helper.setFrom(defaultMail);
+            helper.setTo(solicitante.getEmail());
+            helper.setSubject(subject);
+            helper.setText(body);
+            this.mailSender.send(message);
+            return true;
+        } catch (MailException | MessagingException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
