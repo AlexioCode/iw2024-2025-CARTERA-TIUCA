@@ -3,6 +3,7 @@ package es.uca.iw.carteratiuca.views;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
@@ -24,11 +25,11 @@ import java.util.UUID;
 @Route("admin-users-manage")
 @Menu(order = 5, icon = "line-awesome/svg/folder-open.svg")
 @RolesAllowed("ADMIN")
-public class AdminUserManage extends Composite<VerticalLayout> {
+public class AdminUserManageView extends Composite<VerticalLayout> {
 
     private final UserService service;
 
-    public AdminUserManage(UserService service, AuthenticatedUser currentUser) {
+    public AdminUserManageView(UserService service, AuthenticatedUser currentUser) {
         this.service = service;
 
         H3 h3 = new H3();
@@ -58,9 +59,9 @@ public class AdminUserManage extends Composite<VerticalLayout> {
             return botonModificar;
         });
 
-        //poner botón en color rojo
         projectGrid.addComponentColumn(usuario -> {
             Button botonEliminar = new Button("Eliminar", event -> onBotonEliminarClick(usuario, currentUser));
+            botonEliminar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_LARGE, ButtonVariant.LUMO_ERROR);
             return botonEliminar;
         });
 

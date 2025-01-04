@@ -1,17 +1,10 @@
 package es.uca.iw.carteratiuca.views;
 
-import es.uca.iw.carteratiuca.entities.User;
-import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
@@ -25,6 +18,9 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.server.menu.MenuConfiguration;
 import com.vaadin.flow.server.menu.MenuEntry;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import es.uca.iw.carteratiuca.entities.User;
+import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
@@ -36,10 +32,9 @@ import java.util.Optional;
 @AnonymousAllowed
 public class MainLayout extends AppLayout {
 
+    private final AuthenticatedUser authenticatedUser;
+    private final AccessAnnotationChecker accessChecker;
     private H1 viewTitle;
-
-    private AuthenticatedUser authenticatedUser;
-    private AccessAnnotationChecker accessChecker;
 
     public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
         this.authenticatedUser = authenticatedUser;

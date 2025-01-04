@@ -16,6 +16,9 @@ public class Proyecto extends AbstractEntity {
     @ManyToOne
     private User solicitante;
 
+    @ManyToOne
+    private Convocatoria convocatoria;
+
     @OneToOne
     private JustificacionProyecto justificacion;
 

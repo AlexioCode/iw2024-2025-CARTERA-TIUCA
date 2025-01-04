@@ -39,7 +39,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
 
     private final H4 status;
-    private final MaxValidatorForBigDecimal maxValidatorForBigDecimal;
+
 
     Proyecto proyecto = new Proyecto();
 
@@ -292,7 +292,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         botonEnviar.addClickListener(e -> onRegisterButtonClick());
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
-        this.maxValidatorForBigDecimal = maxValidatorForBigDecimal;
+
     }
 
     /* /*
