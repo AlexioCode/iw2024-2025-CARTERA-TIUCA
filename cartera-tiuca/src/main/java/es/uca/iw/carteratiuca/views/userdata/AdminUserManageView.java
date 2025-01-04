@@ -38,9 +38,6 @@ public class AdminUserManageView extends Composite<VerticalLayout> {
         h3.setWidth("max-content");
         getContent().add(h3);
 
-        //recibir todos los usuarios
-        List<User> allUsers = service.getActiveUsers();
-
         Grid<User> projectGrid = new Grid<>();
         getContent().getStyle().set("flex-grow", "1");
         projectGrid.addColumn(User::getUsername).setHeader("Nombre usuario").setSortable(true);
