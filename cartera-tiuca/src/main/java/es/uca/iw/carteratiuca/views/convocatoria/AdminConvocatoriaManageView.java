@@ -39,12 +39,12 @@ public class AdminConvocatoriaManageView extends Composite<VerticalLayout> {
         projectGrid.addColumn(Convocatoria::getFecha_final).setHeader("Fecha Final").setSortable(true);
 
         //boton para ir a modificar datos
-        /*projectGrid.addComponentColumn(convocatoria -> {
+        projectGrid.addComponentColumn(convocatoria -> {
             Button botonModificar = new Button("Modificar", event -> {
                 UI.getCurrent().navigate(ConvocatoriaDataView.class);
             });
             return botonModificar;
-        });*/
+        });
 
 
         setGridData(projectGrid);

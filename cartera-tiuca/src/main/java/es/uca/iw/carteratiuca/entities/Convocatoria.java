@@ -2,15 +2,15 @@ package es.uca.iw.carteratiuca.entities;
 
 import jakarta.persistence.Entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Entity
 public class Convocatoria extends AbstractEntity {
 
     private String nombre;
-    private Date fecha_inicial;
-    private Date fecha_final;
+    private LocalDate fecha_inicial;
+    private LocalDate fecha_final;
 
     public String getNombre() {
         return nombre;
@@ -20,19 +20,19 @@ public class Convocatoria extends AbstractEntity {
         this.nombre = nombre;
     }
 
-    public Date getFecha_inicial() {
+    public LocalDate getFecha_inicial() {
         return fecha_inicial;
     }
 
-    public void setFecha_inicial(Date fechaIni) {
+    public void setFecha_inicial(LocalDate fechaIni) {
         fecha_inicial = fechaIni;
     }
 
-    public Date getFecha_final() {
+    public LocalDate getFecha_final() {
         return fecha_final;
     }
 
-    public void setFecha_final(Date fechaFin) {
+    public void setFecha_final(LocalDate fechaFin) {
         fecha_final = fechaFin;
     }
 }
