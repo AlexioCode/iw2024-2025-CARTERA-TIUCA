@@ -18,9 +18,9 @@ public class Proyecto extends AbstractEntity {
     // @NotNull
     private JustificacionProyecto justificacion;
 
-    @ManyToOne
+    @NotEmpty
     // @NotNull
-    private User promotor;
+    private String promotor;
 
     @NotEmpty
     private String titulo;
@@ -84,6 +84,10 @@ public class Proyecto extends AbstractEntity {
     public void setJustificacion(JustificacionProyecto justificacion) {
         justificacion = justificacion;
     }
+
+    public String getPromotor() {return promotor;}
+
+    public void setPromotor(String promotor) {this.promotor = promotor;}
 
     public String getTitulo() {
         return titulo;
