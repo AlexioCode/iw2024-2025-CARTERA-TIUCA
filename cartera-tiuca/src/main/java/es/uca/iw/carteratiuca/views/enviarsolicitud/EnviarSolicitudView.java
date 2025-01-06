@@ -52,6 +52,8 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     Proyecto proyecto = new Proyecto();
 
     byte[] bytesParaMemoria;
+    byte[] bytesParaEspTecnicas;
+    byte[] bytesParaPresupuesto;
 
     public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user){
         this.proyectoService = service;
@@ -252,11 +254,27 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
         MemoryBuffer bufferParaEspecificacionTecnica = new MemoryBuffer();
         Upload uploadEspecificacionTecnica = new Upload(bufferParaEspecificacionTecnica);
+        uploadEspecificacionTecnica.addSucceededListener(event ->{
+            try{
+                bytesParaEspTecnicas = bufferParaEspecificacionTecnica.getInputStream().readAllBytes();
+            }
+            catch (IOException e){
+                System.out.println("Fallo leyendo bytes");
+            }
+        });
         uploadEspecificacionTecnica.setWidth("max-content");
         formLayout2Col5.add(uploadEspecificacionTecnica);
 
         MemoryBuffer bufferParaPresupuesto = new MemoryBuffer();
         Upload uploadPresupuesto = new Upload(bufferParaPresupuesto);
+        uploadPresupuesto.addSucceededListener(event ->{
+            try{
+                bytesParaPresupuesto = bufferParaPresupuesto.getInputStream().readAllBytes();
+            }
+            catch (IOException e){
+                System.out.println("Fallo leyendo bytes");
+            }
+        });
         uploadPresupuesto.setWidth("max-content");
         formLayout2Col5.add(uploadPresupuesto);
 
