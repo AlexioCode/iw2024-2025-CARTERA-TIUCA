@@ -43,7 +43,7 @@ public class JustificacionProyecto extends AbstractEntity{
         this.consolidarGobiernoSostenible = ConsolidarGobiernoSostenible;
     }
     public boolean isReforzarPapelUCA() {return reforzarPapelUCA;}
-    public void setReforzarPapel(boolean ReforzarPapelUCA) {
+    public void setReforzarPapelUCA(boolean ReforzarPapelUCA) {
         this.reforzarPapelUCA = ReforzarPapelUCA;
     }
     public String getAlcance() {return alcance;}

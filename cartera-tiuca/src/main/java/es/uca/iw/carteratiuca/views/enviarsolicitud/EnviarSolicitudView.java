@@ -26,6 +26,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
+import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
@@ -318,9 +319,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         binderJustificacion.bind(tfAlcance, "alcance");
         binderJustificacion.bind(datePicker, "fechaPuestaEnMarcha");
         binderJustificacion.bind(tfNormativaApp, "normativa");
-        //binder para guardar una justificación proyecto en la BD
-
-
 
         //Sección Enviar
         H2 h2Enviar = new H2();
@@ -358,6 +356,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
             nuevoProyecto.setNumEmpleados(5);
             nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
             nuevoProyecto.setMemoria(bytesParaMemoria);
+            nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
             /*TODO: BORRAR DATO DE EJEMPO*/
             nuevoProyecto.setPromotor("Ejemplo");
             binderProyecto.writeBean(nuevoProyecto);

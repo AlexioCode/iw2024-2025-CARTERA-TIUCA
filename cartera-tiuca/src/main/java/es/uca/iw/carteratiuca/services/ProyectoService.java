@@ -5,6 +5,7 @@ import es.uca.iw.carteratiuca.repositories.JustificacionProyectoRepository;
 import es.uca.iw.carteratiuca.repositories.ProyectoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,15 +41,9 @@ public class ProyectoService {
         return proyectosNoArchivados;
     }
 
-    public boolean registerProyecto(Proyecto proyecto) {
-        try {
-            proyecto.getMemoria();
-
-            proyectoRepository.save(proyecto);
-            return true;
-        } catch (DataIntegrityViolationException e) {
-            return false;
-        }
+    @Transactional
+    public void registerProyecto(Proyecto proyecto) {
+        proyectoRepository.save(proyecto);
     }
 
 

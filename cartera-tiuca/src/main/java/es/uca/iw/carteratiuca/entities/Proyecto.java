@@ -14,7 +14,8 @@ public class Proyecto extends AbstractEntity {
     // @NotNull
     private User solicitante;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "justificacion_id", referencedColumnName = "id") // Clave foránea en la tabla "Padre"
     // @NotNull
     private JustificacionProyecto justificacion;
 
@@ -82,7 +83,7 @@ public class Proyecto extends AbstractEntity {
     }
 
     public void setJustificacion(JustificacionProyecto justificacion) {
-        justificacion = justificacion;
+        this.justificacion = justificacion;
     }
 
     public String getPromotor() {return promotor;}
