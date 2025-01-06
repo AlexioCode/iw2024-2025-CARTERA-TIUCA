@@ -9,6 +9,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Convocatoria;
@@ -69,11 +70,13 @@ public class CreateConvocatoriaView extends VerticalLayout {
     private void onBotonCrearClick() {
         if (binder.validate().isOk()) {
             Convocatoria newConvocatoria = new Convocatoria();
-            newConvocatoria.setNombre(nombre.getValue());
-            newConvocatoria.setFecha_inicial(fecha_inicial.getValue());
-            newConvocatoria.setFecha_final(fecha_final.getValue());
-            service.create(newConvocatoria);
-            Notification.show("Convocatoria creada con éxito.");
+            try {
+                binder.writeBean(newConvocatoria);
+                service.create(newConvocatoria);
+                Notification.show("Convocatoria creada con éxito.");
+            } catch (ValidationException e) {
+                System.err.println("Errores de validación: " + e.getValidationErrors());
+            }
         } else {
             Notification.show("Por favor, revise los datos introducidos.");
         }
