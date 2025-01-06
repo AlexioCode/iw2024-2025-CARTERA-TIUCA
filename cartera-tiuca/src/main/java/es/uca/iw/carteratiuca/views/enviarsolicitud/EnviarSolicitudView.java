@@ -1,10 +1,13 @@
 package es.uca.iw.carteratiuca.views.enviarsolicitud;
 
+import java.io.IOException;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
@@ -17,15 +20,20 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
-import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.MaxValidatorForBigDecimal;
+
+import java.math.BigDecimal;
+import java.util.Map;
 
 @PageTitle("Enviar Solicitud")
 @Route("enviar-solicitud")
@@ -43,7 +51,9 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
     Proyecto proyecto = new Proyecto();
 
-    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user, MaxValidatorForBigDecimal maxValidatorForBigDecimal) {
+    byte[] bytesParaMemoria;
+
+    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user){
         this.proyectoService = service;
 
         //Comun a la vista
@@ -58,6 +68,14 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         TextField tfNombreCorto = new TextField();
         MemoryBuffer bufferParaMemoria = new MemoryBuffer();
         Upload uploadCargarMemoria = new Upload(bufferParaMemoria);
+        uploadCargarMemoria.addSucceededListener(event ->{
+            try{
+                bytesParaMemoria = bufferParaMemoria.getInputStream().readAllBytes();
+            }
+            catch (IOException e){
+                System.out.println("Fallo leyendo bytes");
+            }
+        });
         Hr separadorPrincipal = new Hr();
 
         h1PrincipalPagina.setText("Formulario de solicitud");
@@ -153,7 +171,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         CheckboxGroup chkObjetivosEstrategicos = new CheckboxGroup();
         FormLayout formLayout2Col4 = new FormLayout();
         TextField tfAlcance = new TextField();
-        DateTimePicker dateTimePicker = new DateTimePicker();
+        DatePicker datePicker = new DatePicker();
         TextField tfNormativaApp = new TextField();
         Paragraph pInfoAlineamiento = new Paragraph();
         Paragraph pInfoAlcance = new Paragraph();
@@ -167,15 +185,20 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         h2JustifProyecto.setWidth("max-content");
         chkObjetivosEstrategicos.setLabel("Alineamiento con objetivos estratégicos");
         chkObjetivosEstrategicos.setWidth("100%");
-        chkObjetivosEstrategicos.setItems("Innovar, rediseñar y actualizar nuestra oferta formativa para adaptarla " +
-                        "a las necesidades sociales y económicas de nuestro etorno.",
-                "Conseguir los niveles más altos de calidad en nuestra oferta formativa propia y reglada.",
-                "Aumentar significativamente nuestro posicionamiento en investigación y transferir de forma relevante y" +
+
+        Map<String, String> opciones = Map.of(
+                "actualizarOferta","Innovar, rediseñar y actualizar nuestra oferta formativa para adaptarla a las necesidades sociales y económicas de nuestro etorno.",
+                "altaCalidad","Conseguir los niveles más altos de calidad en nuestra oferta formativa propia y reglada.",
+                "aumentarInvestigacion","Aumentar significativamente nuestro posicionamiento en investigación y transferir de forma relevante y" +
                         " útil nuestra investigación a nuestro tejido social y productivo.",
-                "Consolidar un modelo de gobierno sostenible y socialmente responsable.",
-                "Conseguir que la transparencia sea un valor distintivo y relevante en la UCA.",
-                "Generar valor compartido con la Comunidad Universitaria.",
-                "Reforzar la importancia del papel de la UCA en la sociedad.");
+                "conseguirTransparencia","Conseguir que la transparencia sea un valor distintivo y relevante en la UCA.",
+                "generarValorCompartido", "Generar valor compartido con la Comunidad Universitaria.",
+                "consolidarGobiernoSostenible","Consolidar un modelo de gobierno sostenible y socialmente responsable.",
+                "reforzarPapelUCA","Reforzar la importancia del papel de la UCA en la sociedad."
+        );
+
+        chkObjetivosEstrategicos.setItems(opciones.keySet());
+        chkObjetivosEstrategicos.setRenderer(new TextRenderer<>(opciones::get));
         pInfoAlineamiento.setText("Su solicitud debe estar alineada con, al menos, uno de los anteriores objetivos estratégicos\n");
         pInfoAlineamiento.setWidth("100%");
         pInfoAlineamiento.getStyle().set("font-size", "var(--lumo-font-size-xs)");
@@ -188,8 +211,8 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
                 "beneficiarían de la implantación del proyecto");
         pInfoAlcance.setWidth("100%");
         pInfoAlcance.getStyle().set("font-size", "var(--lumo-font-size-xs)");
-        dateTimePicker.setLabel("Fecha requerida para la puesta en marcha de la solución TI");
-        dateTimePicker.setWidth("100%");
+        datePicker.setLabel("Fecha requerida para la puesta en marcha de la solución TI");
+        datePicker.setWidth("100%");
         pInfoFecha.setText("Solo rellenar la fecha límite para la puesta en marcha en el caso de que su motivación sea" +
                 " por obligado cumplimiento de normativa.");
         pInfoFecha.setWidth("100%");
@@ -202,7 +225,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(pInfoAlineamiento);
         getContent().add(formLayout2Col4);
         formLayout2Col4.add(tfAlcance);
-        formLayout2Col4.add(dateTimePicker);
+        formLayout2Col4.add(datePicker);
         formLayout2Col4.add(pInfoAlcance);
         formLayout2Col4.add(pInfoFecha);
         getContent().add(tfNormativaApp);
@@ -259,29 +282,27 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         status.setVisible(false);
 
         binderProyecto = new BeanValidationBinder<>(Proyecto.class);
-        binderProyecto.forField(tfTituloProyecto).bind(Proyecto::getTitulo, Proyecto::setTitulo);
-        binderProyecto.forField(tfNombreCorto).bind(Proyecto::getNombreCorto, Proyecto::setNombreCorto);
-
-        //importancia promotor
-
-        proyecto.setImportanciaPromotor(cmbImportanciaPromotor.getValue());
-
-        binderProyecto.forField(tfInteresados).bind(Proyecto::getInteresados, Proyecto::setInteresados);
-
-        //financiacion
-
-        binderProyecto.forField(tfFinanciacion).bind(Proyecto::getFinanciacionInteresado, Proyecto::setFinanciacionInteresado);
-
-        binderProyecto.setBean(proyecto);
-        proyecto.setSolicitante(user.get().get());
-
-
-        //binder para guardar una justificación proyecto en la BD
+        binderProyecto.bind(tfTituloProyecto, "titulo");
+        binderProyecto.bind(tfNombreCorto, "nombreCorto");
+        binderProyecto.bind(tfInteresados, "interesados");
+        binderProyecto.bind(cmbImportanciaPromotor, "importanciaPromotor");
+        //binderProyecto.bind(cmbPromotor, "promotor");
+        binderProyecto.bind(tfFinanciacion, "financiacionInteresado");
 
         binderJustificacion = new BeanValidationBinder<>(JustificacionProyecto.class);
+        chkObjetivosEstrategicos.getChildren().forEach(component -> {
+            if(component instanceof Checkbox){
+                Checkbox currentCheckbox = (Checkbox) component;
+                if (opciones.containsKey(currentCheckbox.getLabel()))
+                    binderJustificacion.bind(currentCheckbox, currentCheckbox.getLabel());
+            }
+        });
+        binderJustificacion.bind(tfAlcance, "alcance");
+        binderJustificacion.bind(datePicker, "fechaPuestaEnMarcha");
+        binderJustificacion.bind(tfNormativaApp, "normativa");
+        //binder para guardar una justificación proyecto en la BD
 
 
-        binderJustificacion.setBean(new JustificacionProyecto());
 
         //Sección Enviar
         H2 h2Enviar = new H2();
@@ -289,7 +310,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(h2Enviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2Enviar);
         Button botonEnviar = new Button("Enviar");
-        botonEnviar.addClickListener(e -> onRegisterButtonClick());
+        botonEnviar.addClickListener(e -> onRegisterButtonClick(user));
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
 
@@ -308,15 +329,26 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
          comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
      }
          */
-    public void onRegisterButtonClick() {
-        if (binderProyecto.validate().isOk() & binderJustificacion.validate().isOk()) {
-            if (proyectoService.registerProyecto(binderProyecto.getBean())) {
-                status.setText("Proyecto registrado en la base de datos");
-                status.setVisible(true);
-                binderProyecto.setBean(new Proyecto());
-            }
-        } else {
-            Notification.show("Error del registro.");
+    public void onRegisterButtonClick(AuthenticatedUser user) {
+        Proyecto nuevoProyecto = new Proyecto();
+        JustificacionProyecto nuevaJustificacion = new JustificacionProyecto();
+        try{
+            binderJustificacion.writeBean(nuevaJustificacion);
+            nuevoProyecto.setJustificacion(nuevaJustificacion);
+            nuevoProyecto.setSolicitante(user.get().get());
+            nuevoProyecto.setCoste(new BigDecimal(0));
+            nuevoProyecto.setNumEmpleados(5);
+            nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
+            nuevoProyecto.setMemoria(bytesParaMemoria);
+            /*TODO: BORRAR DATO DE EJEMPO*/
+            nuevoProyecto.setPromotor("Ejemplo");
+            binderProyecto.writeBean(nuevoProyecto);
+            proyectoService.registerProyecto(nuevoProyecto);
+            Notification.show("Proyecto registrado correctamente");
+        }
+        catch(ValidationException e)
+        {
+            Notification.show("Por favor, revise los datos introducidos.");
         }
     }
 
