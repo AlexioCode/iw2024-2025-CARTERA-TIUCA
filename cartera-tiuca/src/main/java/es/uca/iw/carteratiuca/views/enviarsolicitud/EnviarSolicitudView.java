@@ -308,7 +308,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         binderProyecto.bind(tfNombreCorto, "nombreCorto");
         binderProyecto.bind(tfInteresados, "interesados");
         binderProyecto.bind(cmbImportanciaPromotor, "importanciaPromotor");
-        //binderProyecto.bind(cmbPromotor, "promotor");
+        binderProyecto.bind(cmbPromotor, "promotor");
         binderProyecto.bind(tfFinanciacion, "financiacionInteresado");
 
         JustificacionProyecto nuevaJustifiacion = new JustificacionProyecto();
@@ -338,9 +338,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         this.userService = userService;
     }
 
-    /*
-     TODO: Cambiar las opciones dentro del combobox
-     */
      private void obtenerPromotores(ComboBox comboBox, UserService userService) {
          List<User> promotores = userService.getByRole(Role.PROMOTOR);
          comboBox.setItems(promotores);
@@ -357,7 +354,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
                 nuevoProyecto.setNumEmpleados(5);
                 nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
                 nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
-                nuevoProyecto.setPromotor(cmbPromotor.getValue());
                 binderProyecto.writeBean(nuevoProyecto);
                 proyectoService.registerProyecto(nuevoProyecto);
                 Notification notification = new Notification().show("Proyecto registrado correctamente");
