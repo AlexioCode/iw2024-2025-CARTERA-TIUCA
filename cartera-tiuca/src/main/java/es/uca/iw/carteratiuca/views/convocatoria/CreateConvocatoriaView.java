@@ -68,7 +68,8 @@ public class CreateConvocatoriaView extends VerticalLayout {
     }
 
     private void onBotonCrearClick() {
-        if (binder.validate().isOk()) {
+        if (binder.validate().isOk() && fecha_final.getValue() != null && fecha_inicial.getValue() != null
+                && fecha_final.getValue().isAfter(fecha_inicial.getValue())) {
             Convocatoria newConvocatoria = new Convocatoria();
             try {
                 binder.writeBean(newConvocatoria);
