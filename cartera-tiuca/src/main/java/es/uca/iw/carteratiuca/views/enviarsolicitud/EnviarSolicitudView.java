@@ -60,6 +60,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
 
+        Proyecto nuevoProyecto = new Proyecto();
 
         //Seccion Principal
         H1 h1PrincipalPagina = new H1();
@@ -71,6 +72,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         uploadCargarMemoria.addSucceededListener(event ->{
             try{
                 bytesParaMemoria = bufferParaMemoria.getInputStream().readAllBytes();
+                nuevoProyecto.setMemoria(bytesParaMemoria);
             }
             catch (IOException e){
                 System.out.println("Fallo leyendo bytes");
@@ -255,6 +257,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         uploadEspecificacionTecnica.addSucceededListener(event ->{
             try{
                 bytesParaEspTecnicas = bufferParaEspecificacionTecnica.getInputStream().readAllBytes();
+                nuevoProyecto.setEspecificacionesTecnicas(bytesParaEspTecnicas);
             }
             catch (IOException e){
                 System.out.println("Fallo leyendo bytes");
@@ -268,6 +271,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         uploadPresupuesto.addSucceededListener(event ->{
             try{
                 bytesParaPresupuesto = bufferParaPresupuesto.getInputStream().readAllBytes();
+                nuevoProyecto.setPresupuesto(bytesParaPresupuesto);
             }
             catch (IOException e){
                 System.out.println("Fallo leyendo bytes");
@@ -326,7 +330,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(h2Enviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2Enviar);
         Button botonEnviar = new Button("Enviar");
-        botonEnviar.addClickListener(e -> onRegisterButtonClick(user, nuevaJustifiacion));
+        botonEnviar.addClickListener(e -> onRegisterButtonClick(user, nuevoProyecto, nuevaJustifiacion));
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
 
@@ -345,29 +349,35 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
          comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
      }
          */
-    public void onRegisterButtonClick(AuthenticatedUser user, JustificacionProyecto nuevaJustificacion) {
-        Proyecto nuevoProyecto = new Proyecto();
-        try{
-            binderJustificacion.writeBean(nuevaJustificacion);
-            nuevoProyecto.setJustificacion(nuevaJustificacion);
-            nuevoProyecto.setSolicitante(user.get().get());
-            nuevoProyecto.setCoste(new BigDecimal(0));
-            nuevoProyecto.setNumEmpleados(5);
-            nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
-            nuevoProyecto.setMemoria(bytesParaMemoria);
-            nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
-            /*TODO: BORRAR DATO DE EJEMPO*/
-            nuevoProyecto.setPromotor("Ejemplo");
-            binderProyecto.writeBean(nuevoProyecto);
-            proyectoService.registerProyecto(nuevoProyecto);
-            Notification notification = new Notification().show("Proyecto registrado correctamente");
-            notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-            binderProyecto.getFields().forEach(f-> f.clear());
-            binderJustificacion.getFields().forEach(f-> f.clear());
-        }
-        catch(ValidationException e)
+    public void onRegisterButtonClick(AuthenticatedUser user, Proyecto nuevoProyecto, JustificacionProyecto nuevaJustificacion) {
+        if (bytesParaMemoria != null)
         {
-            Notification notification = new Notification().show("Por favor, revise los datos introducidos.");
+            try{
+                binderJustificacion.writeBean(nuevaJustificacion);
+                nuevoProyecto.setJustificacion(nuevaJustificacion);
+                nuevoProyecto.setSolicitante(user.get().get());
+                nuevoProyecto.setCoste(new BigDecimal(0));
+                nuevoProyecto.setNumEmpleados(5);
+                nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
+                nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
+                /*TODO: BORRAR DATO DE EJEMPO*/
+                nuevoProyecto.setPromotor("Ejemplo");
+                binderProyecto.writeBean(nuevoProyecto);
+                proyectoService.registerProyecto(nuevoProyecto);
+                Notification notification = new Notification().show("Proyecto registrado correctamente");
+                notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                binderProyecto.getFields().forEach(f-> f.clear());
+                binderJustificacion.getFields().forEach(f-> f.clear());
+            }
+            catch(ValidationException e)
+            {
+                Notification notification = new Notification().show("Por favor, revise los datos introducidos.");
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            }
+        }
+        else
+        {
+            Notification notification = new Notification().show("Por favor, suba un memoria al proyecto");
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
