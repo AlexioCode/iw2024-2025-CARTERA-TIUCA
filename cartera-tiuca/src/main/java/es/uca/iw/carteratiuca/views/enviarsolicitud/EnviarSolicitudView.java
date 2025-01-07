@@ -12,6 +12,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
@@ -359,11 +360,15 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
             nuevoProyecto.setPromotor("Ejemplo");
             binderProyecto.writeBean(nuevoProyecto);
             proyectoService.registerProyecto(nuevoProyecto);
-            Notification.show("Proyecto registrado correctamente");
+            Notification notification = new Notification().show("Proyecto registrado correctamente");
+            notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            binderProyecto.getFields().forEach(f-> f.clear());
+            binderJustificacion.getFields().forEach(f-> f.clear());
         }
         catch(ValidationException e)
         {
-            Notification.show("Por favor, revise los datos introducidos.");
+            Notification notification = new Notification().show("Por favor, revise los datos introducidos.");
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
 
