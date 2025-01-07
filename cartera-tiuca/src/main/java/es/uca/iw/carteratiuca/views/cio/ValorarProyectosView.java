@@ -9,6 +9,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
+import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
@@ -42,6 +43,35 @@ public class ValorarProyectosView extends VerticalLayout {
 
         proyectosGrid.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
 
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isActualizarOferta)
+        ).setHeader("¿Actualiza la oferta formativa?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isAltaCalidad)
+        ).setHeader("¿Alta calidad en oferta formativa?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isAumentarInvestigacion)
+        ).setHeader("¿Aumenta investigación?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isConsolidarGobiernoSostenible)
+        ).setHeader("¿Consolida gobierno sostenible?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isConseguirTransparencia)
+        ).setHeader("¿Transparencia?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isGenerarValorCompartido)
+        ).setHeader("¿Valor compartido con comunidad?").setSortable(true).setWidth("300px");
+
+        proyectosGrid.addColumn(proyecto ->
+                evaluarFuncionBoolean(proyecto, JustificacionProyecto::isReforzarPapelUCA)
+        ).setHeader("¿Refuerza papel de la UCA?").setSortable(true).setWidth("300px");
+
+
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonApto = new Button("Apto", e -> {
                 proyecto.setEstadoValoracionCIO(EstadosAvalacionValoracion.SI);
@@ -68,5 +98,11 @@ public class ValorarProyectosView extends VerticalLayout {
         });
 
         add(proyectosGrid);
+    }
+
+    // Función para mostrar Sí o No, dependiendo del valor
+    private String evaluarFuncionBoolean(Proyecto proyecto, java.util.function.Predicate<JustificacionProyecto> funcion) {
+        JustificacionProyecto justificacion = proyecto.getJustificacion();
+        return justificacion != null && funcion.test(justificacion) ? "Sí" : "No";
     }
 }
