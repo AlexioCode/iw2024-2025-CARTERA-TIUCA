@@ -25,15 +25,14 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import es.uca.iw.carteratiuca.entities.EstadoProyecto;
-import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
-import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
-import es.uca.iw.carteratiuca.entities.Proyecto;
+import es.uca.iw.carteratiuca.entities.*;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 import es.uca.iw.carteratiuca.services.ProyectoService;
+import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @PageTitle("Enviar Solicitud")
@@ -48,12 +47,15 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
 
     private final H4 status;
+    private final UserService userService;
+
+    private final ComboBox<User> cmbPromotor;
 
     byte[] bytesParaMemoria;
     byte[] bytesParaEspTecnicas;
     byte[] bytesParaPresupuesto;
 
-    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user){
+    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user, UserService userService){
         this.proyectoService = service;
 
         //Comun a la vista
@@ -103,7 +105,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         //Seccion Promotor
         H2 h2SeccionPromotor = new H2();
         FormLayout formLayout2Col2 = new FormLayout();
-        ComboBox cmbPromotor = new ComboBox();
+        cmbPromotor = new ComboBox();
         ComboBox<Integer> cmbImportanciaPromotor = new ComboBox();
         Hr separadorInfoPromotor = new Hr();
 
@@ -123,14 +125,14 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         formLayout2Col2.setWidth("100%");
         cmbPromotor.setLabel("Promotor");
         cmbPromotor.setWidth("min-content");
-        //setComboBoxSampleData(cmbPromotor);
+        obtenerPromotores(cmbPromotor, userService);
         cmbImportanciaPromotor.setLabel("Importancia (0 - 5)");
         cmbImportanciaPromotor.setWidth("min-content");
         cmbImportanciaPromotor.setItems(1, 2, 3, 4, 5);
 
         getContent().add(h2SeccionPromotor);
         getContent().add(formLayout2Col2);
-        //formLayout2Col2.add(cmbPromotor);
+        formLayout2Col2.add(cmbPromotor);
         formLayout2Col2.add(cmbImportanciaPromotor);
         formLayout2Col2.add(pInfoPromotor);
         formLayout2Col2.add(pInfoImportancia);
@@ -333,22 +335,17 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         botonEnviar.addClickListener(e -> onRegisterButtonClick(user, nuevoProyecto, nuevaJustifiacion));
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
-
+        this.userService = userService;
     }
 
-    /* /*
+    /*
      TODO: Cambiar las opciones dentro del combobox
-     *
-     private void setComboBoxSampleData(ComboBox comboBox) {
-         List<SampleItem> sampleItems = new ArrayList<>();
-         sampleItems.add(new SampleItem("first", "First", null));
-         sampleItems.add(new SampleItem("second", "Second", null));
-         sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-         sampleItems.add(new SampleItem("fourth", "Fourth", null));
-         comboBox.setItems(sampleItems);
-         comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
+     */
+     private void obtenerPromotores(ComboBox comboBox, UserService userService) {
+         List<User> promotores = userService.getByRole(Role.PROMOTOR);
+         comboBox.setItems(promotores);
+         comboBox.setItemLabelGenerator(item -> ((User) item).getUsername());
      }
-         */
     public void onRegisterButtonClick(AuthenticatedUser user, Proyecto nuevoProyecto, JustificacionProyecto nuevaJustificacion) {
         if (bytesParaMemoria != null)
         {
@@ -360,8 +357,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
                 nuevoProyecto.setNumEmpleados(5);
                 nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
                 nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.NO);
-                /*TODO: BORRAR DATO DE EJEMPO*/
-                nuevoProyecto.setPromotor("Ejemplo");
+                nuevoProyecto.setPromotor(cmbPromotor.getValue());
                 binderProyecto.writeBean(nuevoProyecto);
                 proyectoService.registerProyecto(nuevoProyecto);
                 Notification notification = new Notification().show("Proyecto registrado correctamente");

@@ -132,4 +132,6 @@ public class UserService implements UserDetailsService {
     public List<User> getActiveUsers() {
         return userRepository.findByActiveIsTrue();
     }
+
+    public List<User> getByRole(Role role) { return userRepository.findByRoles(role);}
 }
