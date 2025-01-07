@@ -23,4 +23,6 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, UUID>, JpaSp
     List<Proyecto> findByPromotorAndEstadoAvalacion(User promotor, EstadosAvalacionValoracion estadoAvalacion);
 
     List<Proyecto> findByEstadoAvalacionAndEstadoValoracionCIO(EstadosAvalacionValoracion estadoAvalacion, EstadosAvalacionValoracion estadoValoracionCIO);
+
+    List<Proyecto> findByEstadoValoracionCIOAndEstadoValoracionOTP(EstadosAvalacionValoracion estadoValoracionCIO, EstadosAvalacionValoracion estadoValoracionOTP);
 }

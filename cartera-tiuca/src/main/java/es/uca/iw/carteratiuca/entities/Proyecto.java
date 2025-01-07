@@ -30,7 +30,6 @@ public class Proyecto extends AbstractEntity {
     @NotEmpty
     private String nombreCorto;
 
-    @NotNull
     private BigDecimal coste;
 
     @Min(value = 0, message = "El número de empleados debe ser mayor de 0")
@@ -46,6 +45,9 @@ public class Proyecto extends AbstractEntity {
     private BigDecimal financiacionInteresado;
 
     private Integer gradoAvance = 0;
+
+    @Min(value = 0, message = "La valoración final debe ser mayor a 0")
+    private int valoracionFinal;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -210,5 +212,14 @@ public class Proyecto extends AbstractEntity {
 
     public void setEstadoValoracionOTP(EstadosAvalacionValoracion estadoValoracionOTP) {
         this.estadoValoracionOTP = estadoValoracionOTP;
+    }
+
+    @Min(value = 0, message = "La valoración final debe ser mayor a 0")
+    public int getValoracionFinal() {
+        return valoracionFinal;
+    }
+
+    public void setValoracionFinal(@Min(value = 0, message = "La valoración final debe ser mayor a 0") int valoracionFinal) {
+        this.valoracionFinal = valoracionFinal;
     }
 }
