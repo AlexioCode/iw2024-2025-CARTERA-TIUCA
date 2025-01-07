@@ -8,7 +8,6 @@ import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.*;
@@ -48,9 +47,6 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
 
     private final H4 status;
-
-
-    Proyecto proyecto = new Proyecto();
 
     byte[] bytesParaMemoria;
     byte[] bytesParaEspTecnicas;
@@ -171,7 +167,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
         //Seccion Justificacion
         H2 h2JustifProyecto = new H2();
-        CheckboxGroup chkObjetivosEstrategicos = new CheckboxGroup();
+        CheckboxGroup<String> chkObjetivosEstrategicos = new CheckboxGroup();
         FormLayout formLayout2Col4 = new FormLayout();
         TextField tfAlcance = new TextField();
         DatePicker datePicker = new DatePicker();
@@ -308,13 +304,16 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         //binderProyecto.bind(cmbPromotor, "promotor");
         binderProyecto.bind(tfFinanciacion, "financiacionInteresado");
 
+        JustificacionProyecto nuevaJustifiacion = new JustificacionProyecto();
         binderJustificacion = new BeanValidationBinder<>(JustificacionProyecto.class);
-        chkObjetivosEstrategicos.getChildren().forEach(component -> {
-            if(component instanceof Checkbox){
-                Checkbox currentCheckbox = (Checkbox) component;
-                if (opciones.containsKey(currentCheckbox.getLabel()))
-                    binderJustificacion.bind(currentCheckbox, currentCheckbox.getLabel());
-            }
+        chkObjetivosEstrategicos.addSelectionListener(event ->{
+            nuevaJustifiacion.setActualizarOferta(event.getValue().contains("actualizarOferta"));
+            nuevaJustifiacion.setAltaCalidad(event.getValue().contains("altaCalidad"));
+            nuevaJustifiacion.setAumentarInvestigacion(event.getValue().contains("aumentarInvestigacion"));
+            nuevaJustifiacion.setConseguirTransparencia(event.getValue().contains("conseguirTransparencia"));
+            nuevaJustifiacion.setGenerarValorCompartido(event.getValue().contains("generarValorCompartido"));
+            nuevaJustifiacion.setConsolidarGobiernoSostenible(event.getValue().contains("consolidarGobiernoSostenible"));
+            nuevaJustifiacion.setReforzarPapelUCA(event.getValue().contains("reforzarPapelUCA"));
         });
         binderJustificacion.bind(tfAlcance, "alcance");
         binderJustificacion.bind(datePicker, "fechaPuestaEnMarcha");
@@ -326,7 +325,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
         getContent().add(h2Enviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, h2Enviar);
         Button botonEnviar = new Button("Enviar");
-        botonEnviar.addClickListener(e -> onRegisterButtonClick(user));
+        botonEnviar.addClickListener(e -> onRegisterButtonClick(user, nuevaJustifiacion));
         getContent().add(botonEnviar);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, botonEnviar);
 
@@ -345,9 +344,8 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
          comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
      }
          */
-    public void onRegisterButtonClick(AuthenticatedUser user) {
+    public void onRegisterButtonClick(AuthenticatedUser user, JustificacionProyecto nuevaJustificacion) {
         Proyecto nuevoProyecto = new Proyecto();
-        JustificacionProyecto nuevaJustificacion = new JustificacionProyecto();
         try{
             binderJustificacion.writeBean(nuevaJustificacion);
             nuevoProyecto.setJustificacion(nuevaJustificacion);
