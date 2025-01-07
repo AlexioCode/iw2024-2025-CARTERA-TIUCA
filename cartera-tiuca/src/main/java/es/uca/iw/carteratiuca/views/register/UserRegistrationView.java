@@ -20,7 +20,6 @@ import es.uca.iw.carteratiuca.services.UserService;
 @PageTitle("Registrar usuario")
 @Route(value = "register")
 @Menu(order = 6, icon = "line-awesome/svg/folder-open.svg")
-//@RouteAlias("")
 @AnonymousAllowed
 public class UserRegistrationView extends VerticalLayout {
 

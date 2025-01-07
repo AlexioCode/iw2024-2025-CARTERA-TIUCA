@@ -3,6 +3,7 @@ package es.uca.iw.carteratiuca.services;
 import es.uca.iw.carteratiuca.entities.*;
 import es.uca.iw.carteratiuca.repositories.JustificacionProyectoRepository;
 import es.uca.iw.carteratiuca.repositories.ProyectoRepository;
+import jakarta.validation.constraints.Email;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +15,8 @@ import java.util.UUID;
 @Service
 public class ProyectoService {
     private final ProyectoRepository proyectoRepository;
-
     private final JustificacionProyectoRepository justificacionProyectoRepository;
+    private EmailService emailService;
 
     public ProyectoService(ProyectoRepository repository, JustificacionProyectoRepository justificacionProyectoRepository) {
         this.proyectoRepository = repository;
@@ -44,6 +45,7 @@ public class ProyectoService {
     @Transactional
     public void registerProyecto(Proyecto proyecto) {
         proyectoRepository.save(proyecto);
+        emailService.enviarCorreoProyectoCreado(proyecto.getPromotor());
     }
 
 
