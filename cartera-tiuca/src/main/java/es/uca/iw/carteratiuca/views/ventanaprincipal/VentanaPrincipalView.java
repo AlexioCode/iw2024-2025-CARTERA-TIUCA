@@ -42,7 +42,8 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         layoutColumn2.getStyle().set("flex-grow", "1");
         layoutColumn2.setJustifyContentMode(JustifyContentMode.START);
         layoutColumn2.setAlignItems(Alignment.START);
-        textLarge.setText("Bienvenido al Sistema de gestión de la cartera anual de proyectos TI de la UCA");
+        textLarge.setText("Bienvenido al Sistema de gestión de la cartera anual de proyectos TI de la UCA.\n" +
+                "En esta web podrás gestionar los proyectos potenciales que repercutan en la universidad de Cádiz.");
         textLarge.setWidth("100%");
         textLarge.getStyle().set("font-size", "var(--lumo-font-size-xl)");
         getContent().add(layoutRow);

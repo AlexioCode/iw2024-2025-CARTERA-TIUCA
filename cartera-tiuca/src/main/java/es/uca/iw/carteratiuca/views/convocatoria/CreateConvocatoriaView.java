@@ -34,8 +34,8 @@ public class CreateConvocatoriaView extends VerticalLayout {
     public CreateConvocatoriaView(ConvocatoriaService service) {
         this.service = service;
 
-        title = new H1("Datos de una convocatoria:");
-        nombre = new TextField("Nombre");
+        title = new H1("Datos de una convocatoria");
+        nombre = new TextField("Nombre:");
         nombre.setId("nombre");
 
         fecha_inicial = new DatePicker("Fecha de inicio:");

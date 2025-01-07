@@ -27,8 +27,11 @@ import java.util.UUID;
 public class AdminUserManageView extends Composite<VerticalLayout> {
 
     private final UserService service;
+    private final Grid<User> userGrid;
+    private final UserService userService;
+    List<User> users;
 
-    public AdminUserManageView(UserService service, AuthenticatedUser currentUser) {
+    public AdminUserManageView(UserService service, AuthenticatedUser currentUser, UserService userService) {
         this.service = service;
 
         H3 h3 = new H3();
@@ -38,16 +41,16 @@ public class AdminUserManageView extends Composite<VerticalLayout> {
         h3.setWidth("max-content");
         getContent().add(h3);
 
-        Grid<User> projectGrid = new Grid<>();
+        userGrid = new Grid<>();
         getContent().getStyle().set("flex-grow", "1");
-        projectGrid.addColumn(User::getUsername).setHeader("Nombre usuario").setSortable(true);
-        projectGrid.addColumn(User::getEmail).setHeader("Email").setSortable(true);
-        projectGrid.addColumn(User::getRoles).setHeader("Roles").setSortable(true);
-        projectGrid.addColumn(User::getUnit).setHeader("Unidad").setSortable(true);
+        userGrid.addColumn(User::getUsername).setHeader("Nombre usuario").setSortable(true);
+        userGrid.addColumn(User::getEmail).setHeader("Email").setSortable(true);
+        userGrid.addColumn(User::getRoles).setHeader("Roles").setSortable(true);
+        userGrid.addColumn(User::getUnit).setHeader("Unidad").setSortable(true);
 
         //PONER BOTONES DE MODIFICAR Y ELIMINAR USUARIO
 
-        projectGrid.addComponentColumn(usuario -> {
+        userGrid.addComponentColumn(usuario -> {
             Button botonModificar = new Button("Modificar", event -> {
                 UI.getCurrent().navigate(UserDataView.class).
                         ifPresent(user -> user.adminUserDataView(usuario));
@@ -55,14 +58,15 @@ public class AdminUserManageView extends Composite<VerticalLayout> {
             return botonModificar;
         });
 
-        projectGrid.addComponentColumn(usuario -> {
+        userGrid.addComponentColumn(usuario -> {
             Button botonEliminar = new Button("Eliminar", event -> onBotonEliminarClick(usuario, currentUser));
             botonEliminar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
             return botonEliminar;
         });
-
-        setGridData(projectGrid);
-        getContent().add(projectGrid);
+        users = userService.getActiveUsers();
+        userGrid.setItems(users);
+        getContent().add(userGrid);
+        this.userService = userService;
     }
 
     public void onBotonEliminarClick(User usuario, AuthenticatedUser currentUser) {
@@ -84,13 +88,12 @@ public class AdminUserManageView extends Composite<VerticalLayout> {
             // Si el usuario eliminado es el mismo que el usuario actual, cerrar sesión
             if (currentUserId.equals(userToDeleteId))
                 currentUser.logout();
+            else
+                users.remove(usuario);
+            userGrid.getDataProvider().refreshAll();
         });
 
         dialog.open();
-    }
-
-    private void setGridData(Grid grid) {
-        grid.setItems(service.getActiveUsers());
     }
 
 }

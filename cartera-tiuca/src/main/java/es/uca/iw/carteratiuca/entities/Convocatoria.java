@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDate;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 public class Convocatoria extends AbstractEntity {
 
+    @NotEmpty
     private String nombre;
     private LocalDate fecha_inicial;
     private LocalDate fecha_final;

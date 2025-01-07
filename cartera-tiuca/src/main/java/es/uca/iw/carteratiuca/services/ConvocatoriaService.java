@@ -23,4 +23,11 @@ public class ConvocatoriaService {
         convocatoriaRepository.save(convocatoria);
     }
 
+    public Convocatoria update(Convocatoria convocatoria) {
+        return convocatoriaRepository.save(convocatoria);
+    }
+
+    public void delete(Convocatoria convocatoria) {
+        convocatoriaRepository.delete(convocatoria);
+    }
 }
