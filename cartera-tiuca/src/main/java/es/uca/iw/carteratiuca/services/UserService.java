@@ -102,6 +102,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll(filter, pageable);
     }
 
+    @Transactional
     public boolean registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegisterCode(UUID.randomUUID().toString().substring(0, 5));

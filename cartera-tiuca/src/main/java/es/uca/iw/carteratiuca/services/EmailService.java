@@ -133,4 +133,28 @@ public class EmailService {
             return false;
         }
     }
+
+    public boolean enviarCorreoProyectoCreado(User promotor) {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+
+        String subject;
+        String body;
+
+        subject = "Nuevo proyecto por avalar";
+        body = "Se le ha enviado para solicitud de proyecto para avalar";
+
+        try {
+            helper.setFrom(defaultMail);
+            helper.setTo(promotor.getEmail());
+            helper.setSubject(subject);
+            helper.setText(body);
+            this.mailSender.send(message);
+            return true;
+        } catch (MailException | MessagingException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }
