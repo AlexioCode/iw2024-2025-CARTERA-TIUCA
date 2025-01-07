@@ -11,18 +11,17 @@ import java.math.BigDecimal;
 public class Proyecto extends AbstractEntity {
 
     @ManyToOne
-    // @NotNull
+    @NotNull
     private User solicitante;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "justificacion_id", referencedColumnName = "id") // Clave foránea en la tabla "Padre"
-    // @NotNull
+    @NotNull
     private JustificacionProyecto justificacion;
 
     @ManyToOne
     @JoinColumn(name = "promotor_id")
-    @NotEmpty
-    // @NotNull
+    @NotNull
     private User promotor;
 
     @NotEmpty
