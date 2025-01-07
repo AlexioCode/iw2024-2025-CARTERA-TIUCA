@@ -1,5 +1,6 @@
 package es.uca.iw.carteratiuca.views.cio;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
@@ -13,6 +14,7 @@ import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
+import es.uca.iw.carteratiuca.views.projects.DetailsProjectView;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.util.List;
@@ -71,6 +73,9 @@ public class ValorarProyectosView extends VerticalLayout {
                 evaluarFuncionBoolean(proyecto, JustificacionProyecto::isReforzarPapelUCA)
         ).setHeader("¿Refuerza papel de la UCA?").setSortable(true).setWidth("300px");
 
+        proyectosGrid.addColumn(proyecto ->
+                obtenerValorDeJustificacion(proyecto, JustificacionProyecto::getAlcance)
+        ).setHeader("Alcance").setSortable(true).setAutoWidth(true);
 
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonApto = new Button("Apto", e -> {
@@ -81,6 +86,7 @@ public class ValorarProyectosView extends VerticalLayout {
                 proyectosGrid.getDataProvider().refreshAll();
                 emailService.enviarCorreoValoracionCIO(proyecto.getSolicitante(), "SI");
             });
+            botonApto.setSizeFull();
             return botonApto;
         });
 
@@ -94,7 +100,16 @@ public class ValorarProyectosView extends VerticalLayout {
                 emailService.enviarCorreoValoracionCIO(proyecto.getSolicitante(), "NO");
             });
             botonNoApto.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+            botonNoApto.setSizeFull();
             return botonNoApto;
+        });
+
+        proyectosGrid.addComponentColumn(proyecto -> {
+            Button botonDetalles = new Button("Detalles", event -> {
+                UI.getCurrent().navigate(DetailsProjectView.class).
+                        ifPresent(detalle -> detalle.editProject(proyecto));
+            });
+            return botonDetalles;
         });
 
         add(proyectosGrid);
@@ -104,5 +119,10 @@ public class ValorarProyectosView extends VerticalLayout {
     private String evaluarFuncionBoolean(Proyecto proyecto, java.util.function.Predicate<JustificacionProyecto> funcion) {
         JustificacionProyecto justificacion = proyecto.getJustificacion();
         return justificacion != null && funcion.test(justificacion) ? "Sí" : "No";
+    }
+
+    private String obtenerValorDeJustificacion(Proyecto proyecto, java.util.function.Function<JustificacionProyecto, String> funcion) {
+        JustificacionProyecto justificacion = proyecto.getJustificacion();
+        return justificacion != null ? funcion.apply(justificacion) : "No disponible";
     }
 }
