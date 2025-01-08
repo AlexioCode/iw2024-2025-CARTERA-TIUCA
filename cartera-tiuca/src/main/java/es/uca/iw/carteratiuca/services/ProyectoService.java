@@ -73,6 +73,11 @@ public class ProyectoService {
                 EstadosAvalacionValoracion.PORDETERMINAR);
     }
 
+    public List<Proyecto> getProyectosAvaladosSinValorarOTP() {
+        return proyectoRepository.findByEstadoAvalacionAndEstadoValoracionCIO(EstadosAvalacionValoracion.SI,
+                EstadosAvalacionValoracion.PORDETERMINAR);
+    }
+
     public List<Proyecto> getProyectosValoradosPorCIOyOTP() {
         return proyectoRepository.findByEstadoValoracionCIOAndEstadoValoracionOTPAndEstado(
                 EstadosAvalacionValoracion.SI, EstadosAvalacionValoracion.SI, EstadoProyecto.REGISTRADO);
