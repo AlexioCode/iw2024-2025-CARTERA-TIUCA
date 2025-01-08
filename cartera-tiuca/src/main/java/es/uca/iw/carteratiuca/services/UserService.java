@@ -43,7 +43,6 @@ public class UserService implements UserDetailsService {
     private static List<GrantedAuthority> getAuthorities(User user) {
         return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -62,6 +61,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
+    @Transactional
     public User update(User user) {
         // Si la contraseña no está vacía, cifrarla antes de guardar
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
@@ -70,6 +70,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void delete(UUID id) {
         User user = userRepository.findById(id).get();
 

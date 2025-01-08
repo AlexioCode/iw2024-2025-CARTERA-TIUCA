@@ -17,7 +17,6 @@ import java.util.UUID;
 public class ProyectoService {
     private final ProyectoRepository proyectoRepository;
     private final JustificacionProyectoRepository justificacionProyectoRepository;
-    private EmailService emailService;
 
     public ProyectoService(ProyectoRepository repository, JustificacionProyectoRepository justificacionProyectoRepository) {
         this.proyectoRepository = repository;
@@ -48,11 +47,12 @@ public class ProyectoService {
         proyectoRepository.save(proyecto);
     }
 
-
+    @Transactional
     public void update(Proyecto proyecto) {
         proyectoRepository.save(proyecto);
     }
 
+    @Transactional
     public void delete(UUID id) {
         Proyecto proyecto = proyectoRepository.findById(id).get();
         UUID justificacionId = proyecto.getJustificacion().getId();
