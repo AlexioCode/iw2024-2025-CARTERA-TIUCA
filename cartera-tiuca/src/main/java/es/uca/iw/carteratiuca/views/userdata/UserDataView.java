@@ -29,7 +29,6 @@ import jakarta.annotation.security.PermitAll;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 @PageTitle("Datos de usuario")

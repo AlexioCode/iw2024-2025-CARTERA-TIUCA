@@ -14,7 +14,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("FAQ")
 @Route(value = "preguntas-frecuentes")
-@Menu(order = 12, icon = "line-awesome/svg/book-solid.svg")
+@Menu(order = 16, icon = "line-awesome/svg/book-solid.svg")
 @AnonymousAllowed
 public class FAQView extends VerticalLayout {
     public FAQView() {
