@@ -130,8 +130,10 @@ public class UserService implements UserDetailsService {
         user.addRole(Role.USER);
 
         // Atributos para auditoría de tablas
-        user.setCreated_by(authenticatedUser.get().get().getUsername());
-        user.setCreated_date(LocalDate.now());
+        if(authenticatedUser.get().isPresent()) {
+            user.setCreated_by(authenticatedUser.get().get().getUsername());
+            user.setCreated_date(LocalDate.now());
+        }
 
         try {
             userRepository.save(user);
