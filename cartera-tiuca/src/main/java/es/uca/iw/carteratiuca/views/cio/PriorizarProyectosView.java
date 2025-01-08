@@ -61,6 +61,9 @@ public class PriorizarProyectosView extends VerticalLayout {
                         .build()
         );
 
+        
+
+        // Botón para añadir a cartera
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonAñadirAcartera = new Button("Añadir a cartera", e -> {
                 proyecto.setEstado(EstadoProyecto.ACEPTADO);
@@ -74,6 +77,7 @@ public class PriorizarProyectosView extends VerticalLayout {
             return botonAñadirAcartera;
         });
 
+        // Botón para no añadir a cartera
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonNoAñadirCartera = new Button("No añadir cartera", e -> {
                 proyecto.setEstado(EstadoProyecto.DENEGADO);
