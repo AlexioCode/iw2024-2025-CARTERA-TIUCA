@@ -52,7 +52,7 @@ public class ConsumirServicioWeb {
                 nuevoPromotor.setCargo(currentPromotor.getCargo());
                 nuevoPromotor.setActive(true);
                 nuevoPromotor.setEmail("GeneradorDeEmail" + contandor + "@uwu.com" );
-                nuevoPromotor.setPassword(passwordEncoder.encode("12345678"));
+                nuevoPromotor.setPassword("12345678");
                 nuevoPromotor.addRole(Role.PROMOTOR);
                 nuevoPromotor.setUnit("unidad" + contandor);
                 userService.registerUser(nuevoPromotor);

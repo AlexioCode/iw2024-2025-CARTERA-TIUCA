@@ -40,7 +40,7 @@ public class ValorarTecnicaProyectosView  extends Composite<VerticalLayout> {
         h3.setWidth("max-content");
         getContent().add(h3);
 
-        List<Proyecto> proyectosAvaladosSinValorarOTP = proyectoService.getProyectosAvaladosSinValorarCIO();
+        List<Proyecto> proyectosAvaladosSinValorarOTP = proyectoService.getProyectosAvaladosSinValorarOTP();
         Grid<Proyecto> proyectosGrid = new Grid<>();
         proyectosGrid.setItems(proyectosAvaladosSinValorarOTP);
 

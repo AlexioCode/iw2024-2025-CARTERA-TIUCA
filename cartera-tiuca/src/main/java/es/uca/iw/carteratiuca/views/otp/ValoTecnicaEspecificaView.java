@@ -11,6 +11,7 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.ProyectoService;
@@ -69,6 +70,10 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
             Notification notification = new Notification("Error, revise los campos por favor ");
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             return;
+        }
+        if (binder.getBean().getEstadoValoracionOTP() == EstadosAvalacionValoracion.NO) {
+            binder.getBean().setEstado(EstadoProyecto.DENEGADO);
+            binder.getBean().setGradoAvance(0);
         }
         proyectoService.update(binder.getBean());
         Notification notification = new Notification().show("Valoracion correcta");
