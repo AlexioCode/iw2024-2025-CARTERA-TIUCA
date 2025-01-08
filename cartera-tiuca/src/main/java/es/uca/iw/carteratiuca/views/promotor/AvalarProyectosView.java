@@ -46,7 +46,10 @@ public class AvalarProyectosView extends VerticalLayout {
 
         gridProyectos.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
         gridProyectos.addColumn(Proyecto::getNombreCorto).setHeader("Nombre Corto").setSortable(true);
-        gridProyectos.addColumn(Proyecto::getSolicitante).setHeader("Solicitante").setSortable(true);
+        gridProyectos.addColumn(proyecto -> proyecto.getSolicitante().getUsername())
+                .setHeader("Solicitante")
+                .setSortable(true)
+                .setAutoWidth(true);
         gridProyectos.addColumn(Proyecto::getInteresados).setHeader("Interesados").setSortable(true);
 
 
