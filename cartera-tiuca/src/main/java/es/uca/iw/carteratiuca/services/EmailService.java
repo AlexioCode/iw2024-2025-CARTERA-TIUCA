@@ -33,8 +33,17 @@ public class EmailService {
     @Value("${server.port}")
     private int serverPort;
 
+    MimeMessage message;
+    MimeMessageHelper helper;
+
+    String subject;
+    String body;
+
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
+
+        message = mailSender.createMimeMessage();
+        helper = new MimeMessageHelper(message, "utf-8");
     }
 
     private String getServerUrl() {
@@ -49,12 +58,8 @@ public class EmailService {
 
     public boolean sendRegistrationEmail(User user) {
 
-        MimeMessage message = mailSender.createMimeMessage();
-
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-
-        String subject = "Bienvenido a CarteraTIUCA";
-        String body = "Para activar tu cuenta de usuario, dirígete a la página " + getServerUrl()
+        subject = "Bienvenido a CarteraTIUCA";
+        body = "Para activar tu cuenta de usuario, dirígete a la página " + getServerUrl()
                     + "activate e introduce tu correo y el siguiente código: "
                     + user.getRegisterCode();
 
@@ -73,11 +78,6 @@ public class EmailService {
     }
 
     public boolean enviarCorreoAvalacion(User solicitante, String resultadoAvalacion) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-
-        String subject;
-        String body;
 
         if ("SI".equals(resultadoAvalacion)) {
             subject = "Su proyecto ha sido avalado";
@@ -104,11 +104,6 @@ public class EmailService {
     }
 
     public boolean enviarCorreoValoracionCIO(User solicitante, String valoracion) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-
-        String subject;
-        String body;
 
         if ("SI".equals(valoracion)) {
             subject = "Valoración positiva del CIO en su proyecto";
@@ -135,11 +130,6 @@ public class EmailService {
     }
 
     public boolean enviarCorreoProyectoCreado(User promotor) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-
-        String subject;
-        String body;
 
         subject = "Nuevo proyecto por avalar";
         body = "Se le ha enviado para solicitud de proyecto para avalar";
@@ -157,4 +147,21 @@ public class EmailService {
         }
     }
 
+    public boolean enviarCorreoProyectoAceptado(User solicitante, String decision) {
+
+        subject = "¡ENHORABUENA, SU PROYECTO HA SIDO ACEPTADO!";
+        body = "¡Enhorabuena! Su proyecto ha sido aceptado en la cartera de proyecto TI de la Universidad de Cádiz.";
+
+        try {
+            helper.setFrom(defaultMail);
+            helper.setTo(solicitante.getEmail());
+            helper.setSubject(subject);
+            helper.setText(body);
+            this.mailSender.send(message);
+            return true;
+        } catch (MailException | MessagingException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
