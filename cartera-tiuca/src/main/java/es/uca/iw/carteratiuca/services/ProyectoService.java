@@ -45,7 +45,6 @@ public class ProyectoService {
     @Transactional
     public void registerProyecto(Proyecto proyecto) {
         proyectoRepository.save(proyecto);
-        emailService.enviarCorreoProyectoCreado(proyecto.getPromotor());
     }
 
 

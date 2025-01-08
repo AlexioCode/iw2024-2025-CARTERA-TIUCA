@@ -27,6 +27,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.*;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
@@ -42,6 +43,7 @@ import java.util.Map;
 public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
     private final ProyectoService proyectoService;
+    private final EmailService emailService;
 
     private final BeanValidationBinder<Proyecto> binderProyecto;
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
@@ -55,8 +57,9 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     byte[] bytesParaEspTecnicas;
     byte[] bytesParaPresupuesto;
 
-    public EnviarSolicitudView(ProyectoService service, AuthenticatedUser user, UserService userService){
+    public EnviarSolicitudView(ProyectoService service, EmailService eService, UserService userService, AuthenticatedUser user) {
         this.proyectoService = service;
+        this.emailService = eService;
 
         //Comun a la vista
         getContent().setWidth("100%");
@@ -356,6 +359,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
                 nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.PORDETERMINAR);
                 binderProyecto.writeBean(nuevoProyecto);
                 proyectoService.registerProyecto(nuevoProyecto);
+                emailService.enviarCorreoProyectoCreado(nuevoProyecto.getPromotor());
                 Notification notification = new Notification().show("Proyecto registrado correctamente");
                 notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
                 binderProyecto.getFields().forEach(f-> f.clear());

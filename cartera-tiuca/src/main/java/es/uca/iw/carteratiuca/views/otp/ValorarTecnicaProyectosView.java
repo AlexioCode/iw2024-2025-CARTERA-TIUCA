@@ -8,11 +8,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Valoracion Técnica")
 @Route("valoracion-estrategica")
 @Menu(icon = "line-awesome/svg/mail-bulk-solid.svg")
-@PermitAll
+@RolesAllowed("OTP")
 public class ValorarTecnicaProyectosView  extends Composite<VerticalLayout> {
     ProyectoService proyectoService;
 
