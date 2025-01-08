@@ -1,11 +1,15 @@
 package es.uca.iw.carteratiuca.services;
 
+import com.vaadin.flow.component.notification.Notification;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.entities.Role;
 import es.uca.iw.carteratiuca.entities.User;
 import es.uca.iw.carteratiuca.repositories.UserRepository;
+import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import jakarta.persistence.OptimisticLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,14 +36,17 @@ public class UserService implements UserDetailsService {
     private final ProyectoService proyectoService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private AuthenticatedUser authenticatedUser;
 
     @Autowired
     public UserService(UserRepository repository, ProyectoService proyectoService,
-                       PasswordEncoder passwordEncoder, EmailService emailService) {
+                       PasswordEncoder passwordEncoder, EmailService emailService,
+                       AuthenticatedUser authenticatedUser) {
         this.userRepository = repository;
         this.proyectoService = proyectoService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.authenticatedUser = authenticatedUser;
     }
 
     private static List<GrantedAuthority> getAuthorities(User user) {
@@ -61,13 +70,24 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
-    @Transactional
     public User update(User user) {
         // Si la contraseña no está vacía, cifrarla antes de guardar
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        return userRepository.save(user);
+        // Atributos para la auditoría de tablas
+        user.setModified_by(authenticatedUser.get().get().getUsername());
+        user.setModified_date(LocalDate.now());
+
+        try {
+            userRepository.save(user);
+        } catch (OptimisticLockException oe) {
+            Notification.show("No ha podido modificarse el usuario. Reintentando...");
+            try {
+                Thread.sleep(2000);  // Pausa de 2 segundos antes de intentar nuevamente
+            } catch (InterruptedException ie) {}
+        }
+        return user;
     }
 
     @Transactional
@@ -108,6 +128,10 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegisterCode(UUID.randomUUID().toString().substring(0, 5));
         user.addRole(Role.USER);
+
+        // Atributos para auditoría de tablas
+        user.setCreated_by(authenticatedUser.get().get().getUsername());
+        user.setCreated_date(LocalDate.now());
 
         try {
             userRepository.save(user);

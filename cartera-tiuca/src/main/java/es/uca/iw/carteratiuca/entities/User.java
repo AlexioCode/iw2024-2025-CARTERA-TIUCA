@@ -1,14 +1,7 @@
 package es.uca.iw.carteratiuca.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -16,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +46,12 @@ public class User extends AbstractEntity implements UserDetails {
     @Lob
     @Column(length = 1000000)
     private byte[] profilePicture;
+
+    // Auditoría de tablas
+    private String created_by;
+    private String modified_by;
+    private LocalDate created_date;
+    private LocalDate modified_date;
 
     public String getUsername() {
         return username;
@@ -90,5 +90,37 @@ public class User extends AbstractEntity implements UserDetails {
     // Metodo de Spring para comprobar si el usuario tiene acceso al sitio
     public boolean isEnabled() {
         return active;
+    }
+
+    public String getCreated_by() {
+        return created_by;
+    }
+
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
+    }
+
+    public String getModified_by() {
+        return modified_by;
+    }
+
+    public void setModified_by(String modified_by) {
+        this.modified_by = modified_by;
+    }
+
+    public LocalDate getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(LocalDate created_date) {
+        this.created_date = created_date;
+    }
+
+    public LocalDate getModified_date() {
+        return modified_date;
+    }
+
+    public void setModified_date(LocalDate modified_date) {
+        this.modified_date = modified_date;
     }
 }
