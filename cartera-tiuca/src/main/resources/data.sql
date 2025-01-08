@@ -26,16 +26,16 @@ INSERT INTO `justificacion_proyecto` (`actualizar_oferta`, `alta_calidad`, `aume
 VALUES (1, 1, 1, 1, 1, '2024-12-14', 1, 1, 1, '7d5df433-4dc9-4da6-9139-d5833937b592',
         'mucho y muy seguido', 'no pare sigue sigue');
 
+INSERT INTO `convocatoria` (`id`, `nombre`, `fecha_inicial`, `fecha_final`)
+VALUES ('1db86b5b-b33b-11ef-baa2-00ffcf6a3273', 'convocatoria1', '2024-12-14', '2025-12-14');
+
 INSERT INTO `proyecto` (`coste`, `estado`, `financiacion_interesado`, `grado_avance`, `importancia_promotor`,
                         `interesados`, `num_empleados`, `version`, `id`, `justificacion_id`, `solicitante_id`,
                         `nombre_corto`, `titulo`, `especificaciones_tecnicas`, `presupuesto`, `promotor_id`,
-                        `estado_avalacion`, `estado_valoracioncio`, `estado_valoracionotp`)
+                        `estado_avalacion`, `estado_valoracioncio`, `estado_valoracionotp`, `convocatoria_id`)
 VALUES ('50000', 'REGISTRADO', '10000', '0', '10', '10000',
         '2', '1', '1db86b5b-b33b-11ef-baa2-00ffcf6a3272',
         '7d5df433-4dc9-4da6-9139-d5833937b592', '01f6e929-98d7-431a-9ded-c121ff299676',
         'asdasda', 'asdasdas', NULL, NULL,
         '40960360-a730-4cfe-8776-ced6192e8398', 'PORDETERMINAR',
-        'PORDETERMINAR', 'PORDETERMINAR');
-
-INSERT INTO `convocatoria` (`id`, `nombre`, `fecha_inicial`, `fecha_final`)
-VALUES ('1db86b5b-b33b-11ef-baa2-00ffcf6a3273', 'convocatoria1', '2024-12-14', '2025-12-14');
+        'PORDETERMINAR', 'PORDETERMINAR', '1db86b5b-b33b-11ef-baa2-00ffcf6a3273');

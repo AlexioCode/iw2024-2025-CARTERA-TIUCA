@@ -27,12 +27,14 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.*;
 import es.uca.iw.carteratiuca.security.AuthenticatedUser;
+import es.uca.iw.carteratiuca.services.ConvocatoriaService;
 import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.services.UserService;
 import jakarta.annotation.security.PermitAll;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +46,7 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
 
     private final ProyectoService proyectoService;
     private final EmailService emailService;
+    private final ConvocatoriaService convocatoriaService;
 
     private final BeanValidationBinder<Proyecto> binderProyecto;
     private final BeanValidationBinder<JustificacionProyecto> binderJustificacion;
@@ -57,9 +60,10 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
     byte[] bytesParaEspTecnicas;
     byte[] bytesParaPresupuesto;
 
-    public EnviarSolicitudView(ProyectoService service, EmailService eService, UserService userService, AuthenticatedUser user) {
+    public EnviarSolicitudView(ProyectoService service, EmailService eService, UserService userService, AuthenticatedUser user, ConvocatoriaService convocatoriaService) {
         this.proyectoService = service;
         this.emailService = eService;
+        this.convocatoriaService = convocatoriaService;
 
         //Comun a la vista
         getContent().setWidth("100%");
@@ -347,33 +351,38 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
          comboBox.setItemLabelGenerator(item -> ((User) item).getUsername());
      }
     public void onRegisterButtonClick(AuthenticatedUser user, Proyecto nuevoProyecto, JustificacionProyecto nuevaJustificacion) {
-        if (bytesParaMemoria != null)
-        {
-            try{
-                binderJustificacion.writeBean(nuevaJustificacion);
-                nuevoProyecto.setJustificacion(nuevaJustificacion);
-                nuevoProyecto.setSolicitante(user.get().get());
-                nuevoProyecto.setCoste(new BigDecimal(0));
-                nuevoProyecto.setNumEmpleados(5);
-                nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
-                nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.PORDETERMINAR);
-                binderProyecto.writeBean(nuevoProyecto);
-                proyectoService.registerProyecto(nuevoProyecto);
-                emailService.enviarCorreoProyectoCreado(nuevoProyecto.getPromotor());
-                Notification notification = new Notification().show("Proyecto registrado correctamente");
-                notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-                binderProyecto.getFields().forEach(f-> f.clear());
-                binderJustificacion.getFields().forEach(f-> f.clear());
-            }
-            catch(ValidationException e)
-            {
-                Notification notification = new Notification().show("Por favor, revise los datos introducidos.");
-                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }
+        LocalDate fechaActual;
+        List <Convocatoria> convocatorias = convocatoriaService.getConvocatoriaActual();
+        if (convocatorias.isEmpty()){
+            Notification notification = new Notification().show("No hay una convocatoria activa actualmente, por favor intentelo en otro momento");
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            return;
         }
-        else
-        {
+        if (bytesParaMemoria == null) {
             Notification notification = new Notification().show("Por favor, suba un memoria al proyecto");
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            return;
+        }
+        try{
+            binderJustificacion.writeBean(nuevaJustificacion);
+            nuevoProyecto.setJustificacion(nuevaJustificacion);
+            nuevoProyecto.setSolicitante(user.get().get());
+            nuevoProyecto.setCoste(new BigDecimal(0));
+            nuevoProyecto.setNumEmpleados(5);
+            nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
+            nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.PORDETERMINAR);
+            nuevoProyecto.setConvocatoria(convocatorias.get(0));
+            binderProyecto.writeBean(nuevoProyecto);
+            proyectoService.registerProyecto(nuevoProyecto);
+            emailService.enviarCorreoProyectoCreado(nuevoProyecto.getPromotor());
+            Notification notification = new Notification().show("Proyecto registrado correctamente");
+            notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            binderProyecto.getFields().forEach(f-> f.clear());
+            binderJustificacion.getFields().forEach(f-> f.clear());
+        }
+        catch(ValidationException e)
+        {
+            Notification notification = new Notification().show("Por favor, revise los datos introducidos.");
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }

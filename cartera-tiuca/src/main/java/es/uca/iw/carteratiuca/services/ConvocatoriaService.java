@@ -4,6 +4,7 @@ import es.uca.iw.carteratiuca.entities.Convocatoria;
 import es.uca.iw.carteratiuca.repositories.ConvocatoriaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,5 +30,10 @@ public class ConvocatoriaService {
 
     public void delete(Convocatoria convocatoria) {
         convocatoriaRepository.delete(convocatoria);
+    }
+
+    public List<Convocatoria> getConvocatoriaActual() {
+        LocalDate fechaActual = LocalDate.now();
+        return convocatoriaRepository.findActiveConvocatorias(fechaActual);
     }
 }

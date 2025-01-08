@@ -62,6 +62,11 @@ public class Proyecto extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private EstadosAvalacionValoracion estadoValoracionOTP;
 
+    //@NotNull
+    @ManyToOne
+    @JoinColumn(name = "convocatoria_id")
+    private Convocatoria convocatoria;
+
     @Lob
     @NotNull
     private byte[] memoria;
@@ -71,6 +76,14 @@ public class Proyecto extends AbstractEntity {
 
     @Lob
     private byte[] presupuesto;
+
+    public Convocatoria getConvocatoria() {
+        return convocatoria;
+    }
+
+    public void setConvocatoria(Convocatoria convocatoria) {
+        this.convocatoria = convocatoria;
+    }
 
 
     public User getSolicitante() {
