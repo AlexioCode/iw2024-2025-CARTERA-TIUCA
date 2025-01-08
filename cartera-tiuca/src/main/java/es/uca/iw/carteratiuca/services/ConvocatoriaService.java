@@ -2,6 +2,7 @@ package es.uca.iw.carteratiuca.services;
 
 import es.uca.iw.carteratiuca.entities.Convocatoria;
 import es.uca.iw.carteratiuca.repositories.ConvocatoriaRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class ConvocatoriaService {
         this.convocatoriaRepository = repository;
     }
 
+    @Cacheable("convocatorias")
     public List<Convocatoria> getConvocatorias() {
         return convocatoriaRepository.findAll();
     }
@@ -32,6 +34,7 @@ public class ConvocatoriaService {
         convocatoriaRepository.delete(convocatoria);
     }
 
+    @Cacheable("convocatoriaActual")
     public List<Convocatoria> getConvocatoriaActual() {
         LocalDate fechaActual = LocalDate.now();
         return convocatoriaRepository.findActiveConvocatorias(fechaActual);
