@@ -41,13 +41,20 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
         financiacionInteresado.setReadOnly(true);
         ComboBox<EstadosAvalacionValoracion> estadoValoracionOTP = new ComboBox<>("Estado Valoracion OTP");
         estadoValoracionOTP.setItems(EstadosAvalacionValoracion.values());
-        layout.add(titulo, nombreCorto, coste, numEmpleados, estadoValoracionOTP);
+        ComboBox importanciaPromotor = new ComboBox<>("Importancia del promotor");
+        importanciaPromotor.setReadOnly(true);
+        importanciaPromotor.setItems(1, 2, 3, 4, 5);
+        proyecto.setValoracionOTP(proyectoService.valoracionOTP(proyecto));
+        IntegerField valoracionOTP = new IntegerField("Valoracion OTP (Valoracion Recomendada)");
+        layout.add(titulo, nombreCorto, coste, numEmpleados, estadoValoracionOTP, importanciaPromotor, valoracionOTP);
         binder.bind(titulo, "titulo");
         binder.bind(nombreCorto, "nombreCorto");
         binder.bind(coste, "coste");
         binder.bind(numEmpleados, "numEmpleados");
         binder.bind(financiacionInteresado, "financiacionInteresado");
         binder.bind(estadoValoracionOTP, "estadoValoracionOTP");
+        binder.bind(importanciaPromotor, "importanciaPromotor");
+        binder.bind(valoracionOTP, "valoracionOTP");
         binder.setBean(proyecto);
 
         Button enviar = new Button("Enviar");

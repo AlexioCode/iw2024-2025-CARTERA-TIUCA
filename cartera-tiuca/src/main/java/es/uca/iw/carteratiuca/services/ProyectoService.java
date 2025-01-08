@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -103,6 +104,13 @@ public class ProyectoService {
 
         proyecto.setValoracionCIO(valoracionCIO);
         proyecto.setValoracionFinal(proyecto.getValoracionFinal() + valoracionCIO);
+    }
+
+    public int valoracionOTP(Proyecto proyecto)
+    {
+        return proyecto.getFinanciacionInteresado()
+                .divide( new BigDecimal(proyecto.getNumEmpleados()))
+                .multiply(new BigDecimal(proyecto.getImportanciaPromotor())).toBigInteger().intValue();
     }
 
 }
