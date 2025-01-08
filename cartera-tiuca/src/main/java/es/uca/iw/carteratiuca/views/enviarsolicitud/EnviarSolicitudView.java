@@ -371,6 +371,8 @@ public class EnviarSolicitudView extends Composite<VerticalLayout> {
             nuevoProyecto.setNumEmpleados(5);
             nuevoProyecto.setEstado(EstadoProyecto.REGISTRADO);
             nuevoProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.PORDETERMINAR);
+            nuevoProyecto.setEstadoValoracionCIO(EstadosAvalacionValoracion.PORDETERMINAR);
+            nuevoProyecto.setEstadoValoracionOTP(EstadosAvalacionValoracion.PORDETERMINAR);
             nuevoProyecto.setConvocatoria(convocatorias.get(0));
             binderProyecto.writeBean(nuevoProyecto);
             proyectoService.registerProyecto(nuevoProyecto);
