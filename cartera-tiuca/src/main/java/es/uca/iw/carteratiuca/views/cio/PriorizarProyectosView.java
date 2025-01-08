@@ -31,6 +31,7 @@ public class PriorizarProyectosView extends VerticalLayout {
 
     public PriorizarProyectosView(ProyectoService proyectoService, EmailService emailService) {
         this.proyectoService = proyectoService;
+        this.emailService = emailService;
 
         H3 h3 = new H3();
         setWidth("100%");
