@@ -46,8 +46,14 @@ public class Proyecto extends AbstractEntity {
 
     private Integer gradoAvance = 0;
 
+    @Min(value = 0, message = "La valoración del CIO debe ser mayor a 0")
+    private int valoracionCIO = 0;
+
+    @Min(value = 0, message = "La valoración del OTP debe ser mayor a 0")
+    private int valoracionOTP = 0;
+
     @Min(value = 0, message = "La valoración final debe ser mayor a 0")
-    private int valoracionFinal;
+    private int valoracionFinal = 0;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -234,5 +240,23 @@ public class Proyecto extends AbstractEntity {
 
     public void setValoracionFinal(@Min(value = 0, message = "La valoración final debe ser mayor a 0") int valoracionFinal) {
         this.valoracionFinal = valoracionFinal;
+    }
+
+    @Min(value = 0, message = "La valoración del CIO debe ser mayor a 0")
+    public int getValoracionCIO() {
+        return valoracionCIO;
+    }
+
+    public void setValoracionCIO(@Min(value = 0, message = "La valoración del CIO debe ser mayor a 0") int valoracionCIO) {
+        this.valoracionCIO = valoracionCIO;
+    }
+
+    @Min(value = 0, message = "La valoración del OTP debe ser mayor a 0")
+    public int getValoracionOTP() {
+        return valoracionOTP;
+    }
+
+    public void setValoracionOTP(@Min(value = 0, message = "La valoración del OTP debe ser mayor a 0") int valoracionOTP) {
+        this.valoracionOTP = valoracionOTP;
     }
 }
