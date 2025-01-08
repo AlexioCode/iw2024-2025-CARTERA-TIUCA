@@ -61,7 +61,7 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         getContent().add(image);
 
         textSmall.setText("Para enviar sus solicitudes de proyectos, debe registrarse en la página web desde la opción" +
-                " ''Sign up'' en la esquina inferior izquierda, y luego seleccionar la opción Enviar Solicitud " +
+                " ''Sign in'' en la esquina inferior izquierda, y luego seleccionar la opción ''Enviar Solicitud'' " +
                 "dentro del plazo de una convocatoria. ");
         textSmall.setWidth("100%");
         textSmall.getStyle().set("font-size", "var(--lumo-font-size-l)");
