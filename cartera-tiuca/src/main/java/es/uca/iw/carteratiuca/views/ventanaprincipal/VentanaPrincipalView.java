@@ -67,6 +67,6 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         textSmall.getStyle().set("font-size", "var(--lumo-font-size-l)");
         layoutColumn2.add(textSmall);
 
-        
+
     }
 }
