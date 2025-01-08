@@ -4,11 +4,13 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
@@ -40,10 +42,26 @@ public class ValorarProyectosView extends VerticalLayout {
         add(h3);
 
         List<Proyecto> proyectosAvaladosSinValorarCIO = proyectoService.getProyectosAvaladosSinValorarCIO();
+        // Calcular valoración CIO de forma automática para cada proyecto
+        for(Proyecto proyecto : proyectosAvaladosSinValorarCIO)
+            proyectoService.calcularValoracionCIO(proyecto);
+
         Grid<Proyecto> proyectosGrid = new Grid<>();
         proyectosGrid.setItems(proyectosAvaladosSinValorarCIO);
 
         proyectosGrid.addColumn(Proyecto::getTitulo).setHeader("Titulo").setSortable(true);
+
+        proyectosGrid.addColumn(Proyecto::getValoracionCIO)
+                .setHeader("Valoración automática CIO")
+                .setSortable(true)
+                .setAutoWidth(true)
+                .setKey("valoracionCIO");
+
+        // Establecer orden predeterminado
+        proyectosGrid.sort(
+                GridSortOrder.asc(proyectosGrid.getColumnByKey("valoracionCIO"))
+                        .build()
+        );
 
         proyectosGrid.addColumn(proyecto ->
                 evaluarFuncionBoolean(proyecto, JustificacionProyecto::isActualizarOferta)
@@ -93,6 +111,7 @@ public class ValorarProyectosView extends VerticalLayout {
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonNoApto = new Button("No Apto", e -> {
                 proyecto.setEstadoValoracionCIO(EstadosAvalacionValoracion.NO);
+                proyecto.setEstado(EstadoProyecto.DENEGADO);
                 proyecto.setGradoAvance(0);
                 proyectoService.update(proyecto);
                 proyectosAvaladosSinValorarCIO.remove(proyecto);

@@ -77,4 +77,26 @@ public class ProyectoService {
         return proyectoRepository.findByEstadoValoracionCIOAndEstadoValoracionOTP(
                 EstadosAvalacionValoracion.SI, EstadosAvalacionValoracion.SI);
     }
+
+    public void calcularValoracionCIO(Proyecto proyecto) {
+        JustificacionProyecto justificacion = proyecto.getJustificacion();
+        int valoracion = proyecto.getValoracionFinal();
+
+        // Lista de métodos booleanos de JustificacionProyecto
+        List<Boolean> criterios = List.of(
+                justificacion.isActualizarOferta(),
+                justificacion.isAltaCalidad(),
+                justificacion.isAumentarInvestigacion(),
+                justificacion.isConseguirTransparencia(),
+                justificacion.isConsolidarGobiernoSostenible(),
+                justificacion.isGenerarValorCompartido(),
+                justificacion.isReforzarPapelUCA()
+        );
+
+        // Incrementa la valoración por cada criterio cumplido
+        valoracion += criterios.stream().filter(Boolean::booleanValue).mapToInt(c -> 5000).sum();
+
+        proyecto.setValoracionFinal(valoracion);
+    }
+
 }

@@ -8,6 +8,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.Proyecto;
+import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -20,8 +21,9 @@ import java.util.List;
 public class PriorizarProyectosView extends VerticalLayout {
 
     ProyectoService proyectoService;
+    EmailService emailService;
 
-    public PriorizarProyectosView(ProyectoService proyectoService) {
+    public PriorizarProyectosView(ProyectoService proyectoService, EmailService emailService) {
         this.proyectoService = proyectoService;
 
         H3 h3 = new H3();
