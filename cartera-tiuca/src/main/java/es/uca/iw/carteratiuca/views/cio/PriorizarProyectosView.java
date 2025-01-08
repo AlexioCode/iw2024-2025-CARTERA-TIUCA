@@ -61,7 +61,15 @@ public class PriorizarProyectosView extends VerticalLayout {
                         .build()
         );
 
-        
+        proyectosGrid.addColumn(Proyecto::getCoste)
+                .setHeader("Coste")
+                .setSortable(true)
+                .setAutoWidth(true);
+
+        proyectosGrid.addColumn(proyecto -> proyecto.getSolicitante().getUsername())
+                .setHeader("Solicitante")
+                .setSortable(true)
+                .setAutoWidth(true);
 
         // Botón para añadir a cartera
         proyectosGrid.addComponentColumn(proyecto -> {
