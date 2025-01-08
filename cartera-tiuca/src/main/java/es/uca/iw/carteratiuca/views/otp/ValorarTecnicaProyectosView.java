@@ -24,7 +24,7 @@ import java.util.List;
 
 @PageTitle("Valoracion Técnica")
 @Route("valoracion-tecnica")
-@Menu(icon = "line-awesome/svg/mail-bulk-solid.svg")
+@Menu(order = 13, icon = "line-awesome/svg/mail-bulk-solid.svg")
 @RolesAllowed("OTP")
 public class ValorarTecnicaProyectosView  extends Composite<VerticalLayout> {
     ProyectoService proyectoService;
