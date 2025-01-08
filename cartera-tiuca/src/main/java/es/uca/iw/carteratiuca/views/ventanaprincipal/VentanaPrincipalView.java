@@ -1,9 +1,9 @@
 package es.uca.iw.carteratiuca.views.ventanaprincipal;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
@@ -13,9 +13,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
-import es.uca.iw.carteratiuca.security.AuthenticatedUser;
 
 @PageTitle("Inicio")
 @Route("")
@@ -28,6 +28,7 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         H1 h1 = new H1();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         Paragraph textLarge = new Paragraph();
+        Paragraph textSmall = new Paragraph();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.CENTER);
@@ -51,17 +52,21 @@ public class VentanaPrincipalView extends Composite<VerticalLayout> {
         getContent().add(layoutColumn2);
         layoutColumn2.add(textLarge);
 
-        //boton para ir al userProyectsView, vista de los proyectos del solicitante / admin
-        if (getId().isPresent()) {
+        StreamResource imageResource = new StreamResource("ucalogo.png",
+                () -> getClass().getResourceAsStream("/images/ucalogo.png"));
 
-            Button buttonMisProyectos = new Button("MisProyectos");
-            AuthenticatedUser user;
-            //COMPROBAR QUE EL ROL DEL USUARIO QUE HA INICIADO SESIÓN TIENE EL ROL ADMIN O SOLICITANTE
-            buttonMisProyectos.addClickListener(buttonClickEvent -> {
-                UI.getCurrent().navigate("userProjects/");
-            });
-            getContent().add(buttonMisProyectos);
-        }
-        // RouterLink loginLink = new RouterLink("Login", LoginView.class);
+        Image image = new Image(imageResource, "ucalogo");
+        image.setWidth(400, Unit.PIXELS);
+        image.setHeight(200, Unit.PIXELS);
+        getContent().add(image);
+
+        textSmall.setText("Para enviar sus solicitudes de proyectos, debe registrarse en la página web desde la opción" +
+                " ''Sign up'' en la esquina inferior izquierda, y luego seleccionar la opción Enviar Solicitud " +
+                "dentro del plazo de una convocatoria. ");
+        textSmall.setWidth("100%");
+        textSmall.getStyle().set("font-size", "var(--lumo-font-size-l)");
+        layoutColumn2.add(textSmall);
+
+
     }
 }
