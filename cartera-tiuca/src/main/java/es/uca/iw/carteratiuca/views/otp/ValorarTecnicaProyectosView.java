@@ -14,6 +14,7 @@ import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.JustificacionProyecto;
 import es.uca.iw.carteratiuca.entities.Proyecto;
+import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.JustificacionProyectoService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import es.uca.iw.carteratiuca.views.projects.DetailsProjectView;
@@ -27,12 +28,14 @@ import java.util.List;
 @Menu(order = 13, icon = "line-awesome/svg/mail-bulk-solid.svg")
 @RolesAllowed("OTP")
 public class ValorarTecnicaProyectosView  extends Composite<VerticalLayout> {
-    ProyectoService proyectoService;
+    private final EmailService emailService;
+    private ProyectoService proyectoService;
     JustificacionProyectoService justificacionProyectoService;
 
-    public ValorarTecnicaProyectosView(ProyectoService proyectoService, JustificacionProyectoService justificacionProyectoService) {
+    public ValorarTecnicaProyectosView(ProyectoService proyectoService, JustificacionProyectoService justificacionProyectoService, EmailService emailService) {
     this.proyectoService = proyectoService;
     this.justificacionProyectoService = justificacionProyectoService;
+    this.emailService = emailService;
         H3 h3 = new H3();
         h3.setWidth("100%");
         getStyle().set("flex-grow", "1");
@@ -65,12 +68,11 @@ public class ValorarTecnicaProyectosView  extends Composite<VerticalLayout> {
         proyectosGrid.addComponentColumn(proyecto -> {
             Button botonDetalles = new Button("Valorar", event -> {
                 UI.getCurrent().navigate(ValoTecnicaEspecificaView.class).
-                        ifPresent(detalle -> detalle.editarValoracionTecnica(proyecto, proyectoService));
+                        ifPresent(detalle -> detalle.editarValoracionTecnica(proyecto, proyectoService, emailService));
             });
             return botonDetalles;
         });
 
         getContent().add(proyectosGrid);
-
     }
 }

@@ -14,6 +14,7 @@ import com.vaadin.flow.router.Route;
 import es.uca.iw.carteratiuca.entities.EstadoProyecto;
 import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.Proyecto;
+import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
 import com.vaadin.flow.component.textfield.TextField;
 import jakarta.annotation.security.RolesAllowed;
@@ -27,9 +28,14 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
 
     private BeanValidationBinder <Proyecto> binder;
 
+    private ProyectoService proyectoService;
+    private EmailService emailService;
+
     public ValoTecnicaEspecificaView() {}
 
-    public void editarValoracionTecnica (Proyecto proyecto, ProyectoService proyectoService) {
+    public void editarValoracionTecnica (Proyecto proyecto, ProyectoService proyectoService, EmailService emailService) {
+        this.proyectoService = proyectoService;
+        this.emailService = emailService;
         FormLayout layout = new FormLayout();
         binder = new BeanValidationBinder<>(Proyecto.class);
         TextField titulo = new TextField("Titulo");
@@ -59,12 +65,12 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
         binder.setBean(proyecto);
 
         Button enviar = new Button("Enviar");
-        enviar.addClickListener(e -> onPressButtonEnviar(proyectoService));
+        enviar.addClickListener(e -> onPressButtonEnviar());
         layout.add(enviar);
         getContent().add(layout);
     }
 
-    public void onPressButtonEnviar (ProyectoService proyectoService)
+    public void onPressButtonEnviar ()
     {
         if (!binder.isValid()) {
             Notification notification = new Notification("Error, revise los campos por favor ");
@@ -78,5 +84,6 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
         proyectoService.update(binder.getBean());
         Notification notification = new Notification().show("Valoracion correcta");
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+        emailService.enviarCorreoValoracionCIO(binder.getBean().getSolicitante(), "SI");
     }
 }
