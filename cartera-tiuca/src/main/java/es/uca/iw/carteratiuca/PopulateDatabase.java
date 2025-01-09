@@ -45,7 +45,7 @@ public class PopulateDatabase implements CommandLineRunner {
                     newUser.addRole(Role.OTP);
                 if (rand.nextBoolean())
                     newUser.addRole(Role.PROMOTOR);
-                userService.save(newUser);
+                userService.registerUser(newUser);
             }
         }
 
