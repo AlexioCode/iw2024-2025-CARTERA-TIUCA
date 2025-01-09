@@ -7,7 +7,7 @@
     <groupId>com.example.carteratiuca</groupId>
     <artifactId>cartera-tiuca</artifactId>
     <name>cartera-tiuca</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -108,9 +108,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -131,7 +129,7 @@
                             <file>${project.basedir}/eclipse-formatter.xml</file>
                         </eclipse>
                     </java>
-                    <!-- Uncomment to format TypeScript files 
+                    <!-- Uncomment to format TypeScript files
                         <typescript>
                         <includes>
                             <include>src/main/frontend/**/*.ts</include>
