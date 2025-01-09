@@ -50,7 +50,12 @@ public class UserProjectsView extends Composite<VerticalLayout> {
             infoProyecto.add(horNombreCorto);
 
             H5 h5coste = new H5("Coste: ");
-            Span coste = new Span(proyecto.getCoste().toString());
+            Span coste = new Span();
+            if (proyecto.getCoste().equals(null)) {
+                coste.setText("0");
+            } else {
+                coste.setText(proyecto.getCoste().toString());
+            }
             HorizontalLayout horCoste = new HorizontalLayout(h5coste, coste);
             infoProyecto.add(horCoste);
 
