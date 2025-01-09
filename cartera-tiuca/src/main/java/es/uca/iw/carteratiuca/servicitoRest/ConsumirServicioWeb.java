@@ -28,7 +28,7 @@ public class ConsumirServicioWeb {
                 "https://e608f590-1a0b-43c5-b363-e5a883961765.mock.pstmn.io/sponsors", Json.class
         );
         log.info(json.toString());
-        int contandor = 0;
+        int contador = 0;
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         for (Promotor currentPromotor : json.getData()) {
             User nuevoPromotor = new User();
@@ -36,12 +36,12 @@ public class ConsumirServicioWeb {
             nuevoPromotor.setUsername(currentPromotor.getNombre());
             nuevoPromotor.setCargo(currentPromotor.getCargo());
             nuevoPromotor.setActive(true);
-            nuevoPromotor.setEmail("GeneradorDeEmail" + contandor + "@uwu.com");
+            nuevoPromotor.setEmail("GeneradorDeEmail" + contador + "@uwu.com");
             nuevoPromotor.setPassword("12345678");
             nuevoPromotor.addRole(Role.PROMOTOR);
-            nuevoPromotor.setUnit("unidad" + contandor);
+            nuevoPromotor.setUnit("unidad" + contador);
             userService.registerUser(nuevoPromotor);
-            contandor++;
+            contador++;
         }
     }
 }
