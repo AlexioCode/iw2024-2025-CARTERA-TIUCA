@@ -162,4 +162,14 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getByRole(Role role) { return userRepository.findByRoles(role);}
+
+    public void save (User user)
+    {
+        userRepository.save(user);
+    }
+
+    public List<User> getAllUser()
+    {
+        return userRepository.findAll();
+    }
 }

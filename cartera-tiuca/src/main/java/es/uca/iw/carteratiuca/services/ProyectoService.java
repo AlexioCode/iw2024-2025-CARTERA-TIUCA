@@ -113,4 +113,9 @@ public class ProyectoService {
                 .multiply(new BigDecimal(proyecto.getImportanciaPromotor())).toBigInteger().intValue();
     }
 
+    public long count ()
+    {
+        return proyectoRepository.count();
+    }
+
 }
