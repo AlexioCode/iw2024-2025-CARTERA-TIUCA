@@ -2,6 +2,7 @@ package es.uca.iw.carteratiuca.views.otp;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -9,6 +10,7 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -17,9 +19,7 @@ import es.uca.iw.carteratiuca.entities.EstadosAvalacionValoracion;
 import es.uca.iw.carteratiuca.entities.Proyecto;
 import es.uca.iw.carteratiuca.services.EmailService;
 import es.uca.iw.carteratiuca.services.ProyectoService;
-import com.vaadin.flow.component.textfield.TextField;
 import jakarta.annotation.security.RolesAllowed;
-import com.vaadin.flow.component.button.Button;
 
 
 @PageTitle("Valoracion Técnica")
@@ -27,14 +27,15 @@ import com.vaadin.flow.component.button.Button;
 @RolesAllowed("OTP")
 public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
 
-    private BeanValidationBinder <Proyecto> binder;
+    private BeanValidationBinder<Proyecto> binder;
 
     private ProyectoService proyectoService;
     private EmailService emailService;
 
-    public ValoTecnicaEspecificaView() {}
+    public ValoTecnicaEspecificaView() {
+    }
 
-    public void editarValoracionTecnica (Proyecto proyecto, ProyectoService proyectoService, EmailService emailService) {
+    public void editarValoracionTecnica(Proyecto proyecto, ProyectoService proyectoService, EmailService emailService) {
         this.proyectoService = proyectoService;
         this.emailService = emailService;
         FormLayout layout = new FormLayout();
@@ -76,8 +77,7 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
         getContent().add(backButton);
     }
 
-    public void onPressButtonEnviar ()
-    {
+    public void onPressButtonEnviar() {
         if (!binder.isValid()) {
             Notification notification = new Notification("Error, revise los campos por favor ");
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
@@ -87,8 +87,10 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
             binder.getBean().setEstado(EstadoProyecto.DENEGADO);
             binder.getBean().setGradoAvance(0);
         }
+        binder.getBean().setGradoAvance(binder.getBean().getGradoAvance() + 25);
         proyectoService.update(binder.getBean());
-        Notification notification = new Notification().show("Valoracion correcta");
+        new Notification();
+        Notification notification = Notification.show("Valoracion correcta");
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         emailService.enviarCorreoValoracionCIO(binder.getBean().getSolicitante(), "SI");
     }
