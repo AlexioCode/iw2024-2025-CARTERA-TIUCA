@@ -68,6 +68,6 @@ INSERT INTO `proyecto` (`coste`, `estado`, `financiacion_interesado`, `grado_ava
 VALUES ('50000', 'REGISTRADO', '10000', '0', '10', '10000',
         '2', '1', '1db86b5b-b33b-11ef-baa2-00ffcf6a3272',
         '7d5df433-4dc9-4da6-9139-d5833937b592', '01f6e929-98d7-431a-9ded-c121ff299676',
-        'asdasda', 'asdasdas', NULL, NULL,
+        'proy1', 'ejemplo_proyecto', NULL, NULL,
         '40960360-a730-4cfe-8776-ced6192e8398', 'PORDETERMINAR',
         'PORDETERMINAR', 'PORDETERMINAR', '1db86b5b-b33b-11ef-baa2-00ffcf6a3273');
