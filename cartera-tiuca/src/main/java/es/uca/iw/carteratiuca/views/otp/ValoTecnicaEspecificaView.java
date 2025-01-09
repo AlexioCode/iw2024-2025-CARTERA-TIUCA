@@ -1,6 +1,7 @@
 package es.uca.iw.carteratiuca.views.otp;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -67,7 +68,12 @@ public class ValoTecnicaEspecificaView extends Composite<VerticalLayout> {
         Button enviar = new Button("Enviar");
         enviar.addClickListener(e -> onPressButtonEnviar());
         layout.add(enviar);
+        Button backButton = new Button("Volver", event -> {
+
+            UI.getCurrent().getPage().getHistory().back(); // Obtiene la vista anterior
+        });
         getContent().add(layout);
+        getContent().add(backButton);
     }
 
     public void onPressButtonEnviar ()
