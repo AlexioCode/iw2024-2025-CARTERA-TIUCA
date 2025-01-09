@@ -72,6 +72,7 @@ public class CreateConvocatoriaView extends VerticalLayout {
                 && fecha_final.getValue().isAfter(fecha_inicial.getValue())) {
             Convocatoria newConvocatoria = new Convocatoria();
             try {
+                newConvocatoria.setActivo(true);
                 binder.writeBean(newConvocatoria);
                 service.create(newConvocatoria);
                 Notification.show("Convocatoria creada con éxito.");

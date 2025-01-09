@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface ConvocatoriaRepository extends JpaRepository<Convocatoria, UUID>, JpaSpecificationExecutor<Convocatoria> {
     @Query("SELECT c FROM Convocatoria c WHERE c.fecha_inicial <= :fechaActual AND c.fecha_final >= :fechaActual")
     List<Convocatoria> findActiveConvocatorias(LocalDate fechaActual);
+
 }

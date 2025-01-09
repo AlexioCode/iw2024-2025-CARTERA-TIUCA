@@ -13,6 +13,7 @@ public class Convocatoria extends AbstractEntity {
     private String nombre;
     private LocalDate fecha_inicial;
     private LocalDate fecha_final;
+    private boolean activo;
 
     public String getNombre() {
         return nombre;
@@ -37,4 +38,8 @@ public class Convocatoria extends AbstractEntity {
     public void setFecha_final(LocalDate fechaFin) {
         fecha_final = fechaFin;
     }
+
+    public boolean isActivo() { return activo; }
+
+     public void setActivo(boolean activo) {this.activo = activo;}
 }

@@ -19,7 +19,12 @@ public class ConvocatoriaService {
 
     @Cacheable("convocatorias")
     public List<Convocatoria> getConvocatorias() {
-        return convocatoriaRepository.findAll();
+        List<Convocatoria> convocatoriasActivas = convocatoriaRepository.findAll();
+        for (Convocatoria convocatoria : convocatoriasActivas) {
+            if (!convocatoria.isActivo())
+                convocatoriasActivas.remove(convocatoria);
+        }
+        return convocatoriasActivas;
     }
 
     public void create(Convocatoria convocatoria) {
@@ -31,12 +36,20 @@ public class ConvocatoriaService {
     }
 
     public void delete(Convocatoria convocatoria) {
-        convocatoriaRepository.delete(convocatoria);
+
+        //convocatoriaRepository.delete(convocatoria);
+        convocatoria.setActivo(false);
+        convocatoriaRepository.save(convocatoria);
     }
 
     @Cacheable("convocatoriaActual")
     public List<Convocatoria> getConvocatoriaActual() {
         LocalDate fechaActual = LocalDate.now();
-        return convocatoriaRepository.findActiveConvocatorias(fechaActual);
+        List<Convocatoria> convocatoriasActivas = convocatoriaRepository.findActiveConvocatorias(fechaActual);
+        for (Convocatoria convocatoria : convocatoriasActivas) {
+            if (!convocatoria.isActivo())
+                convocatoriasActivas.remove(convocatoria);
+        }
+        return convocatoriasActivas;
     }
 }
