@@ -28,13 +28,11 @@ public class PopulateDatabase implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception{
+    public void run(String... args) throws Exception {
         Faker faker = new Faker();
 
-        if(userService.count() <= 3)
-        {
-            for (int i = 0; i < 10; i++)
-            {
+        if (userService.count() <= 3) {
+            for (int i = 0; i < 10; i++) {
                 User newUser = new User();
                 newUser.setUsername(faker.name().username());
                 newUser.setEmail(faker.internet().emailAddress());
@@ -45,18 +43,16 @@ public class PopulateDatabase implements CommandLineRunner {
                 newUser.addRole(Role.USER);
                 if (rand.nextBoolean())
                     newUser.addRole(Role.OTP);
-                if(rand.nextBoolean())
+                if (rand.nextBoolean())
                     newUser.addRole(Role.PROMOTOR);
                 userService.save(newUser);
             }
         }
 
-        if(proyectoService.count() <= 2)
-        {
+        if (proyectoService.count() <= 2) {
             List<User> usuarios = userService.getAllUser();
             List<User> promotores = userService.getByRole(Role.PROMOTOR);
-            for (int i = 0; i < 20; i++)
-            {
+            for (int i = 0; i < 20; i++) {
                 Proyecto newProyecto = new Proyecto();
                 JustificacionProyecto justificacion = new JustificacionProyecto();
                 justificacion.setActualizarOferta(rand.nextBoolean());
@@ -77,11 +73,12 @@ public class PopulateDatabase implements CommandLineRunner {
                 newProyecto.setNumEmpleados(0);
                 newProyecto.setImportanciaPromotor(rand.nextInt(5) + 1);
                 newProyecto.setInteresados(faker.lorem().characters());
-                newProyecto.setFinanciacionInteresado(new BigDecimal(rand.nextFloat()).multiply(new BigDecimal(500)));
+                newProyecto.setFinanciacionInteresado(BigDecimal.valueOf(rand.nextFloat()).multiply(new BigDecimal(500)));
                 newProyecto.setEstado(EstadoProyecto.REGISTRADO);
                 newProyecto.setEstadoAvalacion(EstadosAvalacionValoracion.PORDETERMINAR);
                 newProyecto.setEstadoValoracionCIO(EstadosAvalacionValoracion.PORDETERMINAR);
                 newProyecto.setEstadoValoracionOTP(EstadosAvalacionValoracion.PORDETERMINAR);
+                newProyecto.setCoste(new BigDecimal(0));
                 byte[] bytesRandom = new byte[1024 * 5];
                 rand.nextBytes(bytesRandom);
                 newProyecto.setMemoria(bytesRandom);
